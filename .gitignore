@@ -5,5 +5,7 @@ reference/
 web/
 
 # Files
-.DS_STORE
+*.DS_STORE
+*.project
+*.classpath
 readme.html
