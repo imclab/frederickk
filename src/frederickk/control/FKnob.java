@@ -16,83 +16,105 @@ package frederickk.control;
 
 
 import processing.core.PApplet;
-import processing.core.PFont;
 import processing.core.PVector;
+import processing.core.PFont;
 
-public class FCheck extends FControlBase {
+public class FKnob extends FControlBase {
 	//-----------------------------------------------------------------------------
 	//properties
 	//-----------------------------------------------------------------------------
 	protected String name;
-	private float x,y,sz;
-	private boolean val;
+	private float x,y,z, x_new,y_new, b,h;
+	private PVector val = new PVector();
+
+	boolean dragOff = false;
 
 	//-----------------------------------------------------------------------------
 	//constructor
 	//-----------------------------------------------------------------------------
-	public FCheck(PApplet p5) {
+	public FKnob(PApplet p5) {
 		super(p5);
-		val = false;
 	}
 
-	public FCheck(PApplet p5, String _name, float _x, float _y, float _sz, boolean _val, PFont _typeface) {
+	public FKnob(PApplet p5, String _name, float _x, float _y, float _b, float _h, PFont _typeface, int _labelType) {
 		super(p5);
 		setName(_name);
 		setCoord(_x,_y);
-		setSize(_sz);
-		setValue(_val);
-		
+		setSize(_b,_h);
+
 		typeface = _typeface;
+		labelType = _labelType;
+		label.set( (x+b)+5,y, typeface);
 	}
 
+	public FKnob(PApplet p5, String _name, float _x, float _y, float _z, float _b, float _h, PFont _typeface, int _labelType) {
+		super(p5);
+		setName(_name);
+		setCoord(_x,_y,_z);
+		setSize(_b,_h);
+
+		typeface = _typeface;
+		labelType = _labelType;
+		label.set( (x+b)+5,y, typeface);
+	}
+
+	
 	//-----------------------------------------------------------------------------
 	//methods
 	//-----------------------------------------------------------------------------
 	public void create() {
 		update();
-		toggle();
-		
-		p5.noFill();
-		if( LOCKED ) p5.stroke( getColorActive() );
-		else p5.stroke( getColorInactive() );
-		p5.rect(x,y, sz, sz);
+		if(!dragOff) drag();
 
-		// x'd
-		if(val) {
-			p5.stroke( getColorActive() );
-			p5.line(x,y, x+sz, y+sz);
-			p5.line(x+sz,y, x, y+sz);
+		val.x = x;
+		val.y = y;
+		
+		if(showLabels) {
+			label.setCoord( (x+b)+5,y + ( p5.textAscent() ) );
+			if(labelType == LABEL_FLOAT) label.create( getStrValue( val.x,val.y, 2 ) );
+			else if(labelType == LABEL_INT) label.create( getStrValue( val.x, val.y ) );
 		}
 		
+		p5.noStroke();
+		if( getOver() || LOCKED ) p5.fill( getColorActive() );
+		else p5.fill( getColorInactive() );
+		p5.rect(x, y, b, h);
+
 	}
 
 	//-----------------------------------------------------------------------------
 	//interaction
 	//-----------------------------------------------------------------------------
 	private void update() {
-		if( getOver() && PRESSED ) LOCKED = true;
+		if( getOver() && PRESSED ) {
+			LOCKED = true;
+		}
 	}
 
 	protected boolean getOver() {
-		if(MOUSE_X > x && MOUSE_X < x+sz && 
-		   MOUSE_Y > y && MOUSE_Y < y+sz) {
+		if(MOUSE_X > x && MOUSE_X < x+b && 
+		   MOUSE_Y > y && MOUSE_Y < y+h) {
 			OVER = true;
 		} else {
 			OVER = false;
 		}
 		return OVER;
 	}
-
-	private void toggle() {
+	
+	private void drag() {
 		if( LOCKED ) {
-			val = !val;
-			
-			LOCKED = !LOCKED;
-			OVER = !OVER;
-			PRESSED = !PRESSED;
+			if( SNAP ) {
+				x_new = snap( (float) (MOUSE_X - (b * 0.5)), SNAP_INC, 0);
+				y_new = snap( (float) (MOUSE_Y - (h * 0.5)), SNAP_INC, 0);
+			} else {
+				x_new = (float) (MOUSE_X - (b * 0.5));
+				y_new = (float) (MOUSE_Y - (h * 0.5));
+			}
 		}
-	}
 
+		if(PApplet.abs(x_new - x) > 1) x = x_new;
+		if(PApplet.abs(y_new - y) > 1) y = y_new;
+	}
 
 	//-----------------------------------------------------------------------------
 	//sets
@@ -100,18 +122,38 @@ public class FCheck extends FControlBase {
 	public void setCoord(float _x, float _y) {
 		x = _x;
 		y = _y;
+
+		x_new = x;
+		y_new = y;
+
+		val.x = x; 
+		val.y = y;
 	}
 
-	public void setSize(float _sz) {
-		sz = _sz;
+	public void setCoord(float _x, float _y, float _z) {
+		x = _x;
+		y = _y;
+		z = _z;
+
+		x_new = x;
+		y_new = y;
+
+		val.x = x; 
+		val.y = y;
+		val.z = z;
+	}
+
+	public void setSize(float _b, float _h) {
+		b = _b;
+		h = _h;
 	}
 
 	public void setName(String _name) {
 		name = _name;
 	}
-
-	public void setValue(boolean _val) {
-		val = _val;
+	
+	public void disableDrag(boolean _dragOff) {
+		dragOff = _dragOff;
 	}
 
 	//-----------------------------------------------------------------------------
@@ -123,9 +165,9 @@ public class FCheck extends FControlBase {
 		point.y = y;
 		return point;
 	}
-
-	public boolean getValue() {
+	
+	public PVector getValue() {
 		return val;
-	}
+	}	
 
 }

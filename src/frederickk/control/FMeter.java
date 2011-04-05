@@ -14,11 +14,12 @@ package frederickk.control;
  *
  */
 
+
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PVector;
 
-public class FSlider extends FControlBase {
+public class FMeter extends FControlBase {
 	//-----------------------------------------------------------------------------
 	//properties
 	//-----------------------------------------------------------------------------
@@ -31,12 +32,12 @@ public class FSlider extends FControlBase {
 	//-----------------------------------------------------------------------------
 	//constructor
 	//-----------------------------------------------------------------------------
-	public FSlider(PApplet p5) {
+	public FMeter(PApplet p5) {
 		super(p5);
 		loose = 3;
 	}
 
-	public FSlider(PApplet p5, String _name, float _x, float _y, float _b, float _h, float _vMin, float _vMax, float _val, PFont _typeface, int _labelType) {
+	public FMeter(PApplet p5, String _name, float _x, float _y, float _b, float _h, float _vMin, float _vMax, float _val, PFont _typeface, int _labelType) {
 		super(p5);
 		setCoord(_x,_y);
 		setSize(_b,_h);
@@ -46,7 +47,7 @@ public class FSlider extends FControlBase {
 		pos = (float) (x + b*0.5 - h*0.5);
 		posNew = pos;
 		posMin = (int) x;
-		posMax = (int) (x + b-h);
+		posMax = (int) (x + b);
 		
 		setValueRange(_vMin,_vMax);
 		setValue(_val);
@@ -56,23 +57,25 @@ public class FSlider extends FControlBase {
 		label.set( (x+b)+5,y, typeface);
 	}
 
-
 	//-----------------------------------------------------------------------------
 	//methods
 	//-----------------------------------------------------------------------------
 	public void create() {
 		update();
 		drag();
-
+		
 		p5.noStroke();
 		p5.fill( getColorInactive() );
 		p5.rect(x,y, b,h);
 		
+		p5.fill( getColorActive() );
+		p5.rect(x, y, pos-x, h);
+
 		if( LOCKED ) p5.fill( getColorActive() );
 		else p5.fill( getColorInactive() );
 
-		p5.rect(pos, y, h, h);
-
+		p5.rect(pos,y, 3,h);
+		
 		if(showLabels) {
 			if(labelType == LABEL_FLOAT) label.create( getStrValue( getFloatValue(),2 ) );
 			else if(labelType == LABEL_INT) label.create( getStrValue( getIntValue() ) );
@@ -98,7 +101,11 @@ public class FSlider extends FControlBase {
 
 	private void drag() {
 		if( LOCKED ) {
-			posNew = PApplet.constrain((int) (MOUSE_X - (h * 0.5)), posMin, posMax);
+			if( SNAP ) {
+				posNew = PApplet.constrain( snap( (float) (MOUSE_X - (h * 0.5)), SNAP_INC, -5), posMin, posMax);;
+			} else {
+				posNew = PApplet.constrain((float) (MOUSE_X - (h * 0.5)), posMin, posMax);
+			}
 		}
 		if(PApplet.abs(posNew - pos) > 1) {
 			pos = pos + (posNew-pos)/loose;
@@ -163,4 +170,3 @@ public class FSlider extends FControlBase {
 		return vMax;
 	}
 }
-

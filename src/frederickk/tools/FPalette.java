@@ -1,25 +1,19 @@
 package frederickk.tools;
 
 /*
-you can put a one sentence description of your library here.
-
-(c) copyright
-
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
-
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General
-Public License along with this library; if not, write to the
-Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-Boston, MA  02111-1307  USA
+ *  Frederickk.Tools 002
+ *
+ *  Ken Frederick
+ *  ken.frederick@gmx.de
+ *
+ *  http://cargocollective.com/kenfrederick/
+ *  http://kenfrederick.blogspot.com/
+ *
+ *  a collection of tools that i tend to use frequently
+ *  http://code.google.com/p/frederickk/
+ *
  */
+
 
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -27,14 +21,13 @@ import java.awt.Color;
 
 //public class FPalette extends FDateiLeser {
 public class FPalette {
-
 	//-----------------------------------------------------------------------------
 	//properties
 	//-----------------------------------------------------------------------------
 	public static PApplet p5;
 
-	public PImage bild;
-	public int[] farbe;
+	public PImage img;
+	public int[] colors;
 
 	private String pfad = "";
 	private int loc;
@@ -44,29 +37,38 @@ public class FPalette {
 	//-----------------------------------------------------------------------------
 	//constructor
 	//-----------------------------------------------------------------------------
+	/**
+	 * instantiate FPalette
+	 * 
+	 * @param thePApplet
+	 * 			PApplet
+	 * @param p
+	 *          the path of the palette image to load
+	 * 
+	 */
 	public FPalette(
 			PApplet papplet,
 			String p) {
 
-		setPfad(p);
+		setPath(p);
 
 		p5 = papplet;
 
-		bild = p5.loadImage( p5.sketchPath + pfad);
-		bild.loadPixels();
+		img = p5.loadImage( p5.sketchPath + pfad);
+		img.loadPixels();
 
-		farbe = new int[bild.width*bild.height];
+		colors = new int[img.width*img.height];
 		
 		int index = 0;
 		//top to bottom
 		//System.out.println("TOP_BOTTOM");
-		for (int i=0; i<bild.width; i++) {
-			for (int j=0; j<bild.height; j++) {
+		for (int i=0; i<img.width; i++) {
+			for (int j=0; j<img.height; j++) {
 				//-----------------------------------------------------------------------------
 				//get the color and location of images pixels
 				//-----------------------------------------------------------------------------
-				loc = i + j*bild.width; 
-				farbe[index] = bild.pixels[loc];
+				loc = i + j*img.width; 
+				colors[index] = img.pixels[loc];
 				
 				index++;
 			}  
@@ -76,14 +78,14 @@ public class FPalette {
 	}
 
 	//-----------------------------------------------------------------------------
-	//helpers
+	//methods
 	//-----------------------------------------------------------------------------
 	/**
 	 * @param w
 	 *          value to keep within the range of colors created
 	 */
 	private int inBounds(int w) {
-		w = PApplet.constrain(w, 0,getAnzahl());
+		w = PApplet.constrain(w, 0,getCount());
 		return w;
 	}
 
@@ -92,9 +94,9 @@ public class FPalette {
 	//-----------------------------------------------------------------------------
 	/**
 	 * @param pfad
-	 *          set the palette base image path
+	 *          the path of the palette image to load
 	 */
-	public void setPfad(String pfad) {
+	public void setPath(String pfad) {
 		this.pfad = pfad;
 	}
 
@@ -124,26 +126,26 @@ public class FPalette {
 	 * 
 	 * @return pfad
 	 */
-	public String getPfad() {
+	public String getPath() {
 		return pfad;
 	}
 
 	/**
 	 * return all of the created colors as an array 
 	 * 
-	 * @return farbe
+	 * @return colors
 	 */
-	public int[] getFarben() {
-		return farbe;
+	public int[] getColors() {
+		return colors;
 	}
 
 	/**
 	 * return selected color of the created colors 
 	 * 
-	 * @return farbe[]
+	 * @return colors[]
 	 */
-	public int getFarbe(int w) {
-		return farbe[w];
+	public int getColor(int w) {
+		return colors[w];
 	}
 
 	/**
@@ -151,8 +153,8 @@ public class FPalette {
 	 * 
 	 * @return f
 	 */
-	public int getAnzahl() {
-		int f = farbe.length;
+	public int getCount() {
+		int f = colors.length;
 		return f;
 	}
 
@@ -162,9 +164,9 @@ public class FPalette {
 	 * @param wert
 	 *          percentage of transparency 0.0 - 1.0
 	 */
-	public int getFarbeTrans(int w, float wert) {
+	public int getColorTrans(int w, float wert) {
 		w = inBounds(w);
-		Color color = new Color( farbe[w] );
+		Color color = new Color( colors[w] );
 
 		int f = color.getRGB();
 		float r =  ( f >> 16 ) & 0xFF;
@@ -177,3 +179,4 @@ public class FPalette {
 	}
 
 }
+
