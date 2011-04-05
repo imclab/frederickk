@@ -13,11 +13,10 @@
 // About
 // -----------------------------------------
 This a collection of GUI elements and various tools for use with 
-Processing (http://www.processing.org/) that I finde useful.
+Processing (http://www.processing.org/) that I find useful.
 
-https://github.com/frederickk/frederickk
-http://code.google.com/p/frederickk/
- *
+source:  https://github.com/frederickk/frederickk
+binary:  http://code.google.com/p/frederickk/
 
 
 // Change Log
@@ -29,6 +28,6 @@ http://code.google.com/p/frederickk/
  *	corrected some of the mixed language functions (german/english) 
  *	incorporated functions found in my ofxFControl (openFrameworks addon) 
 
- - 003
+ -	003
  *	added additional tools
  *	syntax changed and anything using previous versions (001 & 002) will not work
