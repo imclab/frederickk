@@ -1,0 +1,34 @@
+/*
+ *  Frederickk Library 003
+ *
+ *  Ken Frederick
+ *  ken.frederick@gmx.de
+ *
+ *  http://cargocollective.com/kenfrederick/
+ *  http://kenfrederick.blogspot.com/
+ *
+ */
+
+
+// About
+// -----------------------------------------
+This a collection of GUI elements and various tools for use with 
+Processing (http://www.processing.org/) that I finde useful.
+
+https://github.com/frederickk/frederickk
+http://code.google.com/p/frederickk/
+ *
+
+
+// Change Log
+// -----------------------------------------
+ -	001
+ *	created initial library
+
+ -	002
+ *	corrected some of the mixed language functions (german/english) 
+ *	incorporated functions found in my ofxFControl (openFrameworks addon) 
+
+ - 003
+ *	added additional tools
+ *	syntax changed and anything using previous versions (001 & 002) will not work
