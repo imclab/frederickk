@@ -1,7 +1,7 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 002
+ *  Frederickk.Tools 003
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de

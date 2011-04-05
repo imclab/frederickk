@@ -1,7 +1,7 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 002
+ *  Frederickk.Control 003
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -31,15 +31,18 @@ public class FControl implements PConstants,FControlConstants {
 	protected static PApplet p5;
 
 	private ArrayList<FKnob> FKnobs = new ArrayList<FKnob>();
+	private ArrayList<FKnob3D> FKnob3Ds = new ArrayList<FKnob3D>();
 	private ArrayList<FCheck> FChecks = new ArrayList<FCheck>();
 	private ArrayList<FSlider> FSliders = new ArrayList<FSlider>();
 	private ArrayList<FMeter> FMeters = new ArrayList<FMeter>();
+	private ArrayList<FDropDown> FDropDowns = new ArrayList<FDropDown>();
 
-	protected static PFont typeface;
-	
+	protected static PFont typeface[] = new PFont[2];
+
 	private boolean boolVal;
 	private int intVal;
 	private float floatVal;
+	private int selVal;
 
 	private static int colorInactive;
 	private static int colorActive;
@@ -62,7 +65,7 @@ public class FControl implements PConstants,FControlConstants {
 		p5 = thePApplet;
 
 		//set default resting (inactive) color
-		Color _colorInactive = new Color(215,215,215, 64);
+		Color _colorInactive = new Color(215,215,215, 96);
 		colorInactive = _colorInactive.getRGB();
 		
 		//set default active color
@@ -71,7 +74,7 @@ public class FControl implements PConstants,FControlConstants {
 
 		//set default typeface
 		try {
-			setTypeface( p5.createFont("LucidaGrande-Bold",9) );
+			setTypeface( p5.createFont("LucidaGrande",9), p5.createFont("LucidaGrande-Bold",9) );
 
 		} catch (Exception e) {
 			setTypeface( p5.createFont("SansSerif",9) );
@@ -114,7 +117,7 @@ public class FControl implements PConstants,FControlConstants {
 	private void welcome() {
 		System.out.println( "" );
 		System.out.println( "-----------------------------------------------------------------------------" );
-		System.out.println( "Frederickk Library 002" );
+		System.out.println( "Frederickk Library 003" );
 		System.out.println( "FControl" );
 		System.out.println( "http://code.google.com/p/frederickk/" );
 		System.out.println( "http://kenfrederick.blogspot.com/\n" );
@@ -144,14 +147,14 @@ public class FControl implements PConstants,FControlConstants {
 	 *          x value of gui element
 	 * @param _y
 	 *          y value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
 	 *          
 	 */
-	public void addKnob(String _name, float _x, float _y, float _b, float _h) {
-		FKnobs.add(new FKnob(p5, _name, _x,_y, _b,_h, typeface, LABEL_FLOAT) );
+	public void addKnob(String _name, float _x, float _y, float _w, float _h) {
+		FKnobs.add(new FKnob(p5, _name, _x,_y, _w,_h, typeface, LABEL_FLOAT) );
 	}
 
 	/**
@@ -163,14 +166,14 @@ public class FControl implements PConstants,FControlConstants {
 	 *          y value of gui element
 	 * @param _z
 	 *          z value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
 	 *          
 	 */
-	public void addKnob(String _name, float _x, float _y, float _z, float _b, float _h) {
-		FKnobs.add(new FKnob(p5, _name, _x,_y,_z, _b,_h, typeface, LABEL_FLOAT) );
+	public void addKnob(String _name, float _x, float _y, float _z, float _w, float _h) {
+		FKnobs.add(new FKnob(p5, _name, _x,_y,_z, _w,_h, typeface, LABEL_FLOAT) );
 	}
 
 	/**
@@ -182,14 +185,14 @@ public class FControl implements PConstants,FControlConstants {
 	 *          x value of gui element
 	 * @param _y
 	 *          y value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
 	 *          
 	 */
-	public void addKnob(String _name, int _series, float _x, float _y, float _b, float _h) {
-		FKnobs.add(new FKnob(p5, _name + Integer.toString(_series), _x,_y, _b,_h, typeface, LABEL_FLOAT) );
+	public void addKnob(String _name, int _series, float _x, float _y, float _w, float _h) {
+		FKnobs.add(new FKnob(p5, _name + Integer.toString(_series), _x,_y, _w,_h, typeface, LABEL_FLOAT) );
 	}
 
 	/**
@@ -203,15 +206,68 @@ public class FControl implements PConstants,FControlConstants {
 	 *          y value of gui element
 	 * @param _z
 	 *          z value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
 	 *          
 	 */
-	public void addKnob(String _name, int _series, float _x, float _y, float _z, float _b, float _h) {
-		FKnobs.add(new FKnob(p5, _name + Integer.toString(_series), _x,_y,_z, _b,_h, typeface, LABEL_FLOAT) );
+	public void addKnob(String _name, int _series, float _x, float _y, float _z, float _w, float _h) {
+		FKnobs.add(new FKnob(p5, _name + Integer.toString(_series), _x,_y,_z, _w,_h, typeface, LABEL_FLOAT) );
 	}	
+
+	
+	//-----------------------------------------
+	//FKnob3D
+	//-----------------------------------------
+	/**
+	 * @param fk3
+	 *          FKnob3D instance
+	 * 
+	 */
+	public void add(FKnob3D fk3) {
+		FKnob3Ds.add( fk3 );
+	}
+
+	/**
+	 * @param _name
+	 *          name of the gui element
+	 * @param _x
+	 *          x value of gui element
+	 * @param _y
+	 *          y value of gui element
+	 * @param _z
+	 *          z value of gui element
+	 * @param _w
+	 *          width of gui element
+	 * @param _h
+	 *          height of gui element
+	 *          
+	 */
+	public void addKnob3D(String _name, float _x, float _y, float _z, float _w) {
+		FKnob3Ds.add(new FKnob3D(p5, _name, _x,_y,_z, _w,_w, typeface, LABEL_FLOAT) );
+	}
+
+	/**
+	 * @param _name
+	 *          name of the gui element
+	 * @param _series
+	 *          number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *          x value of gui element
+	 * @param _y
+	 *          y value of gui element
+	 * @param _z
+	 *          z value of gui element
+	 * @param _w
+	 *          width of gui element
+	 * @param _h
+	 *          height of gui element
+	 *          
+	 */
+	public void addKnob3D(String _name, int _series, float _x, float _y, float _z, float _w) {
+		FKnob3Ds.add(new FKnob3D(p5, _name + Integer.toString(_series), _x,_y,_z, _w,_w, typeface, LABEL_FLOAT) );
+	}
 	
 
 	//-----------------------------------------
@@ -297,14 +353,14 @@ public class FControl implements PConstants,FControlConstants {
 	 *          x value of gui element
 	 * @param _y
 	 *          y value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
 	 *          
 	 */
-	public void addSlider(String _name, float _x, float _y, float _b, float _h) {
-		FSliders.add(new FSlider(p5, _name, _x,_y, _b,_h, 0,100, 0, typeface, LABEL_FLOAT) );
+	public void addSlider(String _name, float _x, float _y, float _w, float _h) {
+		FSliders.add(new FSlider(p5, _name, _x,_y, _w,_h, 0,100, 0, typeface, LABEL_FLOAT) );
 	}
 
 	/**
@@ -314,57 +370,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *          x value of gui element
 	 * @param _y
 	 *          y value of gui element
-	 * @param _b
-	 *          width of gui element
-	 * @param _h
-	 *          height of gui element
-	 * @param _vMin
-	 *          minimum value of gui element
-	 * @param _vMax
-	 *          maximum value of gui element
-	 * @param _val
-	 *          initial value of gui element
-	 *          
-	 */
-	public void addSlider(String _name, float _x, float _y, float _b, float _h, float _vMin, float _vMax, float _val) {
-		FSliders.add(new FSlider(p5, _name, _x,_y, _b,_h, _vMin,_vMax, _val, typeface, LABEL_FLOAT) );
-	}
-
-	/**
-	 * @param _name
-	 *          name of the gui element
-	 * @param _x
-	 *          x value of gui element
-	 * @param _y
-	 *          y value of gui element
-	 * @param _b
-	 *          width of gui element
-	 * @param _h
-	 *          height of gui element
-	 * @param _vMin
-	 *          minimum value of gui element
-	 * @param _vMax
-	 *          maximum value of gui element
-	 * @param _val
-	 *          initial value of gui element
-	 * @param _labelType
-	 *          display type of value LABEL_FLOAT or LABEL_INT
-	 *          
-	 */
-	public void addSlider(String _name, float _x, float _y, float _b, float _h, float _vMin, float _vMax, float _val, int _labelType) {
-		FSliders.add(new FSlider(p5, _name, _x,_y, _b,_h, _vMin,_vMax, _val, typeface, _labelType) );
-	}
-
-	/**
-	 * @param _name
-	 *          name of the gui element
-	 * @param _series
-	 *          number marker for multiple elements (i.e. name + series = "name0")
-	 * @param _x
-	 *          x value of gui element
-	 * @param _y
-	 *          y value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
@@ -376,20 +382,18 @@ public class FControl implements PConstants,FControlConstants {
 	 *          initial value of gui element
 	 *          
 	 */
-	public void addSlider(String _name, int _series, float _x, float _y, float _b, float _h, float _vMin, float _vMax, float _val) {
-		FSliders.add(new FSlider(p5, _name + Integer.toString(_series), _x,_y, _b,_h, _vMin,_vMax, _val, typeface, LABEL_FLOAT) );
+	public void addSlider(String _name, float _x, float _y, float _w, float _h, float _vMin, float _vMax, float _val) {
+		FSliders.add(new FSlider(p5, _name, _x,_y, _w,_h, _vMin,_vMax, _val, typeface, LABEL_FLOAT) );
 	}
 
 	/**
 	 * @param _name
 	 *          name of the gui element
-	 * @param _series
-	 *          number marker for multiple elements (i.e. name + series = "name0")
 	 * @param _x
 	 *          x value of gui element
 	 * @param _y
 	 *          y value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
@@ -403,8 +407,60 @@ public class FControl implements PConstants,FControlConstants {
 	 *          display type of value LABEL_FLOAT or LABEL_INT
 	 *          
 	 */
-	public void addSlider(String _name, int _series, float _x, float _y, float _b, float _h, float _vMin, float _vMax, float _val, int _labelType) {
-		FSliders.add(new FSlider(p5, _name + Integer.toString(_series), _x,_y, _b,_h, _vMin,_vMax, _val, typeface, _labelType) );
+	public void addSlider(String _name, float _x, float _y, float _w, float _h, float _vMin, float _vMax, float _val, int _labelType) {
+		FSliders.add(new FSlider(p5, _name, _x,_y, _w,_h, _vMin,_vMax, _val, typeface, _labelType) );
+	}
+
+	/**
+	 * @param _name
+	 *          name of the gui element
+	 * @param _series
+	 *          number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *          x value of gui element
+	 * @param _y
+	 *          y value of gui element
+	 * @param _w
+	 *          width of gui element
+	 * @param _h
+	 *          height of gui element
+	 * @param _vMin
+	 *          minimum value of gui element
+	 * @param _vMax
+	 *          maximum value of gui element
+	 * @param _val
+	 *          initial value of gui element
+	 *          
+	 */
+	public void addSlider(String _name, int _series, float _x, float _y, float _w, float _h, float _vMin, float _vMax, float _val) {
+		FSliders.add(new FSlider(p5, _name + Integer.toString(_series), _x,_y, _w,_h, _vMin,_vMax, _val, typeface, LABEL_FLOAT) );
+	}
+
+	/**
+	 * @param _name
+	 *          name of the gui element
+	 * @param _series
+	 *          number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *          x value of gui element
+	 * @param _y
+	 *          y value of gui element
+	 * @param _w
+	 *          width of gui element
+	 * @param _h
+	 *          height of gui element
+	 * @param _vMin
+	 *          minimum value of gui element
+	 * @param _vMax
+	 *          maximum value of gui element
+	 * @param _val
+	 *          initial value of gui element
+	 * @param _labelType
+	 *          display type of value LABEL_FLOAT or LABEL_INT
+	 *          
+	 */
+	public void addSlider(String _name, int _series, float _x, float _y, float _w, float _h, float _vMin, float _vMax, float _val, int _labelType) {
+		FSliders.add(new FSlider(p5, _name + Integer.toString(_series), _x,_y, _w,_h, _vMin,_vMax, _val, typeface, _labelType) );
 	}
 
 	
@@ -427,14 +483,14 @@ public class FControl implements PConstants,FControlConstants {
 	 *          x value of gui element
 	 * @param _y
 	 *          y value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
 	 *          
 	 */
-	public void addMeter(String _name, float _x, float _y, float _b, float _h) {
-		FMeters.add(new FMeter(p5, _name, _x,_y, _b,_h, 0,100, 0, typeface, LABEL_FLOAT) );
+	public void addMeter(String _name, float _x, float _y, float _w, float _h) {
+		FMeters.add(new FMeter(p5, _name, _x,_y, _w,_h, 0,100, 0, typeface, LABEL_FLOAT) );
 	}
 
 	/**
@@ -444,7 +500,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *          x value of gui element
 	 * @param _y
 	 *          y value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
@@ -456,8 +512,8 @@ public class FControl implements PConstants,FControlConstants {
 	 *          initial value of gui element
 	 *          
 	 */
-	public void addMeter(String _name, float _x, float _y, float _b, float _h, float _vMin, float _vMax, float _val) {
-		FMeters.add(new FMeter(p5, _name, _x,_y, _b,_h, _vMin,_vMax, _val, typeface, LABEL_FLOAT) );
+	public void addMeter(String _name, float _x, float _y, float _w, float _h, float _vMin, float _vMax, float _val) {
+		FMeters.add(new FMeter(p5, _name, _x,_y, _w,_h, _vMin,_vMax, _val, typeface, LABEL_FLOAT) );
 	}
 
 	/**
@@ -467,7 +523,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *          x value of gui element
 	 * @param _y
 	 *          y value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
@@ -481,8 +537,8 @@ public class FControl implements PConstants,FControlConstants {
 	 *          display type of value LABEL_FLOAT or LABEL_INT
 	 *          
 	 */
-	public void addMeter(String _name, float _x, float _y, float _b, float _h, float _vMin, float _vMax, float _val, int _labelType) {
-		FMeters.add(new FMeter(p5, _name, _x,_y, _b,_h, _vMin,_vMax, _val, typeface, _labelType) );
+	public void addMeter(String _name, float _x, float _y, float _w, float _h, float _vMin, float _vMax, float _val, int _labelType) {
+		FMeters.add(new FMeter(p5, _name, _x,_y, _w,_h, _vMin,_vMax, _val, typeface, _labelType) );
 	}
 
 	
@@ -495,7 +551,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *          x value of gui element
 	 * @param _y
 	 *          y value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
@@ -507,8 +563,8 @@ public class FControl implements PConstants,FControlConstants {
 	 *          initial value of gui element
 	 *          
 	 */
-	public void addMeter(String _name, int _series, float _x, float _y, float _b, float _h, float _vMin, float _vMax, float _val) {
-		FMeters.add(new FMeter(p5, _name + Integer.toString(_series), _x,_y, _b,_h, _vMin,_vMax, _val, typeface, LABEL_FLOAT) );
+	public void addMeter(String _name, int _series, float _x, float _y, float _w, float _h, float _vMin, float _vMax, float _val) {
+		FMeters.add(new FMeter(p5, _name + Integer.toString(_series), _x,_y, _w,_h, _vMin,_vMax, _val, typeface, LABEL_FLOAT) );
 	}
 	
 	/**
@@ -520,7 +576,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *          x value of gui element
 	 * @param _y
 	 *          y value of gui element
-	 * @param _b
+	 * @param _w
 	 *          width of gui element
 	 * @param _h
 	 *          height of gui element
@@ -534,11 +590,44 @@ public class FControl implements PConstants,FControlConstants {
 	 *          display type of value LABEL_FLOAT or LABEL_INT
 	 *          
 	 */
-	public void addMeter(String _name, int _series, float _x, float _y, float _b, float _h, float _vMin, float _vMax, float _val, int _labelType) {
-		FMeters.add(new FMeter(p5, _name + Integer.toString(_series), _x,_y, _b,_h, _vMin,_vMax, _val, typeface, _labelType) );
+	public void addMeter(String _name, int _series, float _x, float _y, float _w, float _h, float _vMin, float _vMax, float _val, int _labelType) {
+		FMeters.add(new FMeter(p5, _name + Integer.toString(_series), _x,_y, _w,_h, _vMin,_vMax, _val, typeface, _labelType) );
 	}
 	
+
+	//-----------------------------------------
+	//FCheck
+	//-----------------------------------------
+	/**
+	 * @param fd
+	 *          FDropDown instance
+	 * 
+	 */
+	public void add(FDropDown fd) {
+		FDropDowns.add( fd );
+	}
+
+	/**
+	 * @param _name
+	 *          name of the gui element
+	 * @param _x
+	 *          x value of gui element
+	 * @param _y
+	 *          y value of gui element
+	 * @param _w
+	 *          width of gui element
+	 * @param _h
+	 *         height of gui element
+	 *         
+	 */
+	public void addDropDown(String _name, float _x, float _y, float _w, float _h) {
+		FDropDowns.add(new FDropDown(p5, _name, _x,_y, _w, _h, typeface) );
+	}
+	
+	
+	//-----------------------------------------
 	//FLabel
+	//-----------------------------------------
 	/**
 	 * @param fl
 	 *          FLabel instance
@@ -565,6 +654,13 @@ public class FControl implements PConstants,FControlConstants {
 			fk.showLabels( showLabels );
 			fk.create();
 		}
+		for(int i=0; i<FKnob3Ds.size(); i++) {
+			FKnob3D fk3 = (FKnob3D) FKnob3Ds.get(i);
+			fk3.setColorActive( colorActive );
+			fk3.setColorInactive( colorInactive );
+			fk3.showLabels( showLabels );
+			fk3.create();
+		}
 		for(int i=0; i<FChecks.size(); i++) {
 			FCheck fc = (FCheck) FChecks.get(i);
 			fc.setColorActive( colorActive );
@@ -586,6 +682,14 @@ public class FControl implements PConstants,FControlConstants {
 			fm.showLabels( showLabels );
 			fm.create();
 		}
+		for(int i=0; i<FDropDowns.size(); i++) {
+			FDropDown fd = (FDropDown) FDropDowns.get(i);
+			fd.setColorActive( colorActive );
+			fd.setColorInactive( colorInactive );
+			fd.showLabels( showLabels );
+			fd.create();
+		}
+
 	}
 
 	/**
@@ -637,6 +741,10 @@ public class FControl implements PConstants,FControlConstants {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(_name.compareTo(fk.name) == 0) fk.setCoord(_val.x,_val.y,_val.z);
 		}
+		for(int i=0; i<FKnob3Ds.size(); i++) {
+			FKnob3D fk3 = (FKnob3D) FKnob3Ds.get(i);
+			if(_name.compareTo(fk3.name) == 0) fk3.setCoord(_val.x,_val.y,_val.z);
+		}
 	}
 
 	/**
@@ -652,6 +760,10 @@ public class FControl implements PConstants,FControlConstants {
 		for(int i=0; i<FKnobs.size(); i++) {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(s_name.compareTo(fk.name) == 0) fk.setCoord(_val.x,_val.y,_val.z);
+		}
+		for(int i=0; i<FKnob3Ds.size(); i++) {
+			FKnob3D fk3 = (FKnob3D) FKnob3Ds.get(i);
+			if(s_name.compareTo(fk3.name) == 0) fk3.setCoord(_val.x,_val.y,_val.z);
 		}
 	}
 
@@ -738,7 +850,6 @@ public class FControl implements PConstants,FControlConstants {
 			FSlider fs = (FSlider) FSliders.get(i);
 			if(_name.compareTo(fs.name) == 0) fs.setValueRange(_vMin,_vMax);
 		}
-
 		for(int i=0; i<FMeters.size(); i++) {
 			FMeter fm = (FMeter) FMeters.get(i);
 			if(_name.compareTo(fm.name) == 0) fm.setValueRange(_vMin,_vMax);
@@ -765,6 +876,21 @@ public class FControl implements PConstants,FControlConstants {
 		for(int i=0; i<FMeters.size(); i++) {
 			FMeter fm = (FMeter) FMeters.get(i);
 			if(s_name.compareTo(fm.name) == 0) fm.setValueRange(_vMin,_vMax);
+		}
+	}
+
+
+	/**
+	 * @param _name
+	 *          name of the gui element
+	 * @param _nameItem
+	 *          name of the added menu item
+	 *          
+	 */
+	public void addItem(String _name, String _nameItem) {
+		for(int i=0; i<FDropDowns.size(); i++) {
+			FDropDown fd = (FDropDown) FDropDowns.get(i);
+			if(_name.compareTo(fd.name) == 0) fd.addItem(_nameItem);
 		}
 	}
 
@@ -817,12 +943,26 @@ public class FControl implements PConstants,FControlConstants {
 		}
 	}
 
+
 	/**
 	 * @param _typeface
 	 *          set global typeface for all gui elements
 	 */
 	public void setTypeface(PFont _typeface) {
-		typeface = _typeface;
+		typeface[0] = _typeface;
+		typeface[1] = _typeface;
+		//System.out.println( "FControl typeface " + typeface.getFont().getName() );
+	}
+
+	public void setTypeface(PFont _typeface[]) {
+		typeface[0] = _typeface[0];
+		typeface[1] = _typeface[1];
+		//System.out.println( "FControl typeface " + typeface.getFont().getName() );
+	}
+
+	public void setTypeface(PFont _typeface, PFont _typefaceBold) {
+		typeface[0] = _typeface;
+		typeface[1] = _typefaceBold;
 		//System.out.println( "FControl typeface " + typeface.getFont().getName() );
 	}
 
@@ -1003,6 +1143,10 @@ public class FControl implements PConstants,FControlConstants {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(_name.compareTo(fk.name) == 0) point = fk.getCoord();
 		}
+		for(int i=0; i<FKnob3Ds.size(); i++) {
+			FKnob3D fk3 = (FKnob3D) FKnob3Ds.get(i);
+			if(_name.compareTo(fk3.name) == 0) point = fk3.getCoord();
+		}
 		for(int i=0; i<FChecks.size(); i++) {
 			FCheck fc = (FCheck) FChecks.get(i);
 			if(_name.compareTo(fc.name) == 0) point = fc.getCoord();
@@ -1037,6 +1181,10 @@ public class FControl implements PConstants,FControlConstants {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(s_name.compareTo(fk.name) == 0) point = fk.getCoord();
 		}
+		for(int i=0; i<FKnob3Ds.size(); i++) {
+			FKnob3D fk3 = (FKnob3D) FKnob3Ds.get(i);
+			if(s_name.compareTo(fk3.name) == 0) point = fk3.getCoord();
+		}
 		for(int i=0; i<FChecks.size(); i++) {
 			FCheck fc = (FCheck) FChecks.get(i);
 			if(s_name.compareTo(fc.name) == 0) point = fc.getCoord();
@@ -1068,6 +1216,10 @@ public class FControl implements PConstants,FControlConstants {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(_name.compareTo(fk.name) == 0) _over = fk.getOver();
 		}
+		for(int i=0; i<FKnob3Ds.size(); i++) {
+			FKnob3D fk3 = (FKnob3D) FKnob3Ds.get(i);
+			if(_name.compareTo(fk3.name) == 0) _over = fk3.getOver();
+		}
 		for(int i=0; i<FChecks.size(); i++) {
 			FCheck fc = (FCheck) FChecks.get(i);
 			if(_name.compareTo(fc.name) == 0) _over = fc.getOver();
@@ -1082,6 +1234,84 @@ public class FControl implements PConstants,FControlConstants {
 		}		
 		
 		return _over;
+	}
+
+	
+	/**
+	 * return whether the element has been moved/adjusted 
+	 * 
+	 * @param _name
+	 *          name of the gui element 
+	 *          
+	 */
+	public boolean getMoved() {
+		boolean _moved = false;
+
+		for(int i=0; i<FKnobs.size(); i++) {
+			FKnob fk = (FKnob) FKnobs.get(i);
+			_moved = fk.getMoved();
+		}
+		for(int i=0; i<FKnob3Ds.size(); i++) {
+			FKnob3D fk3 = (FKnob3D) FKnob3Ds.get(i);
+			_moved = fk3.getMoved();
+		}
+		for(int i=0; i<FSliders.size(); i++) {
+			FSlider fs = (FSlider) FSliders.get(i);
+			_moved = fs.getMoved();
+		}
+		for(int i=0; i<FMeters.size(); i++) {
+			FMeter fm = (FMeter) FMeters.get(i);
+			_moved = fm.getMoved();
+		}		
+		
+		return _moved;
+	}
+	
+	
+	/**
+	 * return whether the element has been moved/adjusted 
+	 * 
+	 * @param _name
+	 *          name of the gui element 
+	 *          
+	 */
+	public boolean getMoved(String _name) {
+		boolean _moved = false;
+
+		for(int i=0; i<FKnobs.size(); i++) {
+			FKnob fk = (FKnob) FKnobs.get(i);
+			if(_name.compareTo(fk.name) == 0) _moved = fk.getMoved();
+		}
+		for(int i=0; i<FKnob3Ds.size(); i++) {
+			FKnob3D fk3 = (FKnob3D) FKnob3Ds.get(i);
+			if(_name.compareTo(fk3.name) == 0) _moved = fk3.getMoved();
+		}
+		for(int i=0; i<FSliders.size(); i++) {
+			FSlider fs = (FSlider) FSliders.get(i);
+			if(_name.compareTo(fs.name) == 0) _moved = fs.getMoved();
+		}
+		for(int i=0; i<FMeters.size(); i++) {
+			FMeter fm = (FMeter) FMeters.get(i);
+			if(_name.compareTo(fm.name) == 0) _moved = fm.getMoved();
+		}		
+		
+		return _moved;
+	}
+	
+	
+	/**
+	 * return the selection from FDropDown 
+	 * 
+	 * @param _name
+	 *          name of the gui element 
+	 *          
+	 */
+	public int getSelection(String _name) {
+		for(int i=0; i<FDropDowns.size(); i++) {
+			FDropDown fd = (FDropDown) FDropDowns.get(i);
+			if(_name.compareTo(fd.name) == 0) selVal = fd.getSelection();
+		}
+		return selVal;
 	}
 	
 	/**

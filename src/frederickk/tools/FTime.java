@@ -1,7 +1,7 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 002
+ *  Frederickk.Tools 003
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -15,44 +15,26 @@ package frederickk.tools;
  */
 
 
-import processing.core.PApplet;
+import java.util.Calendar;
+//import java.util.GregorianCalendar;
 
 public class FTime {
 
 	//-----------------------------------------------------------------------------
-	//properties
-	//-----------------------------------------------------------------------------
-	public static PApplet p5;
-	private String[] date = new String[3];
-	private String[] time = new String[3];
-
-	//-----------------------------------------------------------------------------
-	//constructor
-	//-----------------------------------------------------------------------------
-	/**
-	 * instantiate FTime
-	 * 
-	 * @param thePApplet
-	 * 			PApplet
-	 */
-	public FTime(
-			PApplet thePApplet) {
-
-		p5 = thePApplet;
-	}
-	
-	//-----------------------------------------------------------------------------
 	//gets
 	//-----------------------------------------------------------------------------
 	/**
-	 * return the current date as string "yymmdd"
+	 * return the current date as string "yyyyMMdd"
 	 * 
 	 * @return date
 	 */
-	public String date() {
-		date[0] = String.valueOf( PApplet.year() );
-		date[1] = String.valueOf( PApplet.month() );
-		date[2] = String.valueOf( PApplet.day() );
+	public static String date() {
+		Calendar cal = Calendar.getInstance();
+		String[] date = new String[3];
+		
+		date[0] = String.valueOf( cal.get(Calendar.YEAR) );
+		date[1] = String.valueOf( cal.get(Calendar.MONTH) + 1 );
+		date[2] = String.valueOf( cal.get(Calendar.DATE) );
 
 		for (int i = 0; i != date.length; i++) {
 			if (date[i].length() == 1)
@@ -63,14 +45,18 @@ public class FTime {
 	}
 
 	/**
-	 * return the current time as string "hhmmss"
+	 * return the current time as string "HHmmss"
 	 * 
 	 * @return time
 	 */
-	public String time() {
-		time[0] = String.valueOf( PApplet.hour() );
-		time[1] = String.valueOf( PApplet.minute() );
-		time[2] = String.valueOf( PApplet.second() );
+	public static String time() {
+		//Calendar cal = new GregorianCalendar();
+		Calendar cal = Calendar.getInstance();
+		String[] time = new String[3];
+
+		time[0] = String.valueOf( cal.get(Calendar.HOUR_OF_DAY) ); 
+		time[1] = String.valueOf( cal.get(Calendar.MINUTE) );
+		time[2] = String.valueOf( cal.get(Calendar.SECOND) );
 
 		for (int i = 0; i != time.length; i++) {
 			if (time[i].length() == 1)

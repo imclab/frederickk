@@ -1,7 +1,7 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 002
+ *  Frederickk.Control 003
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -30,7 +30,7 @@ public class FLabel implements PConstants {
 	protected String text;
 	private float x,y;
 
-	protected static PFont typefaceLabel;
+	protected static PFont typefaceLabel[] = new PFont[2];
 	protected static float typefaceSize;
 
 	//-----------------------------------------------------------------------------
@@ -49,12 +49,19 @@ public class FLabel implements PConstants {
 	//methods
 	//-----------------------------------------------------------------------------
 	public void create(String _text) {
-		p5.textFont(typefaceLabel);
+		p5.textFont(typefaceLabel[1]);
 		p5.textAlign(LEFT);
 		setText(_text);
 		p5.text(text, x,y);
 	}
 
+	public void create(String _text, int _style) {
+		p5.textFont(typefaceLabel[ _style ]);
+		p5.textAlign(LEFT);
+		setText(_text);
+		p5.text(text, x,y);
+	}
+	
 	//-----------------------------------------------------------------------------
 	//sets
 	//-----------------------------------------------------------------------------
@@ -63,12 +70,32 @@ public class FLabel implements PConstants {
 		setCoord(_x, _y);
 	}
 
-	private void setTypeface(PFont _typefaceLabel) {
-		typefaceLabel = _typefaceLabel;
-		typefaceSize = typefaceLabel.getFont().getSize();
+	public void set(float _x, float _y, PFont _typefaceLabel[]) {
+		setTypeface(_typefaceLabel);
+		setCoord(_x, _y);
+	}
 
-		//System.out.println( "FLabel typeface \t" + typefaceLabel.getFont() );
-		//System.out.println( "FLabel typeface \t" + typefaceSize );
+	public void set(float _x, float _y, PFont _typefaceLabel, PFont _typefaceLabelBold) {
+		setTypeface(_typefaceLabel,_typefaceLabelBold);
+		setCoord(_x, _y);
+	}
+
+	protected void setTypeface(PFont _typefaceLabel) {
+		typefaceLabel[0] = _typefaceLabel;
+		typefaceLabel[1] = _typefaceLabel;
+		typefaceSize = typefaceLabel[0].getFont().getSize();
+	}
+
+	protected void setTypeface(PFont _typefaceLabel[]) {
+		typefaceLabel[0] = _typefaceLabel[0];
+		typefaceLabel[1] = _typefaceLabel[1];
+		typefaceSize = typefaceLabel[0].getFont().getSize();
+	}
+
+	protected void setTypeface(PFont _typefaceLabel, PFont _typefaceLabelBold) {
+		typefaceLabel[0] = _typefaceLabel;
+		typefaceLabel[1] = _typefaceLabelBold;
+		typefaceSize = typefaceLabel[0].getFont().getSize();
 	}
 	
 	public void setText(String _text) {

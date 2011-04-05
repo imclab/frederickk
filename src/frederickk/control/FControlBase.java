@@ -1,7 +1,7 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 002
+ *  Frederickk.Control 003
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -14,30 +14,34 @@ package frederickk.control;
  *
  */
 
-
 import processing.core.PApplet;
 import processing.core.PFont;
-//import java.awt.Color;
+
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 
-public class FControlBase implements FControlConstants {
+abstract public class FControlBase implements FControlConstants {
 	//-----------------------------------------------------------------------------
 	//properties
 	//-----------------------------------------------------------------------------
 	protected static PApplet p5;
 
-	protected boolean OVER, CLICK, PRESSED, LOCKED, DRAG, RELEASE, SNAP;
+	protected boolean OVER, CLICK, PRESSED, LOCKED, DRAG, MOVED, RELEASE, SNAP;
 	protected float MOUSE_X, MOUSE_Y;
 	protected float MOUSE_X_NEW, MOUSE_Y_NEW;
 	protected float SNAP_INC;
 
-	protected static PFont typeface;
-	protected FLabel label;
+	protected static PFont typeface[] = new PFont[2];
+	protected FLabel labelVal;
+	protected FLabel labelInfo;
 	protected boolean showLabels;
 	protected int labelType;
 
 	protected static int colorInactive;
 	protected static int colorActive;
+	protected static int white;
+
+	protected float x,y,w,h;
 
 	//-----------------------------------------------------------------------------
 	//constructor
@@ -46,7 +50,11 @@ public class FControlBase implements FControlConstants {
 		p5 = thePApplet;
 
 		p5.registerMouseEvent(this);
-		label = new FLabel(p5);
+		labelVal = new FLabel(p5);
+		labelInfo = new FLabel(p5);
+
+		Color _white = new Color(255,255,255, 204);
+		white = _white.getRGB();
 
 		OVER = false;
 		PRESSED = false;
@@ -79,6 +87,8 @@ public class FControlBase implements FControlConstants {
 		showLabels = _showLabels;
 		labelType = _labelType;
 	}
+	
+	abstract public void create();
 
 	//-----------------------------------------------------------------------------
 	//interaction
@@ -110,7 +120,14 @@ public class FControlBase implements FControlConstants {
 
 	}
 
-		
+	protected abstract void update();
+	protected abstract boolean getOver();
+
+	protected boolean getMoved() {
+		return MOVED;
+	}
+
+	
 	//-----------------------------------------------------------------------------
 	//sets
 	//-----------------------------------------------------------------------------

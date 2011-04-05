@@ -15,35 +15,29 @@ PFont typeface;
 
 void setup() {
   size(200,200);
-  typeface = loadFont("FuturaT-Bold-10.vlw");
+  typeface = createFont("FuturaT-Bold",10);
 
   //initiate FControl
   gui = new FControl(this);
 
   //set typeface (optional)
-  //defaul is "LucidaGrande-Bold"
-  //gui.setTypeface( typeface );
+  //default is "LucidaGrande-Bold"
+  gui.setTypeface( typeface );
   gui.setColorActive( color(255,200,0) );
 
   //add gui elements
-  gui.addKnob("knob", random(width),random(height), 8,8);
-  gui.addCheck("check", 15,45, 8, true);
-  gui.addSlider("slider", 15,65, 100,8, 0,100, 25);
-  gui.addMeter("meter", 15,85, 100,8, 0,100, 0);
-
-  //enable snap to grid i.e. 20x20
-  gui.enableSnap("knob", 20);
-
+  gui.addDropDown("dropdown", 15,15, 100,15);
+  for(int i=0; i<5; i++) {
+    gui.addItem("dropdown", "item " + str(i));
+  }
 }
 
 void draw() {
   background(0);
   
   //draw gui elements to screen
+  println( gui.getSelection("dropdown") );
   gui.create();
 
-  //show/hide labels with value from check
-  gui.showLabels( gui.getBoolValue("check"));
-    
 }
 

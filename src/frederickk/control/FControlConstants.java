@@ -1,7 +1,7 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 002
+ *  Frederickk.Control 003
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -21,4 +21,13 @@ public interface FControlConstants {
 	//-----------------------------------------------------------------------------
 	static final int LABEL_FLOAT = 0;
 	static final int LABEL_INT = 1;
+
+	static final int REGULAR = 0;
+	static final int BOLD = 1;
+
+	//-----------------------------------------------------------------------------
+	//sliders & meters
+	//-----------------------------------------------------------------------------
+	static final int VERTICAL = 0;
+	static final int HORIZONTAL = 1;
 }

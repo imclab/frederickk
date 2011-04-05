@@ -1,7 +1,7 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 002
+ *  Frederickk.Tools 003
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -156,7 +156,7 @@ public class FImageLoader {
 
 	/**
 	 * @param w
-	 *          number of image to use
+	 *          index of image to return
 	 *          
 	 * return a specific image
 	 * 

@@ -14,35 +14,39 @@ package frederickk.control;
  *
  */
 
+
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PVector;
 
-public class FCheck extends FControlBase {
+public class FDropDown extends FControlBase {
 	//-----------------------------------------------------------------------------
 	//properties
 	//-----------------------------------------------------------------------------
+	private ArrayList<FKnob> FItems = new ArrayList<FKnob>();
 	protected String name;
-	private float sz;
-	private boolean val;
+	private float x,y,w,h;
+	private int val = -1;
 
+	private boolean OPEN = true;
+	
 	//-----------------------------------------------------------------------------
 	//constructor
 	//-----------------------------------------------------------------------------
-	public FCheck(PApplet p5) {
+	public FDropDown(PApplet p5) {
 		super(p5);
-		val = false;
 	}
-
-	public FCheck(PApplet p5, String _name, float _x, float _y, float _sz, boolean _val, PFont _typeface[]) {
+	
+	public FDropDown(PApplet p5, String _name, float _x, float _y, float _w, float _h, PFont _typeface[]) {
 		super(p5);
 		typeface = _typeface;
 		labelInfo.setTypeface(typeface);
 
 		setName(_name);
+		setSize(_w,_h);
 		setCoord(_x,_y);
-		setSize(_sz);
-		setValue(_val);
 	}
 
 	//-----------------------------------------------------------------------------
@@ -52,23 +56,42 @@ public class FCheck extends FControlBase {
 		update();
 		toggle();
 		
-		p5.noFill();
-		if( LOCKED ) p5.stroke( getColorActive() );
-		else p5.stroke( getColorInactive() );
-		p5.rect(x,y, sz, sz);
-
-		// x'd
 		//-----------------------------------------
-		if(val) {
-			p5.stroke( getColorActive() );
-			p5.line(x,y, x+sz, y+sz);
-			p5.line(x+sz,y, x, y+sz);
+		if( OPEN ) {
+			p5.noFill();
+			p5.stroke( getColorInactive() );
+			p5.rect(x,y, w,h*(FItems.size()+1) );
+
+			for(int i=0; i<FItems.size(); i++) {
+				//items
+				FKnob fk = (FKnob) FItems.get(i);
+				fk.setCoord( x,y+(h*(i+1)) );
+				fk.setSize(w,h);
+				fk.setColorActive( colorActive );
+				fk.setColorInactive( colorInactive );
+				fk.showLabels( true );
+				fk.createItem();
+	
+				//background
+				p5.noFill();
+				p5.stroke( getColorInactive() );
+				p5.rect(x,y+(h*(i+1)), w,h);
+			}
 		}
+
+		//-----------------------------------------
+		p5.fill( getColorActive() );
+		p5.rect(x,y, w,h);
 
 		//-----------------------------------------
 		if(showLabels) {
-			labelInfo.create( name );
+			p5.fill( white );
+			labelInfo.create( name, BOLD );
 		}
+	}	
+
+	public void addItem(String _name) {
+		FItems.add(new FKnob(p5, _name, x,y, w,h, typeface, LABEL_INT) );
 	}
 
 	
@@ -87,39 +110,36 @@ public class FCheck extends FControlBase {
 			OVER = false;
 		}
 		return OVER;
-	}
-
+	}	
+	
 	private void toggle() {
 		if( LOCKED ) {
-			val = !val;
-			
+			OPEN = !OPEN;
 			LOCKED = !LOCKED;
 			OVER = !OVER;
 			PRESSED = !PRESSED;
 		}
 	}
-
-
+	
+	
 	//-----------------------------------------------------------------------------
 	//sets
 	//-----------------------------------------------------------------------------
 	public void setCoord(float _x, float _y) {
 		x = _x;
 		y = _y;
+
+		float typeOff = PApplet.abs( h - typeface[0].getFont().getSize() );
+		labelInfo.setCoord( x+5,y+(typeOff/2) );
 	}
 
-	public void setSize(float _sz) {
-		sz = _sz;
-		w = _sz;
-		h = _sz;
+	public void setSize(float _w, float _h) {
+		w = _w;
+		h = _h;
 	}
 
 	public void setName(String _name) {
 		name = _name;
-	}
-
-	public void setValue(boolean _val) {
-		val = _val;
 	}
 
 	//-----------------------------------------------------------------------------
@@ -131,8 +151,12 @@ public class FCheck extends FControlBase {
 		point.y = y;
 		return point;
 	}
-
-	public boolean getValue() {
+	
+	protected int getSelection() {
+		for(int i=0; i<FItems.size(); i++) {
+			FKnob fk = (FKnob) FItems.get(i);
+			if(fk.LOCKED) val = i;
+		}
 		return val;
 	}
 
