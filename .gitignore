@@ -1,0 +1,9 @@
+# Directories
+bin/
+distribution/
+reference/
+web/
+
+# Files
+.DS_STORE
+readme.html
