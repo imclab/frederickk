@@ -3,6 +3,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/ken.frederick/Documents/Development/java/libs/core.jar"/>
-	<classpathentry kind="lib" path="/Users/ken.frederick/Documents/Development/java/libs/twitter4j-2.0.8.jar"/>
+	<classpathentry kind="lib" path="/Users/ken.frederick/Documents/Development/java/libs/twitter4j-appengine-2.2.4.jar"/>
+	<classpathentry kind="lib" path="/Users/ken.frederick/Documents/Development/java/libs/twitter4j-async-2.2.4.jar"/>
+	<classpathentry kind="lib" path="/Users/ken.frederick/Documents/Development/java/libs/twitter4j-core-2.2.4.jar"/>
+	<classpathentry kind="lib" path="/Users/ken.frederick/Documents/Development/java/libs/twitter4j-media-support-2.2.4.jar"/>
+	<classpathentry kind="lib" path="/Users/ken.frederick/Documents/Development/java/libs/twitter4j-stream-2.2.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

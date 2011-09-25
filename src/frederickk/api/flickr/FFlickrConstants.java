@@ -22,6 +22,8 @@ public interface FFlickrConstants {
 	static final String SERVICE_URL_REST = "http://api.flickr.com/services/rest/";
 	static final String SERVICE_URL_XMLPRC = "http://api.flickr.com/services/xmlrpc/";
 
+
+	
 	//-----------------------------------------------------------------------------
 	//api methods most useful
 	//-----------------------------------------------------------------------------

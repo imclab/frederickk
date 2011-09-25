@@ -31,12 +31,13 @@ public class FFlickrLoader implements Runnable {
 	private static PApplet p5;
 	private Thread thread;
 
-	private ArrayList<String> imageList;
-	private ArrayList<PImage> images = new ArrayList();
+	protected ArrayList<String> imageList;
+	protected ArrayList<PImage> images = new ArrayList();
 	private int num = 0;
 	private int remaining = 0;
 
 	private boolean COMPLETE = false;
+
 
 	//-----------------------------------------------------------------------------
 	//constructor
@@ -46,6 +47,8 @@ public class FFlickrLoader implements Runnable {
 		p5.registerDispose(this);
 	}
 
+
+	
 	//-----------------------------------------------------------------------------
 	//methods
 	//-----------------------------------------------------------------------------
@@ -117,6 +120,8 @@ public class FFlickrLoader implements Runnable {
 		stop();
 	}
 
+
+	
 	//-----------------------------------------------------------------------------
 	//gets
 	//-----------------------------------------------------------------------------

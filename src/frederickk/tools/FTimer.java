@@ -45,6 +45,7 @@ public class FTimer {
 	public FTimer(PApplet papplet) {
 		p5 = papplet;
 		firstCall = true;
+		trigger = true;
 	}
 
 	/**
@@ -90,10 +91,10 @@ public class FTimer {
 
 		if( (p5.millis() - startTime) < freq) {
 		//if( (System.currentTimeMillis() - startTime) < freq) {
-			trigger = true;
+			trigger = false;
 		} else {
 			stop();
-			trigger = false;
+			trigger = true;
 		}
 
 		return trigger;

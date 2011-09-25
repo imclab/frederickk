@@ -19,7 +19,7 @@ import processing.core.*;
 import processing.xml.*;
 import java.util.ArrayList;
 
-public class FFlickr implements FFlickrConstants,Runnable {
+public class FFlickr implements FFlickrConstants, Runnable {
 	//-----------------------------------------------------------------------------
 	//properties
 	//-----------------------------------------------------------------------------
@@ -39,9 +39,9 @@ public class FFlickr implements FFlickrConstants,Runnable {
 	private String query = "";
 	private String tag = "";
 
-	//private ArrayList<PImage> images;
-	private ArrayList<String> imageList;
-	FFlickrLoader imageLoader;
+	protected ArrayList<PImage> images;
+	protected ArrayList<String> imageList;
+	//FFlickrLoader imageLoader;
 	private int width;
 	private int height;
 
@@ -51,6 +51,8 @@ public class FFlickr implements FFlickrConstants,Runnable {
 
 	private boolean FIRST_RUN = true;
 
+
+	
 	//-----------------------------------------------------------------------------
 	//constructor
 	//-----------------------------------------------------------------------------
@@ -62,7 +64,7 @@ public class FFlickr implements FFlickrConstants,Runnable {
 	 */
 	public FFlickr(PApplet papplet) {
 		p5 = papplet;
-		imageLoader = new FFlickrLoader(p5);
+		//imageLoader = new FFlickrLoader(p5);
 		//welcome();
 	}
 
@@ -82,10 +84,9 @@ public class FFlickr implements FFlickrConstants,Runnable {
 		p5 = papplet;
 		key = _key;
 		secret = _secret;
-		imageLoader = new FFlickrLoader(p5);
+		//imageLoader = new FFlickrLoader(p5);
 		//welcome();
 	}
-
 
 	private void welcome() {
 		System.out.println( "" );
@@ -94,7 +95,6 @@ public class FFlickr implements FFlickrConstants,Runnable {
 		System.out.println( "http://code.google.com/p/frederickk/" );
 		System.out.println( "http://kenfrederick.blogspot.com/\n" );
 	}
-
 	private void noKey() {
 		System.out.println( "" );
 		System.out.println( "-----------------------------------------------------------------------------" );
@@ -102,6 +102,8 @@ public class FFlickr implements FFlickrConstants,Runnable {
 		System.out.println( "http://www.flickr.com/services/api/misc.userauth.html" );
 	}
 
+
+	
 	//-----------------------------------------------------------------------------
 	//methods
 	//-----------------------------------------------------------------------------
@@ -109,7 +111,8 @@ public class FFlickr implements FFlickrConstants,Runnable {
 	 * @param _query
 	 * 			search criteria
 	 */ 
-	public void search(String query) {
+	public void search(String _query) {
+	    query = _query;
 		initialize(query);
 	}
 
@@ -117,7 +120,8 @@ public class FFlickr implements FFlickrConstants,Runnable {
 	 * @param _query
 	 * 			search criteria
 	 */ 
-	public void search(String query, String _method) {
+	public void search(String _query, String _method) {
+	    query = _query;
 		method = _method;
 		initialize(query);
 	}
@@ -145,7 +149,7 @@ public class FFlickr implements FFlickrConstants,Runnable {
 	/**
 	 * gather() is threadless
 	 */
-	void gather() {
+	protected void gather() {
 		String url = SERVICE_URL_REST + 
 		"?method=" + method +
 		"&api_key=" + key +
@@ -197,12 +201,14 @@ public class FFlickr implements FFlickrConstants,Runnable {
 				//load the image
 				imageList.add( sizeURL );
 				//images[i] = p5.loadImage(sizeURL);
+		        images.add( p5.loadImage(sizeURL) );
+
 			}
 		}
 
 		//feed our loader
-		imageLoader.toLoad( imageList );
-		imageLoader.start();
+		//imageLoader.toLoad( imageList );
+		//imageLoader.start();
 
 		if(FIRST_RUN) FIRST_RUN = false;
 	}
@@ -229,6 +235,8 @@ public class FFlickr implements FFlickrConstants,Runnable {
 		stop();
 	}
 
+
+	
 	//-----------------------------------------------------------------------------
 	//sets
 	//-----------------------------------------------------------------------------
@@ -312,6 +320,7 @@ public class FFlickr implements FFlickrConstants,Runnable {
 	}
 
 
+	
 	//-----------------------------------------------------------------------------
 	//gets
 	//-----------------------------------------------------------------------------
@@ -343,10 +352,16 @@ public class FFlickr implements FFlickrConstants,Runnable {
 	 */ 
 	public PImage[] getImages() {
 		//images = imageLoader.getImages();
-		System.out.println( "images.size()\t" + imageLoader.getImages() );
+		//System.out.println( "images.size()\t" + imageLoader.getImages() );
 
-		PImage[] imagesArray = null;
-		imageLoader.getImages().toArray(imagesArray);
+		//PImage[] imagesArray = null;
+		PImage[] imagesArray;
+		imagesArray = new PImage[images.size()];
+		for(int i=0; i<imagesArray.length; i++) {
+			PImage img = (PImage) images.get(i);
+			imagesArray[i] = img;
+		}
+		//imageLoader.getImages().toArray(imagesArray);
 
 		return imagesArray;
 	}

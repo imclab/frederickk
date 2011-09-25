@@ -10,12 +10,14 @@ void setup() {
   size(500,500);
   smooth();
 
-  flickr = new FFlickr(this);
-  flickr.setKey("681a16a0f5448bb7c7db02431e59c7fa");
-  flickr.setSecret("919c1384422fa4aa");
+  String key = "681a16a0f5448bb7c7db02431e59c7fa";
+  String secret = "919c1384422fa4aa";
+  flickr = new FFlickr(this, key,secret);
 
-  flickr.setMaxItems(10); //default is 1
+  //flickr.setMaxItems(10); //default is 1
   flickr.getSearchTag( "munich" );
+  //flickr.search( "munich" );
+
 }
 
 void draw() {

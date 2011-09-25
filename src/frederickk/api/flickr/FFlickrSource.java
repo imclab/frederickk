@@ -1,9 +1,30 @@
 package frederickk.api.flickr;
 
+/*
+ *  Frederickk.api.flickr 001
+ *
+ *  Ken Frederick
+ *  ken.frederick@gmx.de
+ *
+ *  http://cargocollective.com/kenfrederick/
+ *  http://kenfrederick.blogspot.com/
+ *
+ *  a library for easier use of the flickr api
+ *  http://code.google.com/p/frederickk/
+ *
+ */
+
+
+//-----------------------------------------------------------------------------
+//libraries
+//-----------------------------------------------------------------------------
 import processing.core.*;
 import processing.core.PApplet;
 
 class FFlickrSource {
+	//-----------------------------------------------------------------------------
+	//properties
+	//-----------------------------------------------------------------------------
 	private static PApplet p5;
 	
 	protected PImage img;
@@ -11,10 +32,18 @@ class FFlickrSource {
 	protected boolean ERROR = false;
 	protected String url;
 
+
+	//-----------------------------------------------------------------------------
+	//constructor
+	//-----------------------------------------------------------------------------
 	public FFlickrSource(PApplet papplet, String _url) {
 		url = _url;
 	}
 
+
+	//-----------------------------------------------------------------------------
+	//methods
+	//-----------------------------------------------------------------------------
 	void load() {
 		System.out.println("nLoading image: " + url);
 		img = p5.loadImage(url);
