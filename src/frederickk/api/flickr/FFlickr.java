@@ -10,7 +10,7 @@ package frederickk.api.flickr;
  *  http://kenfrederick.blogspot.com/
  *
  *  a library for easier use of the flickr api
- *  http://code.google.com/p/frederickk/
+ *  http://github.com/frederickk/frederickk
  *
  */
 
@@ -92,7 +92,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 		System.out.println( "" );
 		System.out.println( "-----------------------------------------------------------------------------" );
 		System.out.println( "##name## Library ##version##" );
-		System.out.println( "http://code.google.com/p/frederickk/" );
+		System.out.println( "http://github.com/frederickk/frederickk" );
 		System.out.println( "http://kenfrederick.blogspot.com/\n" );
 	}
 	private void noKey() {

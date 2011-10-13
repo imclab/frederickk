@@ -13,7 +13,7 @@ package frederickk.tools;
  *  org.apache.commons.lang (ArrayUtils.java)
  *  http://commons.apache.org/lang/
  *  
- *  http://code.google.com/p/frederickk/
+ *  http://github.com/frederickk/frederickk
  *
  */
 

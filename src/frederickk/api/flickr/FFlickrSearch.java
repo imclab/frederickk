@@ -10,7 +10,7 @@ package frederickk.api.flickr;
  *  http://kenfrederick.blogspot.com/
  *
  *  a library for easier use of the flickr api
- *  http://code.google.com/p/frederickk/
+ *  http://github.com/frederickk/frederickk
  *  
  *  multi-threading insight via marius watz
  *  http://processing.org/discourse/yabb2/YaBB.pl?board=Integrate;action=display;num=1204990614

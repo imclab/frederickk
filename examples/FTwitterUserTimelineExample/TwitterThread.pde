@@ -69,7 +69,7 @@ public class TwitterThread implements Runnable {
     
     //replace this with whatever method you're
     //looking to load from FTwitter
-    result = twitter.getPublicTimeline();
+    result = twitter.getTimeline("GE_Deutschland");
   }
 
 

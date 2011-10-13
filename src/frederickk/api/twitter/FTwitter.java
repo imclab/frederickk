@@ -10,7 +10,7 @@ package frederickk.api.twitter;
  *  http://kenfrederick.blogspot.com/
  *
  *  a library for easier use of the twitter of twitter4j-2.2.4
- *  http://code.google.com/p/frederickk/
+ *  http://github.com/frederickk/frederickk
  *
  */
 
@@ -318,8 +318,6 @@ public class FTwitter implements FTwitterConstants {
 	private static String ConsumerSecret = "";
 	private static String AccessToken = "";
 	private static String AccessTokenSecret = "";
-	
-	private float timer = 1000;
 	
 	
 	// -----------------------------------------------------------------------------

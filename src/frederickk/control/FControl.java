@@ -10,7 +10,7 @@ package frederickk.control;
  *  http://kenfrederick.blogspot.com/
  *
  *  a much simpler (for me anyway) processing GUI
- *  http://code.google.com/p/frederickk/
+ *  http://github.com/frederickk/frederickk
  *
  */
 
@@ -119,7 +119,7 @@ public class FControl implements PConstants,FControlConstants {
 		System.out.println( "-----------------------------------------------------------------------------" );
 		System.out.println( "Frederickk Library 003" );
 		System.out.println( "FControl" );
-		System.out.println( "http://code.google.com/p/frederickk/" );
+		System.out.println( "http://github.com/frederickk/frederickk" );
 		System.out.println( "http://kenfrederick.blogspot.com/\n" );
 	}
 	

@@ -10,7 +10,7 @@ package frederickk.tools;
  *  http://kenfrederick.blogspot.com/
  *
  *  a collection of tools that i tend to use frequently
- *  http://code.google.com/p/frederickk/
+ *  http://github.com/frederickk/frederickk
  *
  *	FTimer code improvement by 
  *	Eugen Kern-Emden

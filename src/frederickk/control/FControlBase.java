@@ -10,7 +10,7 @@ package frederickk.control;
  *  http://kenfrederick.blogspot.com/
  *
  *  a much simpler (for me anyway) processing GUI
- *  http://code.google.com/p/frederickk/
+ *  http://github.com/frederickk/frederickk
  *
  */
 
