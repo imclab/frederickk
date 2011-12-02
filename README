@@ -1,5 +1,5 @@
 /*
- *  Frederickk Library 003
+ *  Frederickk Library 0.0.4
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -21,18 +21,18 @@ binary:  http://code.google.com/p/frederickk/
 
 // Change Log
 // -----------------------------------------
- -	001
+ -	0.0.1
  *	created initial library
 
- -	002
+ -	0.0.2
  *	corrected some of the mixed language functions (german/english) 
  *	incorporated functions found in my ofxFControl (openFrameworks addon) 
 
- -	003
+ -	0.0.3
  *	added additional tools
  *	syntax changed and anything using previous versions (001 & 002) will not work
 
- - 0.0.4
+ -	0.0.4
  *	depreciated FMeter, use FSlider
  *	old FKnob is now FHandle
  *	new FKnob is a round "slider" - i.e. like a real knob
