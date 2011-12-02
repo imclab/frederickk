@@ -21,12 +21,18 @@ package frederickk.api.flickr;
  */
 
 
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import processing.core.*;
 import java.util.ArrayList;
 
+
+
 public class FFlickrLoader implements Runnable {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
 	private static PApplet p5;
 	private Thread thread;
@@ -39,8 +45,9 @@ public class FFlickrLoader implements Runnable {
 	private boolean COMPLETE = false;
 
 
+
 	//-----------------------------------------------------------------------------
-	//constructor
+	// constructor
 	//-----------------------------------------------------------------------------
 	public FFlickrLoader(PApplet papplet) {
 		p5 = papplet;
@@ -50,7 +57,7 @@ public class FFlickrLoader implements Runnable {
 
 	
 	//-----------------------------------------------------------------------------
-	//methods
+	// methods
 	//-----------------------------------------------------------------------------
 	/**
 	 * run() is a required method
@@ -123,7 +130,7 @@ public class FFlickrLoader implements Runnable {
 
 	
 	//-----------------------------------------------------------------------------
-	//gets
+	// gets
 	//-----------------------------------------------------------------------------
 	public PImage getImage(int w) {
 		PImage image = (PImage) images.get(w);

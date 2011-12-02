@@ -1,7 +1,7 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 003
+ *  Frederickk.Control 0.0.4
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -10,25 +10,31 @@ package frederickk.control;
  *  http://kenfrederick.blogspot.com/
  *
  *  a much simpler (for me anyway) processing GUI
- *  http://github.com/frederickk/frederickk
+ *  http://code.google.com/p/frederickk/
  *
  */
 
+
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import processing.core.PApplet;
-import processing.core.PVector;
 import processing.core.PFont;
+import processing.core.PVector;
 
 
-public class FKnob extends FControlBase {
+
+public class FKnob extends FSlider {
 	//-----------------------------------------------------------------------------
 	//properties
 	//-----------------------------------------------------------------------------
-	protected String name;
-	protected float x,y,z, x_new,y_new, w,h;
-	protected PVector val = new PVector();
-	protected boolean valSel;
+	private static final long serialVersionUID = 004L;
 
-	protected boolean DRAG_OFF = false;
+	private float hx,hy, radius,radiusInner,radiusHandle;
+	private float angle = PApplet.PI; //place our handle to the far left
+
+
 
 	//-----------------------------------------------------------------------------
 	//constructor
@@ -37,90 +43,81 @@ public class FKnob extends FControlBase {
 		super(p5);
 	}
 
-	public FKnob(PApplet p5, String _name, float _x, float _y, float _w, float _h, PFont _typeface[], int _labelType) {
+	public FKnob(PApplet p5, String _name, float _x, float _y, float _radius, float _vMin, float _vMax, float _val, int _labelType) {
 		super(p5);
-		typeface = _typeface;
-		labelVal.setTypeface(typeface);
-
-		setName(_name);
-		setSize(_w,_h);
+		
+		setRadius(_radius);
 		setCoord(_x,_y);
-
-		labelType = _labelType;
-	}
-
-	public FKnob(PApplet p5, String _name, float _x, float _y, float _z, float _w, float _h, PFont _typeface[], int _labelType) {
-		super(p5);
-		typeface = _typeface;
-		labelVal.setTypeface(typeface);
-
-		setSize(_w,_h);
-		setCoord(_x,_y,_z);
 		setName(_name);
 
-		labelType = _labelType;
+		setValueRange(_vMin,_vMax);
+		setValue(_val);
+
+		setLabelType(_labelType);
 	}
 
-	
+
+
 	//-----------------------------------------------------------------------------
 	//methods
 	//-----------------------------------------------------------------------------
-	public void create() {
+	public void draw() {
 		update();
-		if(!DRAG_OFF) drag();
+		drag();
 
-		//-----------------------------------------
-		val.x = x;
-		val.y = y;
 		
 		//-----------------------------------------
-		if(showLabels) {
-			if(labelType == LABEL_FLOAT) labelVal.create( getStrValue( val.x,val.y, 2 ) );
-			else if(labelType == LABEL_INT) labelVal.create( getStrValue( val.x, val.y ) );
-		}
+		hx = getAngle((float) (radiusHandle*0.5)).x;
+		hy = getAngle((float) (radiusHandle*0.5)).y;
+
 		
 		//-----------------------------------------
-		p5.noStroke();
-		if( getOver() || LOCKED ) p5.fill( getColorActive() );
-		else p5.fill( getColorInactive() );
-		p5.rect(x,y, w, h);
-	}
-	
-	protected void createItem() {
-		update();
-		toggle();
-
-		//-----------------------------------------
+		// controller
+		p5.pushStyle();
+		p5.noFill();
 		p5.stroke( getColorInactive() );
-		if( getOver() || LOCKED ) p5.fill( getColorActive() );
-		else p5.fill( getColorInactive() );
-		p5.rect(x,y, w, h);
+		p5.ellipse(x,y,radius,radius);
+		p5.ellipse(x,y, (float) (radiusInner), (float) (radiusInner) );
+		//p5.line(x,y,hx,hy);
 
 		//-----------------------------------------
-		if(valSel) {
-			p5.fill( getColorActive() );
-			p5.rect(x,y, 3,h);
-		}
+		// handle
+		p5.noStroke();
+		if( getOver() ) p5.fill( getColorOver() );
+		else if( getOver() && LOCKED ) p5.fill( getColorPressed() );
+		else p5.fill( getColorInactive() );
+		p5.ellipse(hx,hy, radiusHandle,radiusHandle);
+
+		//		p5.beginShape();
+		//		p5.endShape();
+
 		
 		//-----------------------------------------
+		// label
 		if(showLabels) {
-			if( getOver() || LOCKED ) p5.fill( white );
-			else p5.fill( getColorActive() );
-			labelInfo.create( name );
-			updateLabelCoord();
+			p5.fill( getColorOver() );
+			labelName.setCoord( (int) (x+((radius*0.5)+8)), (int) (y-radius*0.5));
+			labelName.draw( name, PApplet.LEFT, BOLD );
+
+			int a = (getColorInactive() >> 24) & 0xFF;
+			p5.fill( white, a );
+			labelVal.setCoord( (int) (x-radius*0.5), (int) (y-radius*0.5));
+			labelVal.setSize( (int) radius, (int) radius);
+			if(labelType == LABEL_FLOAT) labelVal.draw( getStrValue(getFloatValue(),2), PApplet.CENTER );
+			else if(labelType == LABEL_INT) labelVal.draw( getStrValue(getIntValue()), PApplet.CENTER );
+
 		}
+		p5.popStyle();
 	}
 
+	
+	
 	//-----------------------------------------------------------------------------
-	//interaction
+	// events
 	//-----------------------------------------------------------------------------
-	protected void update() {
-		if( getOver() && PRESSED ) LOCKED = true;
-	}
-
 	protected boolean getOver() {
-		if(MOUSE_X > x && MOUSE_X < x+w && 
-		   MOUSE_Y > y && MOUSE_Y < y+h) {
+		if(MOUSE_X > x-radius*0.5 && MOUSE_X < x+radius*0.5 && 
+		   MOUSE_Y > y-radius*0.5 && MOUSE_Y < y+radius*0.5) {
 			OVER = true;
 		} else {
 			OVER = false;
@@ -128,112 +125,52 @@ public class FKnob extends FControlBase {
 		return OVER;
 	}
 
+
+	//-----------------------------------------------------------------------------
 	private void drag() {
-		if( LOCKED ) {
-			if( SNAP ) {
-				x_new = snap( (float) (MOUSE_X - (w * 0.5)), SNAP_INC, 0);
-				y_new = snap( (float) (MOUSE_Y - (h * 0.5)), SNAP_INC, 0);
-			} else {
-				x_new = (float) (MOUSE_X - (w * 0.5));
-				y_new = (float) (MOUSE_Y - (h * 0.5));
-			}
+		if(LOCKED) {
+			angle = (float) Math.atan2(MOUSE_Y-y,MOUSE_X-x);
 		}
+		/*
+    if(abs(posNew - pos) > 1) {
+      pos = pos + (posNew-pos)/loose;
+      MOVED = true;
+    } else {
+      MOVED = false;
+    }
+		 */
 
-		if(PApplet.abs(x_new - x) > 1) x = x_new;
-		if(PApplet.abs(y_new - y) > 1) y = y_new;
-		if(PApplet.abs(x_new - x) > 1 || PApplet.abs(y_new - y) > 1) {
-			MOVED = true;
-		} else {
-			MOVED = false;
-		}
-		
 	}
 
-	private void toggle() {
-		if( LOCKED ) {
-			valSel = !valSel;
-			LOCKED = !LOCKED;
-			OVER = !OVER;
-			PRESSED = !PRESSED;
-		}
-	}
-	
-	private void updateLabelCoord() {
-		float typeOff = PApplet.abs( h - labelVal.typefaceSize );
-		labelVal.setCoord( x+(w+5),y+(typeOff/2) );
-		labelInfo.setCoord( x+5,y+(typeOff/2) );
-	}
+
 	
 	//-----------------------------------------------------------------------------
 	//sets
 	//-----------------------------------------------------------------------------
-	public void setCoord(float _x, float _y) {
-		x = _x;
-		y = _y;
+	public void setRadius(float _radius) {
+		radius = _radius;
+		//radiusInner = (float) (radius*0.618);
+		radiusInner = (float) (radius*0.381924);
+		radiusHandle = (float) ((radius - radiusInner)*0.5); 
 
-		x_new = x;
-		y_new = y;
-
-		val.x = x; 
-		val.y = y;
-
-		float typeOff = PApplet.abs( h - labelVal.typefaceSize );
-		labelVal.setCoord( x+(w+5),y+(typeOff/2) );
-		labelInfo.setCoord( x+5,y+(typeOff/2) );
+		width = (int) radius;
+		height = (int) radius;
 	}
 
-	public void setCoord(float _x, float _y, float _z) {
-		x = _x;
-		y = _y;
-		z = _z;
 
-		x_new = x;
-		y_new = y;
-
-		val.x = x; 
-		val.y = y;
-		val.z = z;
-
-		float typeOff = PApplet.abs( h - labelVal.typefaceSize );
-		labelVal.setCoord( x+(w+5),y+(typeOff/2) );
-		labelInfo.setCoord( x+5,y+(typeOff/2) );
-	}
-
-	public void setSize(float _w, float _h) {
-		w = _w;
-		h = _h;
-	}
-
-	public void setName(String _name) {
-		name = _name;
-	}
 	
-	public void disableDrag(boolean _DRAG_OFF) {
-		DRAG_OFF = _DRAG_OFF;
-	}
-
-	protected void setToggle() {
-		valSel = !valSel;
-	}
-	protected void setToggle(boolean _valSel) {
-		valSel = _valSel;
-	}
-
 	//-----------------------------------------------------------------------------
 	//gets
 	//-----------------------------------------------------------------------------
-	protected PVector getCoord() {
-		PVector point = new PVector(0,0);
-		point.x = x;
-		point.y = y;
-		return point;
+	private PVector getAngle(float offset) {
+		float ax = (float) (x + Math.cos( angle ) * (radius*0.5 - offset));
+		float ay = (float) (y + Math.sin( angle ) * (radius*0.5 - offset));
+		return new PVector(ax,ay);  
 	}
-	
-	public PVector getValue() {
-		return val;
-	}	
 
-	protected boolean getToggle() {
-		return valSel;
+	public float getFloatValue() {
+		return PApplet.map(angle, -PApplet.PI,PApplet.PI, vMin,vMax);
 	}
+
+	
 }

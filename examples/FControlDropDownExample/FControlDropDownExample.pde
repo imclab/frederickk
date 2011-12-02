@@ -23,7 +23,7 @@ void setup() {
   //set typeface (optional)
   //default is "LucidaGrande-Bold"
   gui.setTypeface( typeface );
-  gui.setColorActive( color(255,200,0) );
+  gui.setColorOver( color(255,200,0) );
 
   //add gui elements
   gui.addDropDown("dropdown", 15,15, 100,15);
@@ -37,7 +37,7 @@ void draw() {
   
   //draw gui elements to screen
   println( gui.getSelection("dropdown") );
-  gui.create();
+  gui.draw();
 
 }
 

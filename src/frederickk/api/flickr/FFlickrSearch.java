@@ -21,29 +21,39 @@ package frederickk.api.flickr;
  */
 
 
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import processing.core.*;
 import processing.xml.*;
 import java.util.ArrayList;
 
+
+
 public class FFlickrSearch implements FFlickrConstants,Runnable {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
 	private static PApplet p5;
 	private Thread thread;
 
 	private String url = "";
+
+
 	
 	//-----------------------------------------------------------------------------
-	//constructor
+	// constructor
 	//-----------------------------------------------------------------------------
 	public FFlickrSearch(PApplet papplet) {
 		p5 = papplet;
 		p5.registerDispose(this);
 	}
 
+
+
 	//-----------------------------------------------------------------------------
-	//methods
+	// methods
 	//-----------------------------------------------------------------------------
 	/**
 	 * run() is a required method
@@ -52,8 +62,10 @@ public class FFlickrSearch implements FFlickrConstants,Runnable {
 
 	}
 
+
+
 	//-----------------------------------------------------------------------------
-	//sets
+	// sets
 	//-----------------------------------------------------------------------------
 	protected void setURL(String _url) {
 		url = _url;

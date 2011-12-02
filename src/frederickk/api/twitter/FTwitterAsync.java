@@ -16,9 +16,9 @@ package frederickk.api.twitter;
 
 
 
-// -----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 // libraries
-// -----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //twitter4j core
 import twitter4j.ResponseList;
 import twitter4j.TwitterException;
@@ -30,9 +30,9 @@ import twitter4j.TwitterMethod;
 import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
 
-
-
 import processing.core.*;
+
+
 
 public class FTwitterAsync extends FTwitter {
 	// -----------------------------------------------------------------------------
@@ -42,8 +42,8 @@ public class FTwitterAsync extends FTwitter {
 	AsyncTwitterFactory factory;
 	AsyncTwitter twitterAsync;
 
-	
-	
+
+
 	// -----------------------------------------------------------------------------
 	// constructor
 	// -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ public class FTwitterAsync extends FTwitter {
 		factory = new AsyncTwitterFactory();
 		twitterAsync = factory.getInstance();
 	}
-	
+
 
 
 	// -----------------------------------------------------------------------------
@@ -102,10 +102,10 @@ public class FTwitterAsync extends FTwitter {
 			
 			@Override
 			public void gotPublicTimeline(ResponseList<Status> statuses)  {
-	            System.out.println("Showing public timeline.");
-	            for (Status status : statuses) {
-	                System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
-	            }
+				System.out.println("Showing public timeline.");
+				for (Status status : statuses) {
+					System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
+				}
 				synchronized (LOCK) {
 					LOCK.notify();
 				}

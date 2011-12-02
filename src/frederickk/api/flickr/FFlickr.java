@@ -15,13 +15,17 @@ package frederickk.api.flickr;
  */
 
 
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import processing.core.*;
 import processing.xml.*;
 import java.util.ArrayList;
 
 public class FFlickr implements FFlickrConstants, Runnable {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
 	private static PApplet p5;
 	private Thread thread;
@@ -41,7 +45,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	protected ArrayList<PImage> images;
 	protected ArrayList<String> imageList;
-	//FFlickrLoader imageLoader;
+	// FFlickrLoader imageLoader;
 	private int width;
 	private int height;
 
@@ -54,7 +58,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	
 	//-----------------------------------------------------------------------------
-	//constructor
+	// constructor
 	//-----------------------------------------------------------------------------
 	/**
 	 * instantiate FFlickr
@@ -105,14 +109,14 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	
 	//-----------------------------------------------------------------------------
-	//methods
+	// methods
 	//-----------------------------------------------------------------------------
 	/**
 	 * @param _query
 	 * 			search criteria
 	 */ 
 	public void search(String _query) {
-	    query = _query;
+		query = _query;
 		initialize(query);
 	}
 
@@ -121,7 +125,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	 * 			search criteria
 	 */ 
 	public void search(String _query, String _method) {
-	    query = _query;
+		query = _query;
 		method = _method;
 		initialize(query);
 	}
@@ -201,7 +205,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 				//load the image
 				imageList.add( sizeURL );
 				//images[i] = p5.loadImage(sizeURL);
-		        images.add( p5.loadImage(sizeURL) );
+				images.add( p5.loadImage(sizeURL) );
 
 			}
 		}
@@ -238,7 +242,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	
 	//-----------------------------------------------------------------------------
-	//sets
+	// sets
 	//-----------------------------------------------------------------------------
 	/**
 	 * @param _key
@@ -322,7 +326,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	
 	//-----------------------------------------------------------------------------
-	//gets
+	// gets
 	//-----------------------------------------------------------------------------
 	/**
 	 * @param _search
@@ -386,8 +390,8 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	/**
 	 * @param w
-	 *          index of image to return
-	 *          
+	 *		  index of image to return
+	 *		  
 	 * return a specific image
 	 * 
 	 * @return images[w]
@@ -405,15 +409,15 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	/**
 	 * @param id
-	 *          photo id
+	 *		  photo id
 	 * @param sz
-	 *          index of image to return</p>
-	 *          
-	 *          0 - Square</br>
-	 *          1 - Thumbnail</br>
-	 *          2 - Small</br>
-	 *          3 - Medium
-	 *          
+	 *		  index of image to return</p>
+	 *		  
+	 *		  0 - Square</br>
+	 *		  1 - Thumbnail</br>
+	 *		  2 - Small</br>
+	 *		  3 - Medium
+	 *		  
 	 * return the sizes of photo
 	 * 
 	 * @return images[w]
@@ -456,8 +460,8 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	/**
 	 * @param id
-	 *          photo id
-	 *          
+	 *		  photo id
+	 *		  
 	 * return the search tag list of photo as array
 	 * 
 	 * @return tag
@@ -483,8 +487,8 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	/**
 	 * @param query
-	 *          search criteria
-	 *          
+	 *		  search criteria
+	 *		  
 	 * return the search as a raw XMLElement
 	 * 
 	 * @return xml
@@ -512,14 +516,14 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	/**
 	 * @param query
-	 *          search criteria
+	 *		  search criteria
 	 * @param _method
 	 * 			set method (FFlickrConstants)
 	 * 			http://www.flickr.com/services/api/
 	 * @param tokens
-	 *          additional url tokens that correspond to api method
-	 *          (i.e. method = INTERESTINGNESS tokens = "&date=2010-10-02&per_page=10&page=1")
-	 *          
+	 *		  additional url tokens that correspond to api method
+	 *		  (i.e. method = INTERESTINGNESS tokens = "&date=2010-10-02&per_page=10&page=1")
+	 *		  
 	 * return the search as a raw XMLElement
 	 * 
 	 * @return xml
@@ -543,7 +547,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	/**
 	 * @param w
-	 *          value to keep within the range of images found
+	 *		  value to keep within the range of images found
 	 */
 	private int inBounds(int w) {
 		//w = PApplet.constrain(w, 0,getImageNum());

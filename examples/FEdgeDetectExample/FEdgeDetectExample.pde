@@ -13,11 +13,14 @@
 // libraries
 // -----------------------------------------------------------------------------
 import frederickk.tools.*;
+import frederickk.control.*;
+
 
 
 // -----------------------------------------------------------------------------
 // properties
 // -----------------------------------------------------------------------------
+FControl gui;
 FEdgeDetect edges;
 float thresh;
 int density;
@@ -27,9 +30,11 @@ float b_high;
 PImage img;
 
 
+
 // -----------------------------------------------------------------------------
 void setup() {
   size(536,666);
+  gui = new FControl(this);
 
   img = loadImage("http://mikaeleliasson.com/images/Mikael_Eliasson_066.jpg");
 
@@ -47,9 +52,11 @@ void setup() {
 
 }
 
+
 // -----------------------------------------------------------------------------
 void draw() {
   background(0);
+  gui.draw();
   image(img, 0,0);
 
   noStroke();

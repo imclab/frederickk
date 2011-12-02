@@ -1,7 +1,7 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 003
+ *  Frederickk.Tools 0.0.4
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -15,14 +15,19 @@ package frederickk.tools;
  */
 
 
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import processing.core.PApplet;
 import processing.core.PImage;
 import java.awt.Color;
 
-//public class FPalette extends FDateiLeser {
+
+
 public class FPalette {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
 	public static PApplet p5;
 
@@ -33,9 +38,11 @@ public class FPalette {
 	private int loc;
 
 	//private boolean RICHTUNG = true; //default direction is TOP_BOTTOM
+
+
 	
 	//-----------------------------------------------------------------------------
-	//constructor
+	// constructor
 	//-----------------------------------------------------------------------------
 	/**
 	 * instantiate FPalette
@@ -43,7 +50,7 @@ public class FPalette {
 	 * @param thePApplet
 	 * 			PApplet
 	 * @param p
-	 *          the path of the palette image to load
+	 *		  the path of the palette image to load
 	 * 
 	 */
 	public FPalette(
@@ -77,12 +84,14 @@ public class FPalette {
 	
 	}
 
+
+
 	//-----------------------------------------------------------------------------
-	//methods
+	// methods
 	//-----------------------------------------------------------------------------
 	/**
 	 * @param w
-	 *          value to keep within the range of colors created
+	 *		  value to keep within the range of colors created
 	 */
 	private int inBounds(int w) {
 		w = PApplet.constrain(w, 0,getCount());
@@ -90,11 +99,11 @@ public class FPalette {
 	}
 
 	//-----------------------------------------------------------------------------
-	//sets
+	// sets
 	//-----------------------------------------------------------------------------
 	/**
 	 * @param pfad
-	 *          the path of the palette image to load
+	 *		  the path of the palette image to load
 	 */
 	public void setPath(String pfad) {
 		this.pfad = pfad;
@@ -103,7 +112,7 @@ public class FPalette {
 
 	/**
 	 * @param wert
-	 *          set the direction of color gathering TOP_BOTTOM or LEFT_RIGHT
+	 *		  set the direction of color gathering TOP_BOTTOM or LEFT_RIGHT
 	 */
 	/*
 	public void setRichtung(String wert) {
@@ -118,8 +127,10 @@ public class FPalette {
 	}
 	*/
 
+
+
 	//-----------------------------------------------------------------------------
-	//gets
+	// gets
 	//-----------------------------------------------------------------------------
 	/**
 	 * return the palette base image path  
@@ -160,9 +171,9 @@ public class FPalette {
 
 	/**
 	 * @param w
-	 *          number of color to use
+	 *		  number of color to use
 	 * @param wert
-	 *          percentage of transparency 0.0 - 1.0
+	 *		  percentage of transparency 0.0 - 1.0
 	 */
 	public int getColorTrans(int w, float wert) {
 		w = inBounds(w);

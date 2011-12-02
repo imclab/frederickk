@@ -1,7 +1,7 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 003
+ *  Frederickk.Tools 0.0.4
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -15,13 +15,18 @@ package frederickk.tools;
  */
 
 
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import java.util.Calendar;
 //import java.util.GregorianCalendar;
 
-public class FTime {
 
+
+public class FTime {
 	//-----------------------------------------------------------------------------
-	//gets
+	// gets
 	//-----------------------------------------------------------------------------
 	/**
 	 * return the current date as string "yyyyMMdd"

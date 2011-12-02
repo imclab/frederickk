@@ -1,7 +1,7 @@
 package frederickk.api.instagram;
 
 /*
- *  Frederickk.api.flickr 001
+ *  Frederickk.api.instagram 001
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -9,29 +9,32 @@ package frederickk.api.instagram;
  *  http://cargocollective.com/kenfrederick/
  *  http://kenfrederick.blogspot.com/
  *
- *  a library for easier use of the flickr api
+ *  a library for easier use of the instagram api
  *  http://github.com/frederickk/frederickk
  *
  */
 
 
+
 //-----------------------------------------------------------------------------
-//libraries
+// libraries
 //-----------------------------------------------------------------------------
 import processing.core.*;
 import processing.xml.*;
 import java.util.ArrayList;
 
 
+
 public class FInstagram {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
 	private static PApplet p5;
 
 
+
 	//-----------------------------------------------------------------------------
-	//constructor
+	// constructor
 	//-----------------------------------------------------------------------------
 	FInstagram(PApplet _p5) {
 		p5 = _p5;

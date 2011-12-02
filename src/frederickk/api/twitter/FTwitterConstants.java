@@ -30,7 +30,7 @@ public interface FTwitterConstants {
 	public static final int FTTWEET = 4;	
 	public static final int FTSTATUS = 5;	
 
-	
+
 
 	//-----------------------------------------------------------------------------
 	// defaults
@@ -38,7 +38,8 @@ public interface FTwitterConstants {
 	static final int DEFAULT_TWEET_COUNT = 20;
 	static final String DEFAULT_LANGUAGE = "en";
 
-	
+
+
 	//-----------------------------------------------------------------------------
 	// services
 	//-----------------------------------------------------------------------------

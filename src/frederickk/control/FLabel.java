@@ -1,7 +1,7 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 003
+ *  Frederickk.Control 0.0.4
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -15,103 +15,172 @@ package frederickk.control;
  */
 
 
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PConstants;
 
-//import java.awt.Font;
 
-public class FLabel implements PConstants {
+
+public class FLabel implements PConstants, FControlConstants {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
+	private static final long serialVersionUID = 004L;
 	protected static PApplet p5;
 
-	protected String text;
-	private float x,y;
+	protected String text = "";
+	public int width,height;
+	public float x,y;
+	protected boolean bContainer = true;
+	
+	// constants
+	protected static PFont TYPEFACE_REG = new PFont();
+	protected static PFont TYPEFACE_BOLD = new PFont();
+	protected static int TYPEFACE_SIZE = 0;
 
-	protected static PFont typefaceLabel[] = new PFont[2];
-	protected static float typefaceSize;
+
 
 	//-----------------------------------------------------------------------------
-	//constructor
+	// constructor
 	//-----------------------------------------------------------------------------
 	FLabel(PApplet thePApplet) {
-		p5 = thePApplet; 
+		p5 = thePApplet;
+		setText(" ");
 	}
 
-	FLabel(PApplet p5, float _x, float _y, PFont _typefaceLabel) {
+	FLabel(PApplet thePApplet, float _x, float _y, PFont _typefaceLabel) {
+		p5 = thePApplet;
+		setText(" ");
 		setTypeface(_typefaceLabel);
 		setCoord(_x, _y);
 	}
 
+
+
 	//-----------------------------------------------------------------------------
-	//methods
+	// methods
 	//-----------------------------------------------------------------------------
-	public void create(String _text) {
-		p5.textFont(typefaceLabel[1]);
-		p5.textAlign(LEFT);
+	public void draw(String _text) {
 		setText(_text);
-		p5.text(text, x,y);
+
+		p5.textFont(TYPEFACE_BOLD);
+		//System.out.println( "FLabel " + text );
+		//System.out.println( "w: " + Integer.toString(width) + " h: " + Integer.toString(height) );
+		//System.out.println( "x: " + Float.toString(x) + " y: " + Float.toString(y) );
+		if(bContainer) {
+			p5.textAlign(LEFT, CENTER);
+			p5.text(text, x+5,y, width,height);
+		} else {
+			p5.textAlign(LEFT);
+			p5.text(text, x+5,y+TYPEFACE_SIZE);
+		}
 	}
 
-	public void create(String _text, int _style) {
-		p5.textFont(typefaceLabel[ _style ]);
-		p5.textAlign(LEFT);
+	public void draw(String _text, int TEXT_ALIGNMENT) {
 		setText(_text);
-		p5.text(text, x,y);
+
+		p5.textFont(TYPEFACE_BOLD);
+		//System.out.println( "FLabel " + text );
+		//System.out.println( "w: " + Integer.toString(width) + " h: " + Integer.toString(height) );
+		//System.out.println( "x: " + Float.toString(x) + " y: " + Float.toString(y) );
+		if(bContainer) {
+			p5.textAlign(TEXT_ALIGNMENT, CENTER);
+			p5.text(text, x+5,y, width,height);
+		} else {
+			p5.textAlign(TEXT_ALIGNMENT);
+			p5.text(text, x+5,y+TYPEFACE_SIZE);
+		}
 	}
+
+	public void draw(String _text, int TEXT_ALIGNMENT, int TYPE_STYLE) {
+		setText(_text);
+
+		if(TYPE_STYLE == BOLD) p5.textFont(TYPEFACE_BOLD);
+		else p5.textFont(TYPEFACE_REG);
+		//System.out.println( "FLabel " + text );
+		//System.out.println( "w: " + Integer.toString(width) + " h: " + Integer.toString(height) );
+		//System.out.println( "x: " + Float.toString(x) + " y: " + Float.toString(y) );
+		if(bContainer) {
+			p5.textAlign(TEXT_ALIGNMENT, CENTER);
+			p5.text(text, x+5,y, width,height);
+		} else {
+			p5.textAlign(TEXT_ALIGNMENT);
+			p5.text(text, x+5,y+TYPEFACE_SIZE);
+		}
+	}
+
+	
 	
 	//-----------------------------------------------------------------------------
-	//sets
+	// sets
 	//-----------------------------------------------------------------------------
 	public void set(float _x, float _y, PFont _typefaceLabel) {
 		setTypeface(_typefaceLabel);
 		setCoord(_x, _y);
-	}
-
-	public void set(float _x, float _y, PFont _typefaceLabel[]) {
-		setTypeface(_typefaceLabel);
-		setCoord(_x, _y);
+		setSize(100,10);
 	}
 
 	public void set(float _x, float _y, PFont _typefaceLabel, PFont _typefaceLabelBold) {
 		setTypeface(_typefaceLabel,_typefaceLabelBold);
 		setCoord(_x, _y);
+		setSize(100,10);
 	}
 
+	
+	//-----------------------------------------------------------------------------
 	protected void setTypeface(PFont _typefaceLabel) {
-		typefaceLabel[0] = _typefaceLabel;
-		typefaceLabel[1] = _typefaceLabel;
-		typefaceSize = typefaceLabel[0].getFont().getSize();
-	}
-
-	protected void setTypeface(PFont _typefaceLabel[]) {
-		typefaceLabel[0] = _typefaceLabel[0];
-		typefaceLabel[1] = _typefaceLabel[1];
-		typefaceSize = typefaceLabel[0].getFont().getSize();
+		TYPEFACE_REG = _typefaceLabel;
+		TYPEFACE_BOLD = _typefaceLabel;
+		TYPEFACE_SIZE = TYPEFACE_REG.getFont().getSize()+1;
 	}
 
 	protected void setTypeface(PFont _typefaceLabel, PFont _typefaceLabelBold) {
-		typefaceLabel[0] = _typefaceLabel;
-		typefaceLabel[1] = _typefaceLabelBold;
-		typefaceSize = typefaceLabel[0].getFont().getSize();
+		TYPEFACE_REG = _typefaceLabel;
+		TYPEFACE_BOLD = _typefaceLabelBold;
+		TYPEFACE_SIZE = TYPEFACE_REG.getFont().getSize()+1;
 	}
 	
+
+	//-----------------------------------------------------------------------------
 	public void setText(String _text) {
 		text = _text;
 	}
 
+	
+	//-----------------------------------------------------------------------------
+	public void setSize(int _w, int _h) {
+		this.width = _w;
+		this.height = _h;
+		
+		if(this.width < TYPEFACE_SIZE || this.height < TYPEFACE_SIZE) {
+			bContainer = false;	
+		} else {
+			bContainer = true;	
+		}
+	}
 	public void setCoord(float _x, float _y) {
-		x = _x;
-		y = (float) ((float) _y + ( getTypeSize() * 0.8 ));
+		this.x = _x;
+		this.y = _y;
 	}
 
 	//-----------------------------------------------------------------------------
-	//gets
+	public void uncontained() {
+		bContainer = false;
+	}
+	public void contained() {
+		bContainer = true;
+	}
+	
+
+	//-----------------------------------------------------------------------------
+	// gets
 	//-----------------------------------------------------------------------------
 	public float getTypeSize() {
-		float val = typefaceSize;
+		float val = TYPEFACE_SIZE;
 		return val;
 	}
 

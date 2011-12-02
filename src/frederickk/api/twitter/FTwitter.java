@@ -53,41 +53,43 @@ public class FTwitter implements FTwitterConstants {
 		// ------------------------------------
 		protected Date created_at;
 		protected long id;
-	    protected String text;
-	    protected String source;
-	    protected boolean favorited;
-	    protected long in_reply_to_status_id;
-	    protected long in_reply_to_user_id;
-	    protected String in_reply_to_screen_name;
-	    protected int retweet_count;
-	    protected boolean retweeted;
+		protected String text;
+		protected String source;
+		protected boolean favorited;
+		protected long in_reply_to_status_id;
+		protected long in_reply_to_user_id;
+		protected String in_reply_to_screen_name;
+		protected int retweet_count;
+		protected boolean retweeted;
 
-	    
+
+		
 		// ------------------------------------
 		// constructor
 		// ------------------------------------
-	    public FTwitterStatus() {
-	    	//intialize with empty values
-	    	created_at = null;
-	    	id = 0;
-	    	text = null;
-	    	source = null;
-	    	favorited = false;
-	        in_reply_to_status_id = 0;
-	        in_reply_to_user_id = 0;
-	        in_reply_to_screen_name = null;
-	        retweet_count = 0;
-	        retweeted = false;
-	    }
-	    public FTwitterStatus(Status status) {
-	    	set(status);
-	    }    
-	    
+		public FTwitterStatus() {
+			//intialize with empty values
+			created_at = null;
+			id = 0;
+			text = null;
+			source = null;
+			favorited = false;
+			in_reply_to_status_id = 0;
+			in_reply_to_user_id = 0;
+			in_reply_to_screen_name = null;
+			retweet_count = 0;
+			retweeted = false;
+		}
+		public FTwitterStatus(Status status) {
+			set(status);
+		}	
+
+
 
 		// ------------------------------------
 		// sets
 		// ------------------------------------
-	    public void set(Status status) {
+		public void set(Status status) {
 			created_at = status.getCreatedAt();
 			id = status.getId();
 			text = status.getText();
@@ -98,9 +100,10 @@ public class FTwitter implements FTwitterConstants {
 			in_reply_to_screen_name = status.getInReplyToScreenName();
 			//retweet_count = Integer.valueOf( status.retweet_count")[0].getContent() ).intValue();
 			//retweeted = Boolean.parseBoolean( status.retweeted")[0].getContent() );
-	    }
+		}
 
-	    
+
+
 		// ------------------------------------
 		// gets
 		// ------------------------------------
@@ -120,23 +123,24 @@ public class FTwitter implements FTwitterConstants {
 		 * 
 		 * @return result
 		 */
-	    public String[] asArray() {
-	    	String result[] = {
-	    			created_at.toString(),
-	    	    	new Long(id).toString(),
-	    	    	text,
-	    	    	source,
-	    	    	new Boolean(favorited).toString(),
-	    	    	new Long(in_reply_to_status_id).toString(),
-	    	    	new Long(in_reply_to_user_id).toString(),
-	    	        in_reply_to_screen_name,
-	    	        new Integer(retweet_count).toString(),
-	    	        new Boolean(retweeted).toString()
-	    		};
-	    	
-	    	return result;
-	    }
+		public String[] asArray() {
+			String result[] = {
+					created_at.toString(),
+					new Long(id).toString(),
+					text,
+					source,
+					new Boolean(favorited).toString(),
+					new Long(in_reply_to_status_id).toString(),
+					new Long(in_reply_to_user_id).toString(),
+					in_reply_to_screen_name,
+					new Integer(retweet_count).toString(),
+					new Boolean(retweeted).toString()
+				};
+			
+			return result;
+		}
 	}
+
 
 
 	// -----------------------------------------------------------------------------
@@ -155,45 +159,48 @@ public class FTwitter implements FTwitterConstants {
 		protected String to_user; 
 		protected long to_user_id;
 
-	    
+
+
 		// ------------------------------------
 		// constructor
 		// ------------------------------------
-	    public FTwitterTweet() {
-	    	//intialize with empty values
-	    	created_at = null;
-	    	from_user = null;
-	    	from_user_id = 0;
-	    	id = 0;
-	    	iso_language_code = null;
-	    	profile_image_url = null;
-	    	source = null;
-	    	text = null;
-	        to_user = null;
-	        to_user_id = 0;
-	    }
-	    public FTwitterTweet(Tweet tweet) {
-	    	set(tweet);
-	    }    
-	    
+		public FTwitterTweet() {
+			//intialize with empty values
+			created_at = null;
+			from_user = null;
+			from_user_id = 0;
+			id = 0;
+			iso_language_code = null;
+			profile_image_url = null;
+			source = null;
+			text = null;
+			to_user = null;
+			to_user_id = 0;
+		}
+		public FTwitterTweet(Tweet tweet) {
+			set(tweet);
+		}	
+
+
 
 		// ------------------------------------
 		// sets
 		// ------------------------------------
-	    public void set(Tweet tweet) {
+		public void set(Tweet tweet) {
 			created_at = tweet.getCreatedAt();
-	    	from_user = tweet.getFromUser();
-	    	from_user_id = tweet.getFromUserId();
+			from_user = tweet.getFromUser();
+			from_user_id = tweet.getFromUserId();
 			id = tweet.getId();
-	    	iso_language_code = tweet.getIsoLanguageCode();
-	    	profile_image_url = tweet.getProfileImageUrl();
+			iso_language_code = tweet.getIsoLanguageCode();
+			profile_image_url = tweet.getProfileImageUrl();
 			source = tweet.getSource();
 			text = tweet.getText();
 			to_user = tweet.getToUser();
-	        to_user_id = tweet.getToUserId();
-	    }
+			to_user_id = tweet.getToUserId();
+		}
 
-	    
+
+
 		// ------------------------------------
 		// gets
 		// ------------------------------------
@@ -213,24 +220,25 @@ public class FTwitter implements FTwitterConstants {
 		 * 
 		 * @return result
 		 */
-	    public String[] asArray() {
-	    	String result[] = {
-	    			created_at.toString(),
-	    			new Long(id).toString(),
-	    			text,
-	    			source,
-	    	    	iso_language_code,
-	    	    	profile_image_url,
-	    	    	from_user,
-	    	    	new Long(from_user_id).toString(),
-	    			to_user,
-	    	        new Long(to_user_id).toString()
-	    		};
-	    	
-	    	return result;
-	    }
+		public String[] asArray() {
+			String result[] = {
+					created_at.toString(),
+					new Long(id).toString(),
+					text,
+					source,
+					iso_language_code,
+					profile_image_url,
+					from_user,
+					new Long(from_user_id).toString(),
+					to_user,
+					new Long(to_user_id).toString()
+				};
+			
+			return result;
+		}
 	}	
-	
+
+
 
 	// -----------------------------------------------------------------------------
 	protected class FTwitterTrend {
@@ -244,35 +252,38 @@ public class FTwitter implements FTwitterConstants {
 		protected String place_name;
 		protected int woeid;
 
-	    
+
+
 		// ------------------------------------
 		// constructor
 		// ------------------------------------
-	    public FTwitterTrend() {
-	    	//intialize with empty values
-	    	name = null;
-	    	as_of = null;
-	    	trend_at = null;
-	    	country_name = null;
-	    	place_name = null;
-	        woeid = 1;
-	    }
-	    
+		public FTwitterTrend() {
+			//intialize with empty values
+			name = null;
+			as_of = null;
+			trend_at = null;
+			country_name = null;
+			place_name = null;
+			woeid = 1;
+		}
+
+
 
 		// ------------------------------------
 		// sets
 		// ------------------------------------
-	    public void set(Trends trends, Trend trend) {
-	    	name = trend.getName();
-	    	as_of = trends.getAsOf();
-	    	trend_at = trends.getTrendAt();
-	    	country_name = trends.getLocation().getCountryName();
+		public void set(Trends trends, Trend trend) {
+			name = trend.getName();
+			as_of = trends.getAsOf();
+			trend_at = trends.getTrendAt();
+			country_name = trends.getLocation().getCountryName();
 			place_name = trends.getLocation().getCountryName();
 			woeid = trends.getLocation().getWoeid();
-	    }
-	    
-	    
-	    // ------------------------------------
+		}
+
+
+
+		// ------------------------------------
 		// gets
 		// ------------------------------------
 		/**
@@ -287,18 +298,18 @@ public class FTwitter implements FTwitterConstants {
 		 * 
 		 * @return result
 		 */
-	    public String[] asArray() {
-	    	String result[] = {
-	    			name,
-	    			as_of.toString(),
-	    			trend_at.toString(),
-	    			country_name,
-	    			place_name,
-	    	        new Integer(woeid).toString()
-	    		};
-	    	
-	    	return result;
-	    }
+		public String[] asArray() {
+			String result[] = {
+					name,
+					as_of.toString(),
+					trend_at.toString(),
+					country_name,
+					place_name,
+					new Integer(woeid).toString()
+				};
+			
+			return result;
+		}
 	}		
 	
 	
@@ -309,7 +320,7 @@ public class FTwitter implements FTwitterConstants {
 	protected static PApplet p5;
 	protected static Twitter twitter;
 	//protected static Twitter twitter = new TwitterFactory().getInstance();
-    //protected static AsyncTwitter twitter;
+	//protected static AsyncTwitter twitter;
 
 	
 	private static int returnType;
@@ -318,8 +329,9 @@ public class FTwitter implements FTwitterConstants {
 	private static String ConsumerSecret = "";
 	private static String AccessToken = "";
 	private static String AccessTokenSecret = "";
-	
-	
+
+
+
 	// -----------------------------------------------------------------------------
 	// constructor
 	// -----------------------------------------------------------------------------
@@ -391,9 +403,9 @@ public class FTwitter implements FTwitterConstants {
 		setReturnType(STRING_ARRAY);
 	}
 	*/
-		
-	
-	
+
+
+
 	// -----------------------------------------------------------------------------
 	// methods
 	// -----------------------------------------------------------------------------
@@ -404,9 +416,9 @@ public class FTwitter implements FTwitterConstants {
 		System.out.println( "http://github.com/frederickk/frederickk/" );
 		System.out.println( "http://kenfrederick.blogspot.com/\n" );
 	}
-	
-	
-	
+
+
+
 	// -----------------------------------------------------------------------------
 	// sets
 	// -----------------------------------------------------------------------------
@@ -455,9 +467,8 @@ public class FTwitter implements FTwitterConstants {
 		returnType = _returnType;
 	}
 
-	
-	
-	
+
+
 	// -----------------------------------------------------------------------------
 	// gets
 	// -----------------------------------------------------------------------------
@@ -478,7 +489,7 @@ public class FTwitter implements FTwitterConstants {
 		List<Status> statuses;
 
 		try {
-            statuses = twitter.getPublicTimeline();
+			statuses = twitter.getPublicTimeline();
 			for(Status status : statuses) {
 				FTwitterStatus FTStatus = new FTwitterStatus(status);
 
@@ -589,10 +600,8 @@ public class FTwitter implements FTwitterConstants {
 
 		return result;
 	}
-	
 
-	
-	
+
 	/* /////////////////////////////////////////////////////////////////////////////
 	 *
 	 * searches
@@ -715,7 +724,8 @@ public class FTwitter implements FTwitterConstants {
 
 		return result;
 	}
-	
+
+
 
 	/* /////////////////////////////////////////////////////////////////////////////
 	 *
@@ -775,27 +785,27 @@ public class FTwitter implements FTwitterConstants {
 			date = format.parse(_yyyy_MM_dd);
 			System.out.println( date.toString() );
 		}
-        catch(ParseException pe) {
-        	System.out.println("error cannot parse date: " + _yyyy_MM_dd + " " + pe);
-        }		
+		catch(ParseException pe) {
+			System.out.println("error cannot parse date: " + _yyyy_MM_dd + " " + pe);
+		}		
 		
 		//the list of trends
 		try {
 			trendsList = twitter.getDailyTrends(date, false);
-            for (Trends trends : trendsList) {
-            	for (Trend trend : ((Trends) trends).getTrends()) {
-            		FTwitterTrend FTTrend = new FTwitterTrend();
-            		FTTrend.set(trends, trend);
+			for (Trends trends : trendsList) {
+				for (Trend trend : ((Trends) trends).getTrends()) {
+					FTwitterTrend FTTrend = new FTwitterTrend();
+					FTTrend.set(trends, trend);
 				
-            		if(returnType == STRING_ARRAY) {
-            			//each element of the ArrayList will be a string[]
-            			String[] FTTrendStr = ((FTwitterTrend) FTTrend).asArray(); 
-            			result.add( FTTrendStr );
-            		} else if(returnType == OBJECT) {
-            			result.add(FTTrend );
-            		}
-            	} //end trends loop
-            } //end trendsList loop
+					if(returnType == STRING_ARRAY) {
+						//each element of the ArrayList will be a string[]
+						String[] FTTrendStr = ((FTwitterTrend) FTTrend).asArray(); 
+						result.add( FTTrendStr );
+					} else if(returnType == OBJECT) {
+						result.add(FTTrend );
+					}
+				} //end trends loop
+			} //end trendsList loop
 
 		} catch (TwitterException te) {
 			System.out.println("Error geting Trends: " + te.getMessage());
@@ -824,9 +834,9 @@ public class FTwitter implements FTwitterConstants {
 			date = format.parse(_yyyy_MM_dd);
 			System.out.println( date.toString() );
 		}
-        catch(ParseException pe) {
-            System.out.println("error cannot parse date: " + _yyyy_MM_dd + " " + pe);
-        }		
+		catch(ParseException pe) {
+			System.out.println("error cannot parse date: " + _yyyy_MM_dd + " " + pe);
+		}		
 		
 		//the list of trends
 		try {
@@ -835,19 +845,19 @@ public class FTwitter implements FTwitterConstants {
 			//else trendsList = twitter.getWeeklyTrends();
 
 			for (Trends trends : trendsList) {
-            	for (Trend trend : ((Trends) trends).getTrends()) {
-            		FTwitterTrend FTTrend = new FTwitterTrend();
-            		FTTrend.set(trends, trend);
+				for (Trend trend : ((Trends) trends).getTrends()) {
+					FTwitterTrend FTTrend = new FTwitterTrend();
+					FTTrend.set(trends, trend);
 				
-            		if(returnType == STRING_ARRAY) {
-            			//each element of the ArrayList will be a string[]
-            			String[] FTTrendStr = ((FTwitterTrend) FTTrend).asArray(); 
-            			result.add( FTTrendStr );
-            		} else if(returnType == OBJECT) {
-            			result.add(FTTrend );
-            		}
-            	} //end trends loop
-            } //end trendsList loop
+					if(returnType == STRING_ARRAY) {
+						//each element of the ArrayList will be a string[]
+						String[] FTTrendStr = ((FTwitterTrend) FTTrend).asArray(); 
+						result.add( FTTrendStr );
+					} else if(returnType == OBJECT) {
+						result.add(FTTrend );
+					}
+				} //end trends loop
+			} //end trendsList loop
 
 		} catch (TwitterException te) {
 			System.out.println("Error geting Trends: " + te.getMessage());
@@ -883,25 +893,25 @@ public class FTwitter implements FTwitterConstants {
 		}
 		/*
 		for (Location location : locations) {
-            System.out.println(location.getName() + " (woeid:" + location.getWoeid() + ")");
-        }
-        */		
+			System.out.println(location.getName() + " (woeid:" + location.getWoeid() + ")");
+		}
+		*/		
 
 		//the list of trends
 		try {
 			trends = twitter.getLocationTrends(woeid);
-        	for (Trend trend : trends.getTrends()) {
-        		FTwitterTrend FTTrend = new FTwitterTrend();
-        		FTTrend.set(trends, trend);
+			for (Trend trend : trends.getTrends()) {
+				FTwitterTrend FTTrend = new FTwitterTrend();
+				FTTrend.set(trends, trend);
 			
-        		if(returnType == STRING_ARRAY) {
-        			//each element of the ArrayList will be a string[]
-        			String[] FTTrendStr = FTTrend.asArray(); 
-        			result.add( FTTrendStr );
-        		} else if(returnType == OBJECT) {
-        			result.add(FTTrend );
-        		}
-        	} //end trends loop
+				if(returnType == STRING_ARRAY) {
+					//each element of the ArrayList will be a string[]
+					String[] FTTrendStr = FTTrend.asArray(); 
+					result.add( FTTrendStr );
+				} else if(returnType == OBJECT) {
+					result.add(FTTrend );
+				}
+			} //end trends loop
 		} catch (TwitterException te) {
 			System.out.println("Error geting Trends: " + te.getMessage());
 			//te.printStackTrace();

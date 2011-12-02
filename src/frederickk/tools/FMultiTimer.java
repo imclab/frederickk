@@ -1,7 +1,7 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 003
+ *  Frederickk.Tools 0.0.4
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -18,11 +18,18 @@ package frederickk.tools;
  *
  */
 
+
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import processing.core.PApplet;
+
+
 
 public class FMultiTimer {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
 	private PApplet p5;
 
@@ -35,8 +42,10 @@ public class FMultiTimer {
 	private boolean firstCall;
 	private boolean trigger;
 
+
+
 	//-----------------------------------------------------------------------------
-	//constructor
+	// constructor
 	//-----------------------------------------------------------------------------
 	/**
 	 * instantiate FTimer (work in progess, more so than FTimer)
@@ -61,8 +70,10 @@ public class FMultiTimer {
 		setFreq(_interval);
 	}
 
+
+
 	//-----------------------------------------------------------------------------
-	//methods
+	// methods
 	//-----------------------------------------------------------------------------
 	public void start() {
 		startTime = p5.millis();
@@ -78,8 +89,10 @@ public class FMultiTimer {
 			index = 0;
 	}
 
+
+
 	//-----------------------------------------------------------------------------
-	//sets
+	// sets
 	//-----------------------------------------------------------------------------
 	public void setFreq(float _interval) {
 		interval = new float[1];
@@ -93,8 +106,10 @@ public class FMultiTimer {
 		}
 	}
 
+
+
 	//-----------------------------------------------------------------------------
-	//gets
+	// gets
 	//-----------------------------------------------------------------------------
 	public boolean getTrigger() {
 		if (firstCall)

@@ -1,7 +1,7 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 003
+ *  Frederickk.Tools 0.0.4
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -15,13 +15,19 @@ package frederickk.tools;
  */
 
 
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import processing.core.PApplet;
 import processing.core.PImage;
 import java.io.File;
 
+
+
 public class FImageLoader {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
 	public static PApplet p5;
 
@@ -31,8 +37,10 @@ public class FImageLoader {
 	private String[] daten;
 	//private String ordnerName;
 
+
+
 	//-----------------------------------------------------------------------------
-	//constructor
+	// constructor
 	//-----------------------------------------------------------------------------
 	/**
 	 * instantiate FImageLoader
@@ -40,7 +48,7 @@ public class FImageLoader {
 	 * @param _p5
 	 * 			PApplet
 	 * @param ordnerName
-	 *          the path of the images to load
+	 *		  the path of the images to load
 	 */
 	public FImageLoader(
 			PApplet _p5,
@@ -50,12 +58,14 @@ public class FImageLoader {
 		setFolder(p5.sketchPath + ordnerName);
 	}
 
+
+
 	//-----------------------------------------------------------------------------
-	//sets
+	// sets
 	//-----------------------------------------------------------------------------
 	/**
 	 * @param ordnerName
-	 *          the path to load
+	 *		  the path to load
 	 */
 	public void setFolder(
 			String ordnerName) {
@@ -104,7 +114,7 @@ public class FImageLoader {
 
 	/**
 	 * @param ordnerName
-	 *          set the folder to read
+	 *		  set the folder to read
 	 */
 	private void setFolderName(String ordnerName) {
 		ordner = new File(ordnerName);
@@ -112,7 +122,7 @@ public class FImageLoader {
 
 	/**
 	 * @param dateiName
-	 *          set the file to read
+	 *		  set the file to read
 	 */
 	public void setFile(String dateiName) {
 		bild = new PImage[1];
@@ -130,8 +140,10 @@ public class FImageLoader {
 		}
 	}
 
+
+
 	//-----------------------------------------------------------------------------
-	//gets
+	// gets
 	//-----------------------------------------------------------------------------
 	/**
 	 * return number of files
@@ -156,8 +168,8 @@ public class FImageLoader {
 
 	/**
 	 * @param w
-	 *          index of image to return
-	 *          
+	 *		  index of image to return
+	 *		  
 	 * return a specific image
 	 * 
 	 * @return bild[w]
@@ -169,8 +181,8 @@ public class FImageLoader {
 
 	/**
 	 * @param w
-	 *          number of file to use
-	 *          
+	 *		  number of file to use
+	 *		  
 	 * return a specific file 
 	 * 
 	 * @return daten[w]
@@ -182,7 +194,7 @@ public class FImageLoader {
 
 	/**
 	 * @param w
-	 *          value to keep within the range of colors created
+	 *		  value to keep within the range of colors created
 	 */
 	private int inBounds(int w) {
 		w = PApplet.constrain(w, 0,getImageNum());

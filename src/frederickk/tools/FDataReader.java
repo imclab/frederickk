@@ -1,7 +1,7 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 003
+ *  Frederickk.Tools 0.0.4
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -15,12 +15,18 @@ package frederickk.tools;
  */
 
 
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import processing.core.PApplet;
 import java.io.File;
 
+
+
 public class FDataReader {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
 	public static PApplet p5;
 
@@ -28,8 +34,10 @@ public class FDataReader {
 	private String[] daten;
 	//private String ordnerName;
 
+
+
 	//-----------------------------------------------------------------------------
-	//constructor
+	// constructor
 	//-----------------------------------------------------------------------------
 	/**
 	 * instantiate FDataReader
@@ -37,7 +45,7 @@ public class FDataReader {
 	 * @param _p5
 	 * 			PApplet
 	 * @param ordnerName
-	 *          the path of the files to load
+	 *		  the path of the files to load
 	 */
 	public FDataReader(
 			PApplet _p5,
@@ -47,12 +55,14 @@ public class FDataReader {
 		setFolder(ordnerName);
 	}
 
+
+
 	//-----------------------------------------------------------------------------
-	//methods
+	// methods
 	//-----------------------------------------------------------------------------
 	/**
 	 * @param ordnerName
-	 *          the path of the files to load
+	 *		  the path of the files to load
 	 */
 	public void setFolder(
 			String ordnerName) {
@@ -97,14 +107,16 @@ public class FDataReader {
 
 	/**
 	 * @param ordnerName
-	 *          set the file to read
+	 *		  set the file to read
 	 */
 	private void setFolderName(String ordnerName) {
 		ordner = new File(ordnerName);
 	}
 
+
+
 	//-----------------------------------------------------------------------------
-	//gets
+	// gets
 	//-----------------------------------------------------------------------------
 	/**
 	 * return number of files
@@ -118,8 +130,8 @@ public class FDataReader {
 
 	/**
 	 * @param w
-	 *          number of file to use
-	 *          
+	 *		  number of file to use
+	 *		  
 	 * return a specific file 
 	 * 
 	 * @return daten[w]
@@ -131,7 +143,7 @@ public class FDataReader {
 
 	/**
 	 * @param w
-	 *          value to keep within the range of colors created
+	 *		  value to keep within the range of colors created
 	 */
 	private int inBounds(int w) {
 		w = PApplet.constrain(w, 0,getFileNum());

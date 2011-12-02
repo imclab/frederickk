@@ -17,7 +17,7 @@ package frederickk.api.flickr;
 
 public interface FFlickrConstants {
 	//-----------------------------------------------------------------------------
-	//services
+	// services
 	//-----------------------------------------------------------------------------
 	static final String SERVICE_URL_REST = "http://api.flickr.com/services/rest/";
 	static final String SERVICE_URL_XMLPRC = "http://api.flickr.com/services/xmlrpc/";
@@ -25,7 +25,7 @@ public interface FFlickrConstants {
 
 	
 	//-----------------------------------------------------------------------------
-	//api methods most useful
+	// api methods most useful
 	//-----------------------------------------------------------------------------
 	/**
 	 * Returns the list of interesting photos for the most recent day or a user-specified date
@@ -54,7 +54,7 @@ public interface FFlickrConstants {
 	
 	
 	//-----------------------------------------------------------------------------
-	//api methods all
+	// api methods all
 	//-----------------------------------------------------------------------------
 	static final String[] ACTIVITY = {
 		"flickr.activity.userComments",

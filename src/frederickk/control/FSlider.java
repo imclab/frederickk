@@ -1,7 +1,7 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 003
+ *  Frederickk.Control 0.0.4
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -14,107 +14,119 @@ package frederickk.control;
  *
  */
 
+
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import processing.core.PApplet;
 import processing.core.PFont;
-import processing.core.PVector;
+
+
 
 public class FSlider extends FControlBase {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
-	protected String name;
-	private float x,y,w,h;
+	private static final long serialVersionUID = 004L;
+
 	private int posMin, posMax, loose;
-	private float pos, posNew, vMin, vMax;
-	private float val;
+	protected float pos, posNew, vMin, vMax;
+	protected float val;
 	private int dir;
-	
+
+
+
 	//-----------------------------------------------------------------------------
-	//constructor
+	// constructor
 	//-----------------------------------------------------------------------------
 	public FSlider(PApplet p5) {
 		super(p5);
 		loose = 3;
 	}
 
-	public FSlider(PApplet p5, String _name, float _x, float _y, float _w, float _h, float _vMin, float _vMax, float _val, PFont _typeface[], int _labelType) {
+	public FSlider(PApplet p5, String _name, float _x, float _y, int _w, int _h, float _vMin, float _vMax, float _val, int _labelType) {
 		super(p5);
-		typeface = _typeface;
-		labelVal.setTypeface(typeface);
+		loose = 3;
 
+		setName(_name);
 		setSize(_w,_h);
 		setCoord(_x,_y);
-		setName(_name);
-		
-		loose = 3;
-		if(_h > _w) setDirection(VERTICAL);
-		else setDirection(HORIZONTAL);
+
 		posNew = pos;
-		
 		setValueRange(_vMin,_vMax);
 		setValue(_val);
 
-		labelType = _labelType;
+		// labels
+		setLabelType(_labelType);
 	}
 
 
-	//-----------------------------------------------------------------------------
-	//methods
-	//-----------------------------------------------------------------------------
-	public void create() {
-		update();
-		drag();
-
-		
-		//-----------------------------------------
-		p5.noStroke();
-		p5.fill( getColorInactive() );
-		p5.rect(x,y, w,h);
-
-		//-----------------------------------------
-		if( LOCKED ) p5.fill( getColorActive() );
-		else p5.fill( getColorInactive() );
-
-		if(dir == HORIZONTAL)	p5.rect(pos,y, 3,h);
-		if(dir == VERTICAL)		p5.rect(x,pos, w,3);
-
-		//-----------------------------------------
-		if(showLabels) {
-			labelInfo.create( name );
-
-			p5.fill( white );
-			if(labelType == LABEL_FLOAT) labelVal.create( getStrValue( getFloatValue(),2 ) );
-			else if(labelType == LABEL_INT) labelVal.create( getStrValue( getIntValue() ) );
-
-		}
-
-	}
 
 	//-----------------------------------------------------------------------------
-	//interaction
+	// methods
 	//-----------------------------------------------------------------------------
 	protected void update() {
 		if( getOver() && PRESSED ) LOCKED = true;
 	}
 
-	protected boolean getOver() {
-		if(MOUSE_X > x && MOUSE_X < x+w && 
-		   MOUSE_Y > y && MOUSE_Y < y+h) {
-			OVER = true;
-		} else {
-			OVER = false;
+
+	//-----------------------------------------------------------------------------
+	public void draw() {
+		update();
+		drag();
+
+
+		//-----------------------------------------
+		// controller background
+		p5.pushStyle();
+		p5.noStroke();
+		p5.fill( getColorInactive() );
+		p5.rect(x,y, width,height);
+
+		//-----------------------------------------
+		// contoller amount
+		p5.fill( getColorOver() );
+		if(dir == HORIZONTAL) 	p5.rect(x, y, pos-x, height);
+		if(dir == VERTICAL)		p5.rect(x, y, width, pos-y);
+
+		//-----------------------------------------
+		// contoller handle
+		if( LOCKED ) p5.fill( getColorOver() );
+		else p5.fill( getColorInactive() );
+
+		if(dir == HORIZONTAL)	p5.rect(pos,y, 3,height);
+		if(dir == VERTICAL)		p5.rect(x,pos, width,3);
+
+
+		//-----------------------------------------
+		// label
+		if(showLabels) {
+			p5.fill( getColorOver() );
+			labelName.draw( name );
+
+			int a = (getColorInactive() >> 24) & 0xFF;
+			p5.fill( white, a );
+			if(labelType == LABEL_FLOAT) labelVal.draw( getStrValue( getFloatValue(),2 ) );
+			else if(labelType == LABEL_INT) labelVal.draw( getStrValue( getIntValue() ) );
+
 		}
-		return OVER;
+		p5.popStyle();
 	}
 	
+	
+
+	//-----------------------------------------------------------------------------
+	// events
+	//-----------------------------------------------------------------------------
 	private void drag() {
 		if( LOCKED ) {
 			if(dir == HORIZONTAL) {
-				posNew = PApplet.constrain((float) (MOUSE_X - (h * 0.5)), posMin, posMax); 
-				if( SNAP ) posNew = PApplet.constrain( snap( (float) (MOUSE_X - (h * 0.5)), SNAP_INC, -5), posMin, posMax);;
+				posNew = PApplet.constrain((float) (MOUSE_X - (height * 0.5)), posMin, posMax); 
+				if( SNAP ) posNew = PApplet.constrain( snap( (float) (MOUSE_X - (height * 0.5)), SNAP_INC, -5), posMin, posMax);;
 			} else if(dir == VERTICAL) {
-				posNew = PApplet.constrain((float) (MOUSE_Y - (w * 0.5)), posMin, posMax); 
-				if( SNAP ) posNew = PApplet.constrain( snap( (float) (MOUSE_Y - (w * 0.5)), SNAP_INC, -5), posMin, posMax);;
+				posNew = PApplet.constrain((float) (MOUSE_Y - (width * 0.5)), posMin, posMax); 
+				if( SNAP ) posNew = PApplet.constrain( snap( (float) (MOUSE_Y - (width * 0.5)), SNAP_INC, -5), posMin, posMax);;
 			}
 		}
 
@@ -124,31 +136,23 @@ public class FSlider extends FControlBase {
 		} else {
 			MOVED = false;
 		}
+	}
 
+
+
+	//-----------------------------------------------------------------------------
+	// sets
+	//-----------------------------------------------------------------------------
+	public void setSize(int _w, int _h) {
+		super.setSize(_w,_h);
+		if(height > width) setDirection(VERTICAL);
+		else setDirection(HORIZONTAL);
 	}
 	
-	
-	//-----------------------------------------------------------------------------
-	//sets
-	//-----------------------------------------------------------------------------
-	public void setName(String _name) {
-		name = _name;
+	public void setValue(int _val) {
+		val = _val;
+		posNew = (int) PApplet.map(val, vMin,vMax, posMin,posMax);
 	}
-
-	public void setCoord(float _x, float _y) {
-		x = _x;
-		y = _y;
-
-		float typeOff = PApplet.abs( h - typeface[0].getFont().getSize() );
-		labelVal.setCoord( x+5,y+(typeOff/2) );
-		labelInfo.setCoord( x+(w+5),y+(typeOff/2) );
-	}
-
-	public void setSize(float _w, float _h) {
-		w = _w;
-		h = _h;
-	}
-
 	public void setValue(float _val) {
 		val = _val;
 		posNew = PApplet.map(val, vMin,vMax, posMin,posMax);
@@ -163,39 +167,28 @@ public class FSlider extends FControlBase {
 		dir = _dir;
 
 		if(dir == HORIZONTAL) {
-			pos = (float) (x + w*0.5 - h*0.5);
+			pos = x + width*0.5f - height*0.5f;
 			posMin = (int) x;
-			posMax = (int) (x + w);
+			posMax = (int) (x + width);
 
 		} else if(dir == VERTICAL) {
-			pos = (float) (x + h*0.5 - w*0.5);
+			pos = x + height*0.5f - width*0.5f;
 			posMin = (int) y;
-			posMax = (int) (y + h);
+			posMax = (int) (y + height);
 		}
-
-		posNew = pos;
 	}
 
-	//-----------------------------------------------------------------------------
-	//gets
-	//-----------------------------------------------------------------------------
-	protected PVector getCoord() {
-		PVector point = new PVector(0,0);
-		point.x = x;
-		point.y = y;
-		return point;
-	}
 
+
+	//-----------------------------------------------------------------------------
+	// gets
+	//-----------------------------------------------------------------------------
 	public float getFloatValue() {
-		val = PApplet.map(posNew, posMin,posMax, vMin,vMax);
-		//return f;
-		return val;
+		return PApplet.map(posNew, posMin,posMax, vMin,vMax);
 	}
 
 	public int getIntValue() {
-		val = (int) PApplet.map(posNew, posMin,posMax, vMin,vMax);
-		//return f;
-		return (int) val;
+		return (int) getFloatValue();
 	}
 
 	public float getValueMin() {
@@ -205,6 +198,4 @@ public class FSlider extends FControlBase {
 	public float getValueMax() {
 		return vMax;
 	}
-
 }
-

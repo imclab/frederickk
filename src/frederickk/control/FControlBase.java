@@ -1,7 +1,7 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 003
+ *  Frederickk.Control 0.0.4
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -14,44 +14,60 @@ package frederickk.control;
  *
  */
 
+
+
+//-----------------------------------------------------------------------------
+// libraries
+//-----------------------------------------------------------------------------
 import processing.core.PApplet;
 import processing.core.PFont;
+import processing.core.PVector;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.awt.Rectangle;
 
-abstract public class FControlBase implements FControlConstants {
+
+
+abstract public class FControlBase extends Rectangle implements FControlConstants {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
+	private static final long serialVersionUID = 004L;
 	protected static PApplet p5;
 
+	// constants
 	protected boolean OVER, CLICK, PRESSED, LOCKED, DRAG, MOVED, RELEASE, SNAP;
 	protected float MOUSE_X, MOUSE_Y;
 	protected float MOUSE_X_NEW, MOUSE_Y_NEW;
 	protected float SNAP_INC;
 
-	protected static PFont typeface[] = new PFont[2];
+	// labels
+	protected String name;
+
 	protected FLabel labelVal;
-	protected FLabel labelInfo;
+	protected FLabel labelName;
 	protected boolean showLabels;
 	protected int labelType;
 
-	protected static int colorInactive;
-	protected static int colorActive;
-	protected static int white;
+	// colors
+//	protected static int colorInactive;
+//	protected static int colorOver;
+//	protected static int colorPressed;
+//	protected static int white;
+	protected int colorInactive;
+	protected int colorOver;
+	protected int colorPressed;
+	protected int white;
 
-	protected float x,y,w,h;
+
 
 	//-----------------------------------------------------------------------------
-	//constructor
+	// constructor
 	//-----------------------------------------------------------------------------
 	public FControlBase(PApplet thePApplet) {
 		p5 = thePApplet;
-
 		p5.registerMouseEvent(this);
-		labelVal = new FLabel(p5);
-		labelInfo = new FLabel(p5);
 
 		Color _white = new Color(255,255,255, 204);
 		white = _white.getRGB();
@@ -63,42 +79,44 @@ abstract public class FControlBase implements FControlConstants {
 		SNAP = false;
 	}	
 
+
+
 	//-----------------------------------------------------------------------------
-	//methods
+	// methods
 	//-----------------------------------------------------------------------------
 	//quick and dirty, eventually move this to a different spot
 	protected double roundDecimal(float orig, int deci) {
-		  double multi = Math.pow(10,deci);
-		  double num = Math.round(orig * multi)/multi;
-		  return num;
+		double multi = Math.pow(10,deci);
+		double num = Math.round(orig * multi)/multi;
+		return num;
 	}	
 
 	protected int snap(float _val, float _inc, float _offset) {
-		  float sf = ((int) (_val/_inc) * _inc) + _offset;
-
-		  int s = (int) sf;
-		  return s;
+		float sf = ((int) (_val/_inc) * _inc) + _offset;
+		return (int) sf;
 	}
-	
+
 	public void showLabels(boolean _showLabels) {
 		showLabels = _showLabels;
 	}
 	public void showLabels(boolean _showLabels, int _labelType) {
 		showLabels = _showLabels;
-		labelType = _labelType;
+		setLabelType(_labelType);
 	}
-	
-	abstract public void create();
+
+	protected abstract void update();
+	abstract public void draw();
+
+
 
 	//-----------------------------------------------------------------------------
-	//interaction
+	// events
 	//-----------------------------------------------------------------------------
 	/**
 	 * capture mouse events
 	 * 
 	 */
-	public void mouseEvent(
-	        MouseEvent event) {
+	public void mouseEvent(MouseEvent event) {
 		MOUSE_X = event.getX();
 		MOUSE_Y = event.getY();
 
@@ -120,35 +138,136 @@ abstract public class FControlBase implements FControlConstants {
 
 	}
 
-	protected abstract void update();
-	protected abstract boolean getOver();
-
+	//-----------------------------------------------------------------------------
+	//protected abstract boolean getOver();
+	protected boolean getOver() {
+		if(MOUSE_X > x && MOUSE_X < x+width && 
+		   MOUSE_Y > y && MOUSE_Y < y+height) {
+			OVER = true;
+		} else {
+			OVER = false;
+		}
+		return OVER;
+	}
 	protected boolean getMoved() {
 		return MOVED;
 	}
+	protected boolean getPressed() {
+		//return PRESSED;
+		return LOCKED;
+	}
+
+
+
+	//-----------------------------------------------------------------------------
+	// sets
+	//-----------------------------------------------------------------------------
+	/**
+	 * @param _name
+	 *		  the name of the gui element
+	 */
+	public void setName(String _name) {
+		name = _name;
+	}
+	
+
+	//-----------------------------------------------------------------------------
+	/**
+	 * @param _w
+	 *		  width
+	 * @param _h
+	 *		  height
+	 */
+	public void setSize(int _w, int _h) {
+		this.width = _w;
+		this.height = _h;
+
+	}
+	public void setCoord(float _x, float _y) {
+		this.x = (int) _x;
+		this.y = (int) _y;
+	}
+	
+
+	//-----------------------------------------------------------------------------
+	/**
+	 * @param _labelVal
+	 *		  sets label for showing value
+	 * @param _labelName
+	 *		  sets label for showing name/info
+	 */
+	public void setLabels(FLabel _labelVal, FLabel _labelName) {
+		labelVal = _labelVal;
+		labelVal.setSize( width,height );
+		labelVal.setCoord( x+5,y );
+
+		labelName = _labelName;
+		labelName.setSize( width,height );
+		labelName.setCoord( x+(width+5),y );
+	}
+
+	/**
+	 * @param _label
+	 *		  sets generic label for showing value and name/info
+	 */
+	public void setLabels(FLabel _label) {
+		setLabels(_label,_label);
+	}
+
+	public void setLabelType(int _labelType) {
+		labelType = _labelType;
+	}
+	
+	
+//	/**
+//	 * @param _typefaceLabel
+//	 *		  sets regular typeface weight for labels
+//	 * @param _typefaceLabelBold
+//	 *		  sets bold typeface weight for labels
+//	 */
+//	public void setTypeface(PFont _typefaceLabel, PFont _typefaceLabelBold) {
+//		labelVal.setTypeface( _typefaceLabel,_typefaceLabelBold );
+//		labelName.setTypeface( _typefaceLabel,_typefaceLabelBold );
+//	}
+//
+//	/**
+//	 * @param _typefaceLabel
+//	 *		  sets typeface weight for labels
+//	 */
+//	public void setTypeface(PFont _typefaceLabel) {
+//		labelVal.setTypeface( _typefaceLabel );
+//		labelName.setTypeface( _typefaceLabel );
+//	}
 
 	
 	//-----------------------------------------------------------------------------
-	//sets
-	//-----------------------------------------------------------------------------
 	/**
 	 * @param _colorInactive
-	 *          the inactive color of all gui elements
+	 *		  the inactive color of all gui elements
 	 */
 	public void setColorInactive(int _colorInactive) {
 		colorInactive = _colorInactive;
 	}
 	/**
-	 * @param _colorActive
-	 *          the active color of all gui elements
+	 * @param _colorOver
+	 *		  the mouseOver color of all gui elements
 	 */
-	public void setColorActive(int _colorActive) {
-		colorActive = _colorActive;
+	public void setColorOver(int _colorOver) {
+		colorOver = _colorOver;
+	}
+	/**
+	 * @param _colorPressed
+	 *		  the mousePressed color of all gui elements
+	 */
+	public void setColorPressed(int _colorPressed) {
+		colorPressed = _colorPressed;
 	}
 
+
+	//-----------------------------------------------------------------------------
 	/**
 	 * @param _val
-	 *          enable element value snap 
+	 *		  enable element value snap 
 	 */
 	public void enableSnap(float _val) {
 		SNAP_INC = _val;
@@ -156,26 +275,36 @@ abstract public class FControlBase implements FControlConstants {
 	}
 	/**
 	 * disable element value snap 
-	 *          
+	 *		  
 	 */
 	public void disableSnap() {
 		SNAP = false;
 	}		
 
+
+
 	//-----------------------------------------------------------------------------
-	//gets
+	// gets
 	//-----------------------------------------------------------------------------
+	protected PVector getCoord() {
+		return new PVector(x,y);
+	}
+	
 	public int getColorInactive() {
 		return colorInactive;
 	}
-	public int getColorActive() {
-		return colorActive;
+	public int getColorOver() {
+		return colorOver;
+	}
+	public int getColorPressed() {
+		return colorPressed;
 	}
 
-	//singular
+	//-----------------------------------------------------------------------------
+	// singular
 	protected String getStrValue(float _input, int deci) {
 		String val = "";
-		val = Float.toString( (float) roundDecimal( _input,deci ) );
+		val = java.lang.Float.toString( (float) roundDecimal(_input,deci) );
 		return val;
 	}
 	protected String getStrValue(float _input) {
@@ -183,12 +312,14 @@ abstract public class FControlBase implements FControlConstants {
 		val = Integer.toString( (int) _input );
 		return val;
 	}
-	
-	//plural
+
+
+	//-----------------------------------------------------------------------------
+	// plural
 	protected String getStrValue(float _x, float _y, int deci) {
 		String val = "";
-		val += "x " + Float.toString( (float) roundDecimal( _x,deci ) ) + "\n";
-		val += "y " + Float.toString( (float) roundDecimal( _y,deci ) ) + "\n";
+		val += "x " + java.lang.Float.toString( (float) roundDecimal(_x,deci) ) + "\n";
+		val += "y " + java.lang.Float.toString( (float) roundDecimal(_y,deci) ) + "\n";
 		//val += "z " + Float.toString( (float) roundDecimal( getValue().x,deci ) );
 		return val;
 	}
@@ -199,6 +330,6 @@ abstract public class FControlBase implements FControlConstants {
 		//val += "z " + Float.toString( (float) roundDecimal( getValue().x,deci ) );
 		return val;
 	}
-	
-	
+
+
 }

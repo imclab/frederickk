@@ -21,34 +21,30 @@ package frederickk.control;
 //-----------------------------------------------------------------------------
 import processing.core.PApplet;
 import processing.core.PFont;
-import processing.core.PVector;
 
 
 
-public class FCheck extends FControlBase {
+public class FButton extends FControlBase {
 	//-----------------------------------------------------------------------------
 	// properties
 	//-----------------------------------------------------------------------------
 	private static final long serialVersionUID = 004L;
 
-	private boolean val;
 
-
-
+	
 	//-----------------------------------------------------------------------------
 	// constructor
 	//-----------------------------------------------------------------------------
-	public FCheck(PApplet p5) {
+	public FButton(PApplet p5) {
 		super(p5);
-		val = false;
 	}
 
-	public FCheck(PApplet p5, String _name, float _x, float _y, int _sz, boolean _val) {
+	public FButton(PApplet p5, String _name, float _x, float _y, int _w, int _h, int _labelType) {
 		super(p5);
 		setName(_name);
-		setSize(_sz,_sz);
+		setSize(_w,_h);
 		setCoord(_x,_y);
-		setValue(_val);
+		setLabelType(_labelType);
 	}
 
 
@@ -64,68 +60,30 @@ public class FCheck extends FControlBase {
 	//-----------------------------------------------------------------------------
 	public void draw() {
 		update();
-		toggle();
 
-		
+
 		//-----------------------------------------
 		// controller
 		p5.pushStyle();
-		p5.noFill();
-		if( getOver() ) p5.stroke( getColorOver() );
-		else if( LOCKED ) p5.stroke( getColorPressed() );
-		else p5.stroke( getColorInactive() );
+		p5.noStroke();
+
+		if( getOver() ) p5.fill( getColorOver() );
+		else if( getOver() && LOCKED ) p5.fill( getColorPressed() );
+		else p5.fill( getColorInactive() );
+		
 		p5.rect(x,y, width,height);
 
-		//-----------------------------------------
-		// x'd
-		if(val) {
-			PVector xsz = new PVector((float) (width*0.6), (float) (height*0.6));
-			p5.noStroke();
-			p5.fill( getColorOver() );
-			p5.ellipse(x+width/2,y+height/2, xsz.x,xsz.y);
-		}
-
-
+		
 		//-----------------------------------------
 		// label
 		if(showLabels) {
-			p5.fill( getColorOver() );
-			labelName.setSize(width*3,height);
-			labelName.uncontained();
-			labelName.draw(name, PApplet.LEFT, BOLD);
-			//labelVal.draw("");
+			int a = (getColorInactive() >> 24) & 0xFF;
+			p5.fill( white, a );
+			labelName.setCoord(x,y);
+			labelName.draw(name, PApplet.CENTER, BOLD);
 		}
 		p5.popStyle();
 	}
 
-
-	//-----------------------------------------------------------------------------
-	private void toggle() {
-		if( LOCKED ) {
-			val = !val;
-			
-			LOCKED = !LOCKED;
-			OVER = !OVER;
-			PRESSED = !PRESSED;
-		}
-	}
-
-
-
-	//-----------------------------------------------------------------------------
-	// sets
-	//-----------------------------------------------------------------------------
-	public void setValue(boolean _val) {
-		val = _val;
-	}
-
-
-
-	//-----------------------------------------------------------------------------
-	// gets
-	//-----------------------------------------------------------------------------
-	public boolean getValue() {
-		return val;
-	}
-
+	
 }
