@@ -115,6 +115,7 @@ public class FHandle3D extends FHandle {
 		
 		//-----------------------------------------
 		// controller
+		//-----------------------------------------
 		p5.pushStyle();
 		p5.noStroke();
 
@@ -131,6 +132,7 @@ public class FHandle3D extends FHandle {
 		
 		//-----------------------------------------
 		// label
+		//-----------------------------------------
 		if(showLabels) {
 			int a = (getColorInactive() >> 24) & 0xFF;
 			p5.fill( white, a );

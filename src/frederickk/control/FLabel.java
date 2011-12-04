@@ -175,6 +175,7 @@ public class FLabel implements PConstants, FControlConstants {
 		bContainer = true;
 	}
 	
+	
 
 	//-----------------------------------------------------------------------------
 	// gets

@@ -69,6 +69,7 @@ public class FCheck extends FControlBase {
 		
 		//-----------------------------------------
 		// controller
+		//-----------------------------------------
 		p5.pushStyle();
 		p5.noFill();
 		if( getOver() ) p5.stroke( getColorOver() );
@@ -76,8 +77,10 @@ public class FCheck extends FControlBase {
 		else p5.stroke( getColorInactive() );
 		p5.rect(x,y, width,height);
 
+		
 		//-----------------------------------------
 		// x'd
+		//-----------------------------------------
 		if(val) {
 			PVector xsz = new PVector((float) (width*0.6), (float) (height*0.6));
 			p5.noStroke();
@@ -88,6 +91,7 @@ public class FCheck extends FControlBase {
 
 		//-----------------------------------------
 		// label
+		//-----------------------------------------
 		if(showLabels) {
 			p5.fill( getColorOver() );
 			labelName.setSize(width*3,height);

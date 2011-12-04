@@ -19,32 +19,42 @@ package frederickk.control;
 //-----------------------------------------------------------------------------
 // libraries
 //-----------------------------------------------------------------------------
+import processing.core.PApplet;
 import processing.core.PFont;
 
 
 
-public interface FControlConstants {
+public class FTextField extends FControlBase {
 	//-----------------------------------------------------------------------------
-	// labels
+	// properties
 	//-----------------------------------------------------------------------------
-	static final int LABEL_FLOAT = 0;
-	static final int LABEL_INT = 1;
-	static final int LABEL_STRING = 2;
+	private static final long serialVersionUID = 004L;
+
 	
-	static final int REGULAR = 0;
-	static final int BOLD = 1;
+	
+	//-----------------------------------------------------------------------------
+	// constructor
+	//-----------------------------------------------------------------------------
+	public FTextField(PApplet p5) {
+		super(p5);
+	}
+
+	public FTextField(PApplet p5, String _name, float _x, float _y, int _w, int _h) {
+		super(p5);
+	}
 
 
-	//-----------------------------------------------------------------------------
-	// buttons
-	//-----------------------------------------------------------------------------
-	static final int BUTTON_NORMAL = 0;
-	static final int BUTTON_LOAD = 1;
-	
 	
 	//-----------------------------------------------------------------------------
-	// sliders
+	// methods
 	//-----------------------------------------------------------------------------
-	static final int VERTICAL = 0;
-	static final int HORIZONTAL = 1;
+	protected void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void draw() {
+		// TODO Auto-generated method stub
+	}
+
 }

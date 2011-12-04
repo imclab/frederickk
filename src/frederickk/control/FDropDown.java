@@ -69,6 +69,7 @@ public class FDropDown extends FControlBase {
 		
 		//-----------------------------------------
 		// controller
+		//-----------------------------------------
 		p5.pushStyle();
 		if( OPEN ) {
 			p5.noFill();
@@ -99,6 +100,7 @@ public class FDropDown extends FControlBase {
 		
 		//-----------------------------------------
 		// label
+		//-----------------------------------------
 		if(showLabels) {
 			int a = (getColorInactive() >> 24) & 0xFF;
 			p5.fill( white, a );

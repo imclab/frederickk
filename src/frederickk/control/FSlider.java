@@ -79,19 +79,24 @@ public class FSlider extends FControlBase {
 
 		//-----------------------------------------
 		// controller background
+		//-----------------------------------------
 		p5.pushStyle();
 		p5.noStroke();
 		p5.fill( getColorInactive() );
 		p5.rect(x,y, width,height);
 
+
 		//-----------------------------------------
 		// contoller amount
+		//-----------------------------------------
 		p5.fill( getColorOver() );
 		if(dir == HORIZONTAL) 	p5.rect(x, y, pos-x, height);
 		if(dir == VERTICAL)		p5.rect(x, y, width, pos-y);
 
+
 		//-----------------------------------------
 		// contoller handle
+		//-----------------------------------------
 		if( LOCKED ) p5.fill( getColorOver() );
 		else p5.fill( getColorInactive() );
 
@@ -101,6 +106,7 @@ public class FSlider extends FControlBase {
 
 		//-----------------------------------------
 		// label
+		//-----------------------------------------
 		if(showLabels) {
 			p5.fill( getColorOver() );
 			labelName.draw( name );

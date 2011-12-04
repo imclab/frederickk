@@ -30,21 +30,35 @@ public class FButton extends FControlBase {
 	//-----------------------------------------------------------------------------
 	private static final long serialVersionUID = 004L;
 
+	private int mode;
+	private String filePath = "";
 
+	
 	
 	//-----------------------------------------------------------------------------
 	// constructor
 	//-----------------------------------------------------------------------------
 	public FButton(PApplet p5) {
 		super(p5);
+		setMode(BUTTON_NORMAL);
 	}
 
-	public FButton(PApplet p5, String _name, float _x, float _y, int _w, int _h, int _labelType) {
+	public FButton(PApplet p5, String _name, float _x, float _y, int _w, int _h) {
 		super(p5);
 		setName(_name);
 		setSize(_w,_h);
 		setCoord(_x,_y);
-		setLabelType(_labelType);
+		//setLabelType(_labelType);
+		setMode(BUTTON_NORMAL);
+	}
+
+	public FButton(PApplet p5, String _name, float _x, float _y, int _w, int _h, int _mode) {
+		super(p5);
+		setName(_name);
+		setSize(_w,_h);
+		setCoord(_x,_y);
+		//setLabelType(_labelType);
+		setMode(_mode);
 	}
 
 
@@ -53,7 +67,10 @@ public class FButton extends FControlBase {
 	// methods
 	//-----------------------------------------------------------------------------
 	protected void update() {
-		if( getOver() && PRESSED ) LOCKED = true;
+		if( getOver() && PRESSED ) {
+			LOCKED = true;
+			if(mode == BUTTON_LOAD) filePath = p5.selectInput(name);
+		}
 	}
 
 
@@ -64,6 +81,7 @@ public class FButton extends FControlBase {
 
 		//-----------------------------------------
 		// controller
+		//-----------------------------------------
 		p5.pushStyle();
 		p5.noStroke();
 
@@ -76,6 +94,7 @@ public class FButton extends FControlBase {
 		
 		//-----------------------------------------
 		// label
+		//-----------------------------------------
 		if(showLabels) {
 			int a = (getColorInactive() >> 24) & 0xFF;
 			p5.fill( white, a );
@@ -85,5 +104,26 @@ public class FButton extends FControlBase {
 		p5.popStyle();
 	}
 
+
+	
+	//-----------------------------------------------------------------------------
+	// sets
+	//-----------------------------------------------------------------------------
+	public void setMode(int _val) {
+		mode = _val;
+	}
+
+	
+	
+	//-----------------------------------------------------------------------------
+	// gets
+	//-----------------------------------------------------------------------------
+	public int getMode() {
+		return mode;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
 	
 }

@@ -73,6 +73,7 @@ public class FKnob extends FSlider {
 		
 		//-----------------------------------------
 		// controller
+		//-----------------------------------------
 		p5.pushStyle();
 		p5.noFill();
 		p5.stroke( getColorInactive() );
@@ -80,8 +81,10 @@ public class FKnob extends FSlider {
 		p5.ellipse(x,y, (float) (radiusInner), (float) (radiusInner) );
 		//p5.line(x,y,hx,hy);
 
+		
 		//-----------------------------------------
 		// handle
+		//-----------------------------------------
 		p5.noStroke();
 		if( getOver() ) p5.fill( getColorOver() );
 		else if( getOver() && LOCKED ) p5.fill( getColorPressed() );
@@ -94,6 +97,7 @@ public class FKnob extends FSlider {
 		
 		//-----------------------------------------
 		// label
+		//-----------------------------------------
 		if(showLabels) {
 			p5.fill( getColorOver() );
 			labelName.setCoord( (int) (x+((radius*0.5)+8)), (int) (y-radius*0.5));

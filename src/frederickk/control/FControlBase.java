@@ -38,8 +38,8 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 
 	// constants
 	protected boolean OVER, CLICK, PRESSED, LOCKED, DRAG, MOVED, RELEASE, SNAP;
-	protected float MOUSE_X, MOUSE_Y;
-	protected float MOUSE_X_NEW, MOUSE_Y_NEW;
+	protected int MOUSE_X, MOUSE_Y, MOUSE_BUTTON;
+	protected int MOUSE_X_NEW, MOUSE_Y_NEW;
 	protected float SNAP_INC;
 
 	// labels
@@ -68,7 +68,7 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	public FControlBase(PApplet thePApplet) {
 		p5 = thePApplet;
 		p5.registerMouseEvent(this);
-
+		
 		Color _white = new Color(255,255,255, 204);
 		white = _white.getRGB();
 
@@ -119,42 +119,121 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	public void mouseEvent(MouseEvent event) {
 		MOUSE_X = event.getX();
 		MOUSE_Y = event.getY();
+		MOUSE_BUTTON = event.getButton();
 
-		if (event.getID() == MouseEvent.MOUSE_CLICKED) {
-			CLICK = true;
-			RELEASE = false;
-		} 
 
-		if (event.getID() == MouseEvent.MOUSE_PRESSED) {
-			PRESSED = true;
-			RELEASE = false;
-		} 
+		// mouse over
+		/*
+		if(hitTest(MOUSE_X,MOUSE_Y)) {
+			if(!OVER) {
+				OVER = true;
+			}
+		} else if(OVER) {
+			OVER = false;
+		}
+		*/
 
-		if (event.getID() == MouseEvent.MOUSE_RELEASED) {
-			PRESSED = false;
-			RELEASE = true;
+
+		// clicked
+		if( event.getID() == MouseEvent.MOUSE_CLICKED) {
+			if(hitTest(MOUSE_X,MOUSE_Y)) {
+				CLICK = true;
+			} else {
+				// nothing
+			}
+		}
+
+
+		// pressed
+		if( event.getID() == MouseEvent.MOUSE_PRESSED) {
+			if(hitTest(MOUSE_X,MOUSE_Y)) {
+				PRESSED = true;
+			} else {
+				// nothing
+			}
+		}
+
+
+		// released
+		if( event.getID() == MouseEvent.MOUSE_RELEASED) {
+			if(hitTest(MOUSE_X,MOUSE_Y)) {
+				// release inside
+				RELEASE = true;
+			} else {
+				// release outside
+				RELEASE = true;
+			}
 			LOCKED = false;
-		} 
+			PRESSED = false;
+			CLICK = false;
+		}
+		
+		
+		// dragged
+		if( event.getID() == MouseEvent.MOUSE_DRAGGED) {
+			if(hitTest(MOUSE_X,MOUSE_Y)) {
+				if(!OVER) {
+					OVER = true;
+				}
+			} else {
+				if(OVER) {
+					OVER = false;
+				}
+				if(PRESSED) {
+					// drag outside
+					//LOCKED = false;
 
+				}
+			}
+		}
+		
+		
+		// moved
+		if( event.getID() == MouseEvent.MOUSE_MOVED ) {
+			if(hitTest(MOUSE_X,MOUSE_Y)) {
+				if(!OVER) {
+					OVER = true;
+				}
+			} else if(OVER) {
+				OVER = false;
+			}
+		}
+		
 	}
 
+
 	//-----------------------------------------------------------------------------
-	//protected abstract boolean getOver();
+	protected boolean hitTest(int mx, int my) {
+		return ((mx > x) && (mx < x + width) && (my > y) && (my < y + height));
+	}
+
+
+	//-----------------------------------------------------------------------------
 	protected boolean getOver() {
+		/*
 		if(MOUSE_X > x && MOUSE_X < x+width && 
 		   MOUSE_Y > y && MOUSE_Y < y+height) {
 			OVER = true;
 		} else {
 			OVER = false;
 		}
+		*/
 		return OVER;
+	}
+	protected boolean getClicked() {
+		return CLICK;
+	}
+	protected boolean getPressed() {
+		return PRESSED;
+	}
+	protected boolean getLocked() {
+		return LOCKED;
 	}
 	protected boolean getMoved() {
 		return MOVED;
 	}
-	protected boolean getPressed() {
-		//return PRESSED;
-		return LOCKED;
+	protected boolean getReleased() {
+		return RELEASE;
 	}
 
 

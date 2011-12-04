@@ -258,6 +258,64 @@ public class FControl implements PConstants,FControlConstants {
 	}
 
 	
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		  height of gui element
+	 * @param _mode
+	 *		  BUTTON_NORMAL creates a generic button
+	 *		  BUTTON_LOAD creates a button which opens a file dialog use getFilePath() to retrieve the path to the file
+	 *
+	 */
+	public void addButton(String _name, float _x, float _y, int _w, int _h, int _mode) {
+		FButton fb = new FButton(p5);
+		fb.setName(_name);
+		fb.setCoord(_x, _y);
+		fb.setSize(_w, _h);
+		fb.setMode(_mode);
+
+		FLabel LabelValue = new FLabel(p5);
+		FLabel LabelInfo = new FLabel(p5);
+		LabelValue.setTypeface(typefaceReg,typefaceBold);
+		LabelInfo.setTypeface(typefaceReg,typefaceBold);
+
+		fb.setLabels(LabelValue, LabelInfo);
+		fb.setLabelType( LABEL_STRING );
+
+		FButtons.add(fb);
+	}
+
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		  height of gui element
+	 * @param _mode
+	 *		  BUTTON_NORMAL creates a generic button
+	 *		  BUTTON_LOAD creates a button which opens a file dialog use getFilePath() to retrieve the path to the file
+	 *		  
+	 */
+	public void addButton(String _name, int _series, float _x, float _y, int _w, int _h, int _mode) {
+		addButton(_name + Integer.toString(_series), _x,_y, _w,_h, _mode);
+	}
+	
+	
+	
 	//-----------------------------------------
 	// FHandle
 	//-----------------------------------------
@@ -1177,6 +1235,8 @@ public class FControl implements PConstants,FControlConstants {
 	/**
 	 * FDropDown
 	 * 
+	 * single element
+	 * 
 	 * @param _name
 	 *		  name of the gui element
 	 * @param _nameItem
@@ -1193,6 +1253,8 @@ public class FControl implements PConstants,FControlConstants {
 	
 	//-----------------------------------------------------------------------------
 	/**
+	 * single element
+	 * 
 	 * @param _name
 	 *		  name of the gui element
 	 * @param _val
@@ -1203,7 +1265,7 @@ public class FControl implements PConstants,FControlConstants {
 			FHandle fh = (FHandle) FHandles.get(i);
 			if(_name.compareTo(fh.name) == 0) fh.enableSnap(_val);
 		}
-		/*
+
 		for(int i=0; i<FSliders.size(); i++) {
 			FSlider fs = (FSlider) FSliders.get(i);
 			if(_name.compareTo(fs.name) == 0) fs.enableSnap(_val);
@@ -1212,10 +1274,11 @@ public class FControl implements PConstants,FControlConstants {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(_name.compareTo(fk.name) == 0) fk.enableSnap(_val);
 		}
-		*/
 	}
 	
 	/**
+	 * global
+	 * 
 	 * @param _name
 	 *		  name of the gui element
 	 */
@@ -1224,7 +1287,7 @@ public class FControl implements PConstants,FControlConstants {
 			FHandle fh = (FHandle) FHandles.get(i);
 			if(_name.compareTo(fh.name) == 0) fh.disableSnap();
 		}
-		/*
+
 		for(int i=0; i<FSliders.size(); i++) {
 			FSlider fs = (FSlider) FSliders.get(i);
 			if(_name.compareTo(fs.name) == 0) fs.disableSnap();
@@ -1233,7 +1296,6 @@ public class FControl implements PConstants,FControlConstants {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(_name.compareTo(fk.name) == 0) fk.disableSnap();
 		}
-		*/
 	}
 
 
@@ -1263,6 +1325,115 @@ public class FControl implements PConstants,FControlConstants {
 
 	//-----------------------------------------------------------------------------
 	/**
+	 * FHandles
+	 * FHandles3D
+	 * FSlider
+	 * FKnob
+	 * 
+	 * global
+	 * 
+	 * @param _val
+	 *		  increment value
+	 *		  LABEL_FLOAT displays value as a 2 decimal float
+	 *		  LABEL_INT displays value as an integer
+	 *		  LABEL_STRING displays values as a string
+	 */
+	public void setLabelType(int _labelType) {
+		for(int i=0; i<FHandles.size(); i++) {
+			FHandle fh = (FHandle) FHandles.get(i);
+			fh.setLabelType(_labelType);
+		}
+		for(int i=0; i<FHandle3Ds.size(); i++) {
+			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+			fh3.setLabelType(_labelType);
+		}
+		for(int i=0; i<FSliders.size(); i++) {
+			FSlider fs = (FSlider) FSliders.get(i);
+			fs.setLabelType(_labelType);
+		}
+		for(int i=0; i<FKnobs.size(); i++) {
+			FKnob fk = (FKnob) FKnobs.get(i);
+			fk.setLabelType(_labelType);
+		}
+	}
+
+	/**
+	 * FHandles
+	 * FHandles3D
+	 * FSlider
+	 * FKnob
+	 * 
+	 * single element
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _val
+	 *		  increment value
+	 *		  LABEL_FLOAT displays value as a 2 decimal float
+	 *		  LABEL_INT displays value as an integer
+	 *		  LABEL_STRING displays values as a string
+	 */
+	public void setLabelType(String _name, int _labelType) {
+		for(int i=0; i<FHandles.size(); i++) {
+			FHandle fh = (FHandle) FHandles.get(i);
+			if(_name.compareTo(fh.name) == 0) fh.setLabelType(_labelType);
+		}
+		for(int i=0; i<FHandle3Ds.size(); i++) {
+			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+			if(_name.compareTo(fh3.name) == 0) fh3.setLabelType(_labelType);
+		}
+		for(int i=0; i<FSliders.size(); i++) {
+			FSlider fs = (FSlider) FSliders.get(i);
+			if(_name.compareTo(fs.name) == 0) fs.setLabelType(_labelType);
+		}
+		for(int i=0; i<FKnobs.size(); i++) {
+			FKnob fk = (FKnob) FKnobs.get(i);
+			if(_name.compareTo(fk.name) == 0) fk.setLabelType(_labelType);
+		}
+	}
+	
+	/**
+	 * FHandles
+	 * FHandles3D
+	 * FSlider
+	 * FKnob
+	 * 
+	 * series element
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _val
+	 *		  increment value
+	 *		  LABEL_FLOAT displays value as a 2 decimal float
+	 *		  LABEL_INT displays value as an integer
+	 *		  LABEL_STRING displays values as a string
+	 */
+	public void setLabelType(String _name, int _series, int _labelType) {
+		String seriesName = _name + Integer.toString(_series);
+		for(int i=0; i<FHandles.size(); i++) {
+			FHandle fh = (FHandle) FHandles.get(i);
+			if(seriesName.compareTo(fh.name) == 0) fh.setLabelType(_labelType);
+		}
+		for(int i=0; i<FHandle3Ds.size(); i++) {
+			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+			if(seriesName.compareTo(fh3.name) == 0) fh3.setLabelType(_labelType);
+		}
+		for(int i=0; i<FSliders.size(); i++) {
+			FSlider fs = (FSlider) FSliders.get(i);
+			if(seriesName.compareTo(fs.name) == 0) fs.setLabelType(_labelType);
+		}
+		for(int i=0; i<FKnobs.size(); i++) {
+			FKnob fk = (FKnob) FKnobs.get(i);
+			if(seriesName.compareTo(fk.name) == 0) fk.setLabelType(_labelType);
+		}
+	}
+
+	
+	
+	//-----------------------------------------------------------------------------
+	/**
 	 * @param _colorInactive
 	 *		  set global inactive color for all gui elements
 	 */
@@ -1285,8 +1456,8 @@ public class FControl implements PConstants,FControlConstants {
 	public void setColorPressed(int _colorPressed) {
 		colorPressed = _colorPressed;
 	}
-
-
+	
+	
 
 	//-----------------------------------------------------------------------------
 	// gets
@@ -1440,6 +1611,51 @@ public class FControl implements PConstants,FControlConstants {
 		return floatVal;
 	}
 
+
+	//-----------------------------------------------------------------------------
+	/**
+	 * single element
+	 * 
+	 * return filePath of gui element 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 *		  
+	 */
+	public String getFilePath(String _name) {
+		String filePath = "";
+		for(int i=0; i<FButtons.size(); i++) {
+			FButton fb = (FButton) FButtons.get(i);
+			if(_name.compareTo(fb.name) == 0) filePath = fb.getFilePath();
+			//else return null;
+		}
+
+		return filePath;
+	}
+	
+	/**
+	 * return filePath of gui element 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *		  
+	 */
+	public String getFilePath(String _name, int _series) {
+		String filePath = "";
+		String seriesName = _name + Integer.toString(_series);
+		for(int i=0; i<FButtons.size(); i++) {
+			FButton fb = (FButton) FButtons.get(i);
+			if(seriesName.compareTo(fb.name) == 0) filePath = fb.getFilePath();
+			//else return null;
+		}
+
+		return filePath;
+	}
+
+	
+	
 	
 	//-----------------------------------------------------------------------------
 	/**
@@ -1559,7 +1775,124 @@ public class FControl implements PConstants,FControlConstants {
 
 	
 	/**
-	 * return whether the element has been moved/adjusted 
+	 * return whether the element has been clicked 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 *		  
+	 */
+	public boolean getClicked(String _name) {
+		boolean _clicked = false;
+
+		for(int i=0; i<FButtons.size(); i++) {
+			FButton fb = (FButton) FButtons.get(i);
+			if(_name.compareTo(fb.name) == 0) _clicked = fb.getClicked();
+		}		
+		for(int i=0; i<FChecks.size(); i++) {
+			FCheck fc = (FCheck) FChecks.get(i);
+			if(_name.compareTo(fc.name) == 0) _clicked = fc.getClicked();
+		}		
+		for(int i=0; i<FHandles.size(); i++) {
+			FHandle fh = (FHandle) FHandles.get(i);
+			if(_name.compareTo(fh.name) == 0) _clicked = fh.getClicked();
+		}
+		for(int i=0; i<FHandle3Ds.size(); i++) {
+			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+			if(_name.compareTo(fh3.name) == 0) _clicked = fh3.getClicked();
+		}
+		for(int i=0; i<FSliders.size(); i++) {
+			FSlider fs = (FSlider) FSliders.get(i);
+			if(_name.compareTo(fs.name) == 0) _clicked = fs.getClicked();
+		}
+		for(int i=0; i<FKnobs.size(); i++) {
+			FKnob fk = (FKnob) FKnobs.get(i);
+			if(_name.compareTo(fk.name) == 0) _clicked = fk.getClicked();
+		}
+		
+		return _clicked;
+	}
+	
+	
+	/**
+	 * return whether the element has been pressed 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 *		  
+	 */
+	public boolean getPressed(String _name) {
+		boolean _pressed = false;
+
+		for(int i=0; i<FButtons.size(); i++) {
+			FButton fb = (FButton) FButtons.get(i);
+			if(_name.compareTo(fb.name) == 0) _pressed = fb.getPressed();
+		}		
+		for(int i=0; i<FChecks.size(); i++) {
+			FCheck fc = (FCheck) FChecks.get(i);
+			if(_name.compareTo(fc.name) == 0) _pressed = fc.getPressed();
+		}		
+		for(int i=0; i<FHandles.size(); i++) {
+			FHandle fh = (FHandle) FHandles.get(i);
+			if(_name.compareTo(fh.name) == 0) _pressed = fh.getPressed();
+		}
+		for(int i=0; i<FHandle3Ds.size(); i++) {
+			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+			if(_name.compareTo(fh3.name) == 0) _pressed = fh3.getPressed();
+		}
+		for(int i=0; i<FSliders.size(); i++) {
+			FSlider fs = (FSlider) FSliders.get(i);
+			if(_name.compareTo(fs.name) == 0) _pressed = fs.getPressed();
+		}
+		for(int i=0; i<FKnobs.size(); i++) {
+			FKnob fk = (FKnob) FKnobs.get(i);
+			if(_name.compareTo(fk.name) == 0) _pressed = fk.getPressed();
+		}
+		
+		return _pressed;
+	}
+	
+	
+	/**
+	 * return whether the element is locked on 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 *		  
+	 */
+	public boolean getLocked(String _name) {
+		boolean _locked = false;
+
+		for(int i=0; i<FButtons.size(); i++) {
+			FButton fb = (FButton) FButtons.get(i);
+			if(_name.compareTo(fb.name) == 0) _locked = fb.getLocked();
+		}		
+		for(int i=0; i<FChecks.size(); i++) {
+			FCheck fc = (FCheck) FChecks.get(i);
+			if(_name.compareTo(fc.name) == 0) _locked = fc.getLocked();
+		}		
+		for(int i=0; i<FHandles.size(); i++) {
+			FHandle fh = (FHandle) FHandles.get(i);
+			if(_name.compareTo(fh.name) == 0) _locked = fh.getLocked();
+		}
+		for(int i=0; i<FHandle3Ds.size(); i++) {
+			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+			if(_name.compareTo(fh3.name) == 0) _locked = fh3.getLocked();
+		}
+		for(int i=0; i<FSliders.size(); i++) {
+			FSlider fs = (FSlider) FSliders.get(i);
+			if(_name.compareTo(fs.name) == 0) _locked = fs.getLocked();
+		}
+		for(int i=0; i<FKnobs.size(); i++) {
+			FKnob fk = (FKnob) FKnobs.get(i);
+			if(_name.compareTo(fk.name) == 0) _locked = fk.getLocked();
+		}
+		
+		return _locked;
+	}
+
+	
+	/**
+	 * return whether any element has been moved/adjusted 
 	 * 
 	 * @param _name
 	 *		  name of the gui element 
@@ -1621,43 +1954,42 @@ public class FControl implements PConstants,FControlConstants {
 	
 
 	/**
-	 * return whether the element has been pressed 
+	 * return whether the element has been released
 	 * 
 	 * @param _name
 	 *		  name of the gui element 
 	 *		  
 	 */
-	public boolean getPressed(String _name) {
-		boolean _pressed = false;
+	public boolean getReleased(String _name) {
+		boolean _released = false;
 
 		for(int i=0; i<FButtons.size(); i++) {
 			FButton fb = (FButton) FButtons.get(i);
-			if(_name.compareTo(fb.name) == 0) _pressed = fb.getPressed();
+			if(_name.compareTo(fb.name) == 0) _released = fb.getReleased();
 		}		
 		for(int i=0; i<FChecks.size(); i++) {
 			FCheck fc = (FCheck) FChecks.get(i);
-			if(_name.compareTo(fc.name) == 0) _pressed = fc.getPressed();
+			if(_name.compareTo(fc.name) == 0) _released = fc.getReleased();
 		}		
 		for(int i=0; i<FHandles.size(); i++) {
 			FHandle fh = (FHandle) FHandles.get(i);
-			if(_name.compareTo(fh.name) == 0) _pressed = fh.getPressed();
+			if(_name.compareTo(fh.name) == 0) _released = fh.getReleased();
 		}
 		for(int i=0; i<FHandle3Ds.size(); i++) {
 			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
-			if(_name.compareTo(fh3.name) == 0) _pressed = fh3.getPressed();
+			if(_name.compareTo(fh3.name) == 0) _released = fh3.getReleased();
 		}
 		for(int i=0; i<FSliders.size(); i++) {
 			FSlider fs = (FSlider) FSliders.get(i);
-			if(_name.compareTo(fs.name) == 0) _pressed = fs.getPressed();
+			if(_name.compareTo(fs.name) == 0) _released = fs.getReleased();
 		}
 		for(int i=0; i<FKnobs.size(); i++) {
 			FKnob fk = (FKnob) FKnobs.get(i);
-			if(_name.compareTo(fk.name) == 0) _pressed = fk.getPressed();
+			if(_name.compareTo(fk.name) == 0) _released = fk.getReleased();
 		}
 		
-		return _pressed;
+		return _released;
 	}
-	
 	
 	
 	//-----------------------------------------------------------------------------
