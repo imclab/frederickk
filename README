@@ -37,6 +37,5 @@ binary:  http://code.google.com/p/frederickk/
  *	old FKnob is now FHandle
  *	new FKnob is a round "slider" - i.e. like a real knob
  *	added additional tools
- *	added showFrameRateTitle() which will display the applications frameRate in the title
  *	changed getColorActive() to getColorOver()
- *	change setColorActive() to getColorOver()
+ *	change setColorActive() to setColorOver()
