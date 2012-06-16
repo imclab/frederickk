@@ -1,18 +1,28 @@
 import frederickk.tools.*;
 
 /**
- * FTimerExample
- * Ken Frederick
+ *  FTimer Example
+ *  Ken Frederick
  * 
- * Example showing the usage of the very rudimentary FTimer
+ *  Example showing the usage of the very rudimentary FTimer
  *
  */
 
+
+
+// ------------------------------------------------------------------------
+// properties
+// ------------------------------------------------------------------------
 FTimer timer;
 boolean timerRun = true;
 
 PFont typeface;
 
+
+
+// ------------------------------------------------------------------------
+// methods
+// ------------------------------------------------------------------------
 void setup() {
   size(200,200);
   typeface = createFont("LucidaGrande-Bold", 9);
@@ -23,6 +33,7 @@ void setup() {
   timer = new FTimer(this, 1000);
 }
 
+// ------------------------------------------------------------------------
 void draw() {
   background(0);
   noStroke();
@@ -49,6 +60,11 @@ void draw() {
 
 }
 
+
+
+// ------------------------------------------------------------------------
+// events
+// ------------------------------------------------------------------------
 void mousePressed() {
   timerRun = !timerRun;
 }

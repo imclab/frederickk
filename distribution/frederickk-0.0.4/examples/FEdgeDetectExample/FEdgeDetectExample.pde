@@ -1,19 +1,14 @@
-/**
- *  FEdgeDetect Example 
- *
- *  Ken Frederick
- *  ken.frederick@gmx.de
- *
- *  http://cargocollective.com/kenfrederick/
- *  http://kenfrederick.blogspot.com/
- *
- */
-
-// -----------------------------------------------------------------------------
-// libraries
-// -----------------------------------------------------------------------------
 import frederickk.tools.*;
 import frederickk.control.*;
+
+/**
+ *  FEdgeDetect Example 
+ *  Ken Frederick
+ * 
+ *  Example showing the usage of the FEdgeDetect
+ *  shows the edges of an image inspired from http://processing.org/learning/topics/edgedetection.html
+ * 
+ */
 
 
 

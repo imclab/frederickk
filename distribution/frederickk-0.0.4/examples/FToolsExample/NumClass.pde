@@ -1,5 +1,5 @@
 /**
- * NumClass
+ * NumClass.pde
  * Ken Frederick
  * 
  * An example class for use with the FConvert class
@@ -8,12 +8,20 @@
  * 
  */
 
-class NumClass {
-  Integer testInteger;
-  int testInt;
-  float testfloat;
+public class NumClass {
+  //-----------------------------------------------------------------------------
+  // properties
+  //-----------------------------------------------------------------------------
+  public Integer testInteger;
+  public int testInt;
+  public float testfloat;
 
-  NumClass(Integer _testInteger, int _testInt, float _testfloat) {
+
+
+  //-----------------------------------------------------------------------------
+  // constructor
+  //-----------------------------------------------------------------------------
+  public NumClass(Integer _testInteger, int _testInt, float _testfloat) {
     testInteger = _testInteger;
     testInt = _testInt;
     testfloat = _testfloat;

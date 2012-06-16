@@ -1,12 +1,21 @@
-//-----------------------------------------------------------------------------
-// libraries
-//-----------------------------------------------------------------------------
-import com.maxmind.geoip.*;
+import com.maxmind.geoip.*;  // http://www.maxmind.com/app/java
 import java.net.InetAddress;
 
 import frederickk.api.twitter.*;
 import frederickk.tools.*;
 import frederickk.control.*;
+
+/**
+ *  FTwitter Trends Example
+ *  Ken Frederick
+ * 
+ *  Example showing the usage of FTwitter
+ *  highlighing how to pull a feed of trends based
+ *  on location using an IP address
+ *  (work in progress)
+ *
+ */
+
 
 
 //-----------------------------------------------------------------------------
@@ -23,6 +32,11 @@ double location[] = new double[2];
 
 PFont typeface;
 
+
+
+//-----------------------------------------------------------------------------
+// methods
+//-----------------------------------------------------------------------------
 void setup() {
   size(800,600);
 
@@ -31,13 +45,14 @@ void setup() {
 
   tt = new TwitterThread(this);
   tt.start();
-  palette = new FPalette(this, "/data/palette/ge_palette.png");
+  palette = new FPalette(this, "/data/palette/palette.png");
 
   typeface = createFont("FuturaOTKF-Bold", 30);
   textFont(typeface);
 
 }
 
+//-----------------------------------------------------------------------------
 void draw() {
   background(palette.getColor(1));
   frame.setTitle(str(frameRate));  
@@ -55,9 +70,20 @@ void draw() {
 }
 
 
-//-----------------------------------------------------------------------------
-// methods
-//-----------------------------------------------------------------------------
+
+/**
+ *  in order to properly look up location based on IP address
+ *  you will need to download the following files from:
+ *  http://www.maxmind.com/app/geolite
+ *
+ *  put these in this sketch's "data" folder
+ *  "GeoIP.dat"
+ *  "GeoLiteCity.dat"
+ *
+ *  download this http://www.maxmind.com/app/java
+ *  and place the files within this sketch's "code" folder
+ *  or within the "libraries" folder
+ */
 void loadGeoIP() {
   try {
     cl = new LookupService(dataPath("GeoLiteCity.dat"), LookupService.GEOIP_INDEX_CACHE);

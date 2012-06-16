@@ -1,15 +1,19 @@
 import frederickk.control.*;
 
 /**
- * FControlExample
- * Ken Frederick
+ *  FControl DropDown Example
+ *  Ken Frederick
  * 
- * Example showing the usage of the FControl GUI elements:
- * FKnob, FCheck, FSlider, FMeter and being able to set your
- * own custom typeface, by default LucidaGrande-Bold is used
+ *  Example showing the usage of the FControl DropDown GUI element
+ *  (work in progress)
  * 
  */
- 
+
+
+
+//-----------------------------------------------------------------------------
+// properties
+//-----------------------------------------------------------------------------
 FControl gui;
 PFont typeface;
 

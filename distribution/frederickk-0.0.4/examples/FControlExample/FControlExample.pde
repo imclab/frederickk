@@ -1,7 +1,7 @@
 import frederickk.control.*;
 
 /**
- *  FControlExample
+ *  FControl Example
  *  Ken Frederick
  *  
  *  Example showing the usage of the FControl GUI elements:
@@ -9,7 +9,12 @@ import frederickk.control.*;
  *  own custom typeface, by default LucidaGrande-Bold is used
  *  
  */
- 
+
+
+
+//-----------------------------------------------------------------------------
+// properties
+//-----------------------------------------------------------------------------
 FControl gui;
 PFont typeface;
 

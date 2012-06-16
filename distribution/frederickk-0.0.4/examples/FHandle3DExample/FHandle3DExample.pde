@@ -2,16 +2,26 @@ import processing.opengl.*;
 import frederickk.control.*;
 
 /**
- * FKnob3DExample
- * Ken Frederick
+ *  FHandle3D Example
+ *  Ken Frederick
  * 
- * Example showing the usage of the FKnob3D GUI elements
+ *  Example showing the usage of the FHandle3D GUI element
  * 
  */
- 
+
+
+
+//-----------------------------------------------------------------------------
+// properties
+//-----------------------------------------------------------------------------
 FControl gui;
 PFont typeface;
 
+
+
+//-----------------------------------------------------------------------------
+// methods
+//-----------------------------------------------------------------------------
 void setup() {
   size(200,200, OPENGL);
   typeface = loadFont("FuturaT-Bold-10.vlw");
@@ -31,6 +41,7 @@ void setup() {
 
 }
 
+//-----------------------------------------------------------------------------
 void draw() {
   background(0);
   
