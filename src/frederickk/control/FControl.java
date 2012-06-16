@@ -468,6 +468,18 @@ public class FControl implements PConstants,FControlConstants {
 	// FCheck
 	//-----------------------------------------
 	/**
+	 * @param _fcheck
+	 *		  fcheck element
+	 */
+	public void addCheck(FCheck fcheck) {
+		FLabel LabelName = new FLabel(p5);
+		LabelName.setTypeface(typefaceBold);
+		fcheck.setLabels(LabelName);
+
+		FChecks.add(fcheck);
+	}
+	
+	/**
 	 * @param _name
 	 *		  name of the gui element
 	 * @param _x
@@ -1079,6 +1091,28 @@ public class FControl implements PConstants,FControlConstants {
 		}
 	}
 
+
+	
+	//-----------------------------------------------------------------------------
+	/**
+	 * FSlider
+	 * FKnob
+	 * 
+	 * single & series elements
+	 * 
+	 * @param _val
+	 *		  set loosenes of the sliding mechanism (globally for every slider and knob) 
+	 */
+	public void setLoose(int _val) {
+		for(int i=0; i<FSliders.size(); i++) {
+			FSlider fs = (FSlider) FSliders.get(i);
+			fs.setLoose(_val);
+		}
+		for(int i=0; i<FKnobs.size(); i++) {
+			FKnob fk = (FKnob) FKnobs.get(i);
+			fk.setLoose(_val);
+		}
+	}
 	
 	//-----------------------------------------------------------------------------
 	/**
@@ -1787,26 +1821,32 @@ public class FControl implements PConstants,FControlConstants {
 		for(int i=0; i<FButtons.size(); i++) {
 			FButton fb = (FButton) FButtons.get(i);
 			if(_name.compareTo(fb.name) == 0) _clicked = fb.getClicked();
+			else continue;
 		}		
 		for(int i=0; i<FChecks.size(); i++) {
 			FCheck fc = (FCheck) FChecks.get(i);
 			if(_name.compareTo(fc.name) == 0) _clicked = fc.getClicked();
+			else continue;
 		}		
 		for(int i=0; i<FHandles.size(); i++) {
 			FHandle fh = (FHandle) FHandles.get(i);
 			if(_name.compareTo(fh.name) == 0) _clicked = fh.getClicked();
+			else continue;
 		}
 		for(int i=0; i<FHandle3Ds.size(); i++) {
 			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
 			if(_name.compareTo(fh3.name) == 0) _clicked = fh3.getClicked();
+			else continue;
 		}
 		for(int i=0; i<FSliders.size(); i++) {
 			FSlider fs = (FSlider) FSliders.get(i);
 			if(_name.compareTo(fs.name) == 0) _clicked = fs.getClicked();
+			else continue;
 		}
 		for(int i=0; i<FKnobs.size(); i++) {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(_name.compareTo(fk.name) == 0) _clicked = fk.getClicked();
+			else continue;
 		}
 		
 		return _clicked;
@@ -1826,26 +1866,32 @@ public class FControl implements PConstants,FControlConstants {
 		for(int i=0; i<FButtons.size(); i++) {
 			FButton fb = (FButton) FButtons.get(i);
 			if(_name.compareTo(fb.name) == 0) _pressed = fb.getPressed();
+			else continue;
 		}		
 		for(int i=0; i<FChecks.size(); i++) {
 			FCheck fc = (FCheck) FChecks.get(i);
 			if(_name.compareTo(fc.name) == 0) _pressed = fc.getPressed();
+			else continue;
 		}		
 		for(int i=0; i<FHandles.size(); i++) {
 			FHandle fh = (FHandle) FHandles.get(i);
 			if(_name.compareTo(fh.name) == 0) _pressed = fh.getPressed();
+			else continue;
 		}
 		for(int i=0; i<FHandle3Ds.size(); i++) {
 			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
 			if(_name.compareTo(fh3.name) == 0) _pressed = fh3.getPressed();
+			else continue;
 		}
 		for(int i=0; i<FSliders.size(); i++) {
 			FSlider fs = (FSlider) FSliders.get(i);
 			if(_name.compareTo(fs.name) == 0) _pressed = fs.getPressed();
+			else continue;
 		}
 		for(int i=0; i<FKnobs.size(); i++) {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(_name.compareTo(fk.name) == 0) _pressed = fk.getPressed();
+			else continue;
 		}
 		
 		return _pressed;
@@ -1865,26 +1911,32 @@ public class FControl implements PConstants,FControlConstants {
 		for(int i=0; i<FButtons.size(); i++) {
 			FButton fb = (FButton) FButtons.get(i);
 			if(_name.compareTo(fb.name) == 0) _locked = fb.getLocked();
+			else continue;
 		}		
 		for(int i=0; i<FChecks.size(); i++) {
 			FCheck fc = (FCheck) FChecks.get(i);
 			if(_name.compareTo(fc.name) == 0) _locked = fc.getLocked();
+			else continue;
 		}		
 		for(int i=0; i<FHandles.size(); i++) {
 			FHandle fh = (FHandle) FHandles.get(i);
 			if(_name.compareTo(fh.name) == 0) _locked = fh.getLocked();
+			else continue;
 		}
 		for(int i=0; i<FHandle3Ds.size(); i++) {
 			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
 			if(_name.compareTo(fh3.name) == 0) _locked = fh3.getLocked();
+			else continue;
 		}
 		for(int i=0; i<FSliders.size(); i++) {
 			FSlider fs = (FSlider) FSliders.get(i);
 			if(_name.compareTo(fs.name) == 0) _locked = fs.getLocked();
+			else continue;
 		}
 		for(int i=0; i<FKnobs.size(); i++) {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(_name.compareTo(fk.name) == 0) _locked = fk.getLocked();
+			else continue;
 		}
 		
 		return _locked;

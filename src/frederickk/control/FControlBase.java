@@ -140,6 +140,7 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 				CLICK = true;
 			} else {
 				// nothing
+				//CLICK = false;
 			}
 		}
 
@@ -150,6 +151,7 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 				PRESSED = true;
 			} else {
 				// nothing
+				//PRESSED = false;
 			}
 		}
 

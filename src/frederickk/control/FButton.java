@@ -22,6 +22,10 @@ package frederickk.control;
 import processing.core.PApplet;
 import processing.core.PFont;
 
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+
 
 
 public class FButton extends FControlBase {
@@ -68,8 +72,8 @@ public class FButton extends FControlBase {
 	//-----------------------------------------------------------------------------
 	protected void update() {
 		if( getOver() && PRESSED ) {
-			LOCKED = true;
 			if(mode == BUTTON_LOAD) filePath = p5.selectInput(name);
+			LOCKED = true;
 		}
 	}
 
@@ -77,8 +81,9 @@ public class FButton extends FControlBase {
 	//-----------------------------------------------------------------------------
 	public void draw() {
 		update();
+		toggle();
 
-
+		
 		//-----------------------------------------
 		// controller
 		//-----------------------------------------
@@ -105,6 +110,39 @@ public class FButton extends FControlBase {
 	}
 
 
+	//-----------------------------------------------------------------------------
+	@SuppressWarnings("deprecation")
+	public String loadFile() {
+		/**
+	     *  http://processing.org/discourse/yabb2/YaBB.pl?board=Syntax;action=display;num=1140107049;start=0
+	     */
+
+	    Frame f = new Frame();
+	    String title = "Select File to Load";
+	    String defDir = "";
+	    String fileType = "";
+
+	    FileDialog fd = new FileDialog(f, title, FileDialog.LOAD);
+	    fd.setFile(fileType);
+	    fd.setDirectory(defDir);
+	    fd.setLocation(50, 50);
+	    fd.show();
+
+	    String path = fd.getDirectory()+fd.getFile();
+	    return path;
+	}
+	
+	
+	//-----------------------------------------------------------------------------
+	protected void toggle() {
+		if( LOCKED ) {
+			LOCKED = !LOCKED;
+			OVER = !OVER;
+			PRESSED = !PRESSED;
+		}
+	}
+	
+	
 	
 	//-----------------------------------------------------------------------------
 	// sets

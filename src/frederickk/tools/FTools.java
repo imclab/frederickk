@@ -303,28 +303,12 @@ public class FTools {
 
 	
 	/**
-	 * bitwise luminance
-	 * http://processing.org/discourse/yabb2/YaBB.pl?num=1164286894
-	 * 
-	 * @param col
-	 * 			color value 
+	 * return boolean value as int
 	 * 
 	 */
-	public static int luminance(int col){
-		return ( ((col>>16)&0xff)*9 + ((col>>8)&0xff)*19 + ((col&0xff)<<2) ) >> 5;
+	public static int boolToInt(boolean val) {
+		return (val) ? 1:0;
 	}
 
-	/*
-	public static int brightness(int col){
-		int a = (col >> 16) & 0xFF;
-		int b = (col >> 8) & 0xFF;
-		int c = col & 0xFF;
-
-		//max function taken from processing 
-		return (a > b) ? ((a > c) ? a : c) : ((b > c) ? b : c);
-	}
-	*/
-
-	
 	
 }

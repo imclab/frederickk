@@ -30,7 +30,8 @@ public class FSlider extends FControlBase {
 	//-----------------------------------------------------------------------------
 	private static final long serialVersionUID = 004L;
 
-	private int posMin, posMax, loose;
+	private int posMin, posMax;
+	private static int loose;
 	protected float pos, posNew, vMin, vMax;
 	protected float val;
 	private int dir;
@@ -42,12 +43,12 @@ public class FSlider extends FControlBase {
 	//-----------------------------------------------------------------------------
 	public FSlider(PApplet p5) {
 		super(p5);
-		loose = 3;
+		loose = 1; //3;
 	}
 
 	public FSlider(PApplet p5, String _name, float _x, float _y, int _w, int _h, float _vMin, float _vMax, float _val, int _labelType) {
 		super(p5);
-		loose = 3;
+		loose = 1; //3;
 
 		setName(_name);
 		setSize(_w,_h);
@@ -149,12 +150,18 @@ public class FSlider extends FControlBase {
 	//-----------------------------------------------------------------------------
 	// sets
 	//-----------------------------------------------------------------------------
+	public void setLoose(int val) {
+		loose = val;
+	}
+	
+	//-----------------------------------------------------------------------------
 	public void setSize(int _w, int _h) {
 		super.setSize(_w,_h);
 		if(height > width) setDirection(VERTICAL);
 		else setDirection(HORIZONTAL);
 	}
 	
+	//-----------------------------------------------------------------------------
 	public void setValue(int _val) {
 		val = _val;
 		posNew = (int) PApplet.map(val, vMin,vMax, posMin,posMax);
@@ -169,6 +176,7 @@ public class FSlider extends FControlBase {
 		vMax = _vMax;
 	}
 
+	//-----------------------------------------------------------------------------
 	private void setDirection(int _dir) {
 		dir = _dir;
 

@@ -37,7 +37,7 @@ public class FPalette {
 	private String pfad = "";
 	private int loc;
 
-	//private boolean RICHTUNG = true; //default direction is TOP_BOTTOM
+	//private boolean DIRECTION = true; //default direction is TOP_BOTTOM
 
 
 	
@@ -98,6 +98,55 @@ public class FPalette {
 		return w;
 	}
 
+	/**
+	 * find a color within the palette which corresponds to input color's brightness
+	 * 
+	 * @param _col
+	 *		  (int) color to to find brightness match of
+	 * @param lo
+	 *		  starting point within FPalette array
+	 * @param hi
+	 *		  ending point within FPalette array
+	 * @param thresh
+	 *		  range within to find color of matching brightness (1-255)
+	 */
+	public int matchBrightness(int _col, int lo, int hi, int thresh) {
+		if(thresh <= 1) thresh = 1;
+		if(lo < 0) lo = 0;
+		if(hi > colors.length) hi = colors.length;
+		int val = -1;
+	  
+		if(colors.length > 0) {
+			for(int i=lo; i<hi; i++) {
+				int r = thresh;
+				do {
+					if( p5.brightness(_col) > (p5.brightness(colors[i]) - r) &&
+						p5.brightness(_col) < (p5.brightness(colors[i]) + r) ) {
+						val = colors[i];
+						if(val != -1) break;
+					} else {
+						r += thresh;              
+					}
+				} while(val == -1);
+			}
+		}
+		return val;
+	}
+
+	/**
+	 * find a color within the palette which corresponds to input color's brightness
+	 * 
+	 * @param _col
+	 *		  (int) color to to find brightness match of
+	 * @param thresh
+	 *		  range within to find color of matching brightness (1-255)
+	 */
+	public int matchBrightness(int _col, int thresh) {
+		return matchBrightness(_col, 0,colors.length, thresh);
+	}
+
+
+	  
 	//-----------------------------------------------------------------------------
 	// sets
 	//-----------------------------------------------------------------------------
@@ -111,17 +160,17 @@ public class FPalette {
 
 
 	/**
-	 * @param wert
+	 * @param val
 	 *		  set the direction of color gathering TOP_BOTTOM or LEFT_RIGHT
 	 */
 	/*
-	public void setRichtung(String wert) {
-		if(wert == "TOP_BOTTOM") {
-			RICHTUNG = true;
-		} else if(wert == "LEFT_RIGHT") {
-			RICHTUNG = false;
+	public void setRichtung(String val) {
+		if(val == "TOP_BOTTOM") {
+			DIRECTION = true;
+		} else if(val == "LEFT_RIGHT") {
+			DIRECTION = false;
 		} else {
-			RICHTUNG = true;
+			DIRECTION = true;
 			System.out.println("invalid: default TOP_BOTTOM");
 		}
 	}
@@ -133,7 +182,7 @@ public class FPalette {
 	// gets
 	//-----------------------------------------------------------------------------
 	/**
-	 * return the palette base image path  
+	 * return the palette base image path as string  
 	 * 
 	 * @return pfad
 	 */
@@ -142,7 +191,7 @@ public class FPalette {
 	}
 
 	/**
-	 * return all of the created colors as an array 
+	 * return all of the created colors as an int array 
 	 * 
 	 * @return colors
 	 */
@@ -172,10 +221,10 @@ public class FPalette {
 	/**
 	 * @param w
 	 *		  number of color to use
-	 * @param wert
+	 * @param val
 	 *		  percentage of transparency 0.0 - 1.0
 	 */
-	public int getColorTrans(int w, float wert) {
+	public int getColorTrans(int w, float val) {
 		w = inBounds(w);
 		Color color = new Color( colors[w] );
 
@@ -184,7 +233,7 @@ public class FPalette {
 		float g = ( f >> 8 ) & 0xFF;
 		float b = f & 0xFF;
 
-		Color colorHold = new Color(r,g,b, 255*wert);
+		Color colorHold = new Color(r,g,b, 255*val);
 		int farbeTrans = colorHold.getRGB();
 		return farbeTrans;
 	}

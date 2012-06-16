@@ -43,7 +43,7 @@ import processing.core.PApplet;
 //-----------------------------------------------------------------------------
 // libraries
 //-----------------------------------------------------------------------------
-import processing.core.PApplet;
+//import processing.core.PApplet;
 
 
 
@@ -117,6 +117,7 @@ public class FFade {
 		}
 	}
 
+	//-----------------------------------------------------------------------------
 	public void fadeIn(){
 		if(bFadeIn)return;
 		if(alpha == 1.0f) return;
@@ -125,6 +126,7 @@ public class FFade {
 		bFadeOut = false;
 	}
 
+	//-----------------------------------------------------------------------------
 	public void fadeOut(){
 		if(bFadeOut)return;
 		if(alpha == 0.0f) return;
@@ -133,14 +135,30 @@ public class FFade {
 		bFadeIn = false;
 	}
 
+	//-----------------------------------------------------------------------------
+	/**
+	 *	return fading in
+	 * 
+	 *	@return bFadeIn 
+	 */
 	public boolean isFadingIn(){
 		return bFadeIn;
 	}
 
+	//-----------------------------------------------------------------------------
+	/**
+	 *	return fading out 
+	 * 
+	 *	@return bFadeOut 
+	 */
 	public boolean isFadingOut(){
 		return bFadeOut;
 	}
 
+	//-----------------------------------------------------------------------------
+	/**
+	 *	stop fade 
+	 */
 	public void stopFade(){
 		bBeginFade = bFadeIn = bFadeOut = false;
 	}
@@ -150,12 +168,29 @@ public class FFade {
 	//-----------------------------------------------------------------------------
 	// sets
 	//-----------------------------------------------------------------------------
+	/**
+	 * @param _seconds
+	 *		  length of fade in seconds 
+	 */
 	public void setFadeSeconds(float _seconds){
 		setFadeMillis((int)(_seconds * 1000.0f));
 	}
 
+	/**
+	 * @param _millis
+	 *		  length of fade in milliseconds 
+	 */
 	public void setFadeMillis(int _millis){
 		fadeMillis = _millis;
+	}
+
+	//-----------------------------------------------------------------------------
+	/**
+	 * @param val
+	 *		  alpha
+	 */
+	public void setAlpha(float val){
+		alpha = val;
 	}
 
 
@@ -171,10 +206,7 @@ public class FFade {
 		return fadeMillis;
 	}
 
-	public void setAlpha(float _a){
-		alpha = _a;
-	}
-
+	//-----------------------------------------------------------------------------
 	public float getAlpha(){
 		return alpha;
 	}

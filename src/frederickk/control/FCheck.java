@@ -31,7 +31,7 @@ public class FCheck extends FControlBase {
 	//-----------------------------------------------------------------------------
 	private static final long serialVersionUID = 004L;
 
-	private boolean val;
+	protected boolean val;
 
 
 
@@ -104,7 +104,7 @@ public class FCheck extends FControlBase {
 
 
 	//-----------------------------------------------------------------------------
-	private void toggle() {
+	protected void toggle() {
 		if( LOCKED ) {
 			val = !val;
 			
