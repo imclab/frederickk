@@ -1,9 +1,17 @@
-//-----------------------------------------------------------------------------
-// libraries
-//-----------------------------------------------------------------------------
 import frederickk.api.twitter.*;
 import frederickk.tools.*;
 import frederickk.control.*;
+
+/**
+ *  FTwitter User Timeline Example
+ *  Ken Frederick
+ * 
+ *  Example showing the usage of FTwitter
+ *  highlighing how to pull a feed of a user's timeline
+ *  (work in progress)
+ *
+ */
+
 
 
 //-----------------------------------------------------------------------------
@@ -15,6 +23,11 @@ TwitterThread tt;
 String txt = "";
 PFont typeface;
 
+
+
+//-----------------------------------------------------------------------------
+// methods
+//-----------------------------------------------------------------------------
 void setup() {
   size(800,600);
 
@@ -34,6 +47,7 @@ void setup() {
 
 }
 
+//-----------------------------------------------------------------------------
 void draw() {
   background(palette.getColor(1));
   frame.setTitle(str(frameRate));  

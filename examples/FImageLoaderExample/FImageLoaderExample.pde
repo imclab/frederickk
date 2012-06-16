@@ -1,13 +1,18 @@
 import frederickk.tools.*;
 
 /**
- * FImageLoaderExample
- * Ken Frederick
+ *  FImageLoader Example
+ *  Ken Frederick
  * 
- * Example showing the usage of the FImageLoader
+ *  Example showing the usage of the FImageLoader
  * 
  */
- 
+
+
+
+//-----------------------------------------------------------------------------
+// properties
+//-----------------------------------------------------------------------------
 FImageLoader imageLoader;
 PFont typeface;
 
@@ -20,6 +25,7 @@ void setup() {
 
 }
 
+//-----------------------------------------------------------------------------
 void draw() {
   background(0);
 

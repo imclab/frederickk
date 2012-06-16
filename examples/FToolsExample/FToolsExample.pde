@@ -1,23 +1,33 @@
 import frederickk.tools.*;
 
 /**
- * FToolsExample
- * Ken Frederick
+ *  FTools Example
+ *  Ken Frederick
  * 
- * Example showing the usage of the FTools class
+ *  Example showing the usage of the FTools class
  *
- * A selection of ArrayList Utility Methods modified for processing from
- * org.apache.commons.lang (ArrayUtils.java)
- * http://commons.apache.org/lang/
+ *  A selection of ArrayList Utility Methods modified for processing from
+ *  org.apache.commons.lang (ArrayUtils.java)
+ *  http://commons.apache.org/lang/
  * 
  */
 
+
+
+//-----------------------------------------------------------------------------
+// properties
+//-----------------------------------------------------------------------------
 Integer[] integerExample;
 ArrayList numClassList = new ArrayList();
 ArrayList PVectorList = new ArrayList();
 
+
+
+//-----------------------------------------------------------------------------
+// methods
+//-----------------------------------------------------------------------------
 void setup() {
-  /**
+  /*
    * for more information on arrays and arrayLists
    *
    * http://processing.org/reference/Array.html
@@ -26,9 +36,7 @@ void setup() {
    */
 
 
-  //-----------------------------------------------------------------------------
   // there is no need to instantiate the FTools class
-  //-----------------------------------------------------------------------------
 
 
   // populate Array integerExample
@@ -43,7 +51,8 @@ void setup() {
     println(integerExample[i]);
   } 
 
-  /**
+
+  /*
    * reverse
    *
    * reverse the order of any array
@@ -55,7 +64,8 @@ void setup() {
     println(integerExample[i]);
   } 
 
-  /**
+
+  /*
    * toPrimitive (int[])
    *
    * convert an Integer[] array into primitive int[] array
@@ -69,24 +79,16 @@ void setup() {
   } 
 
 
-  //-----------------------------------------------------------------------------
-
-
   // populate ArrayList numClassList
   // with an NumClass of misc. numbers
-
   for(int i=0; i<4; i++) {
     numClassList.add( new NumClass(i, i+1, i/0.3) );
   }
 
 
-  //-----------------------------------------------------------------------------
-
-
   // populate ArrayList PVectorList
   // with PVector objects
   // http://processing.org/reference/PVector.html
-
   println();
   println("PVectorList");
   for(int i=0; i<4; i++) {
@@ -97,7 +99,8 @@ void setup() {
     PVectorList.add( new PVector(x,y) );
   }
 
-  /**
+
+  /*
    * to2DArray (float[][])
    *
    * convert an ArrayList of PVector into a float[][3] 2D array

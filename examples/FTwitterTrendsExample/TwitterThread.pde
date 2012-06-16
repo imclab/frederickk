@@ -2,6 +2,7 @@
  *  until i figure out how to implement multi-threading
  *  inside of the library itself, this is my bootleg workaround
  */
+
 public class TwitterThread implements Runnable {
   // -----------------------------------------------------------------------------
   // properties
@@ -18,11 +19,18 @@ public class TwitterThread implements Runnable {
   // -----------------------------------------------------------------------------
   // constructor
   // -----------------------------------------------------------------------------
-  public TwitterThread(PApplet parent) {
+  public TwitterThread(PApplet parent, int timing) {
     parent.registerDispose(this);
-    twitter = new FTwitter(parent);
-    timer = new FTimer(parent, 10000);
 
+    twitter = new FTwitter(parent);
+    timer = new FTimer(parent, timing);
+    runThread = true;
+  }
+  public TwitterThread(PApplet parent, String _ConsumerKey, String _ConsumerSecret, String _AccessToken, String _AccessTokenSecret, int timing) {
+    parent.registerDispose(this);
+
+    twitter = new FTwitter(parent, _ConsumerKey,_ConsumerSecret, _AccessToken,_AccessTokenSecret);
+    timer = new FTimer(parent, timing);
     runThread = true;
   }
 
@@ -41,19 +49,9 @@ public class TwitterThread implements Runnable {
       if(timer.getTrigger()) update();
     }
   }
-
-  private void update() {
-    println("checking for trends");
-    result = twitter.getTrendsLocation(location[0], location[1]);
-    //result = twitter.getTrends();
-  }
-
   public void stop() {
     thread = null;
   }
-
-  // this will magically be called by the parent once the user hits stop
-  // this functionality hasn't been tested heavily so if it doesn't work, file a bug
   public void dispose() {
     stop();
   }
@@ -66,10 +64,19 @@ public class TwitterThread implements Runnable {
     runThread = true;
   }
 
+  // -----------------------------------------------------------------------------
+  private void update() {
+    //println("checking for new tweets");
+    
+    //replace this with whatever method you're
+    //looking to load from FTwitter
+    result = twitter.getTimeline("GE_Deutschland");
+  }
+
 
 
   // -----------------------------------------------------------------------------
-  // methods
+  // gets
   // -----------------------------------------------------------------------------
   public ArrayList getList() {
     return result;

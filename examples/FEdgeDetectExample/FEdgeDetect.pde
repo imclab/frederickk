@@ -9,6 +9,7 @@
  */
 
 
+
 public class FEdgeDetect {
   // -----------------------------------------------------------------------------
   // properties
@@ -28,6 +29,8 @@ public class FEdgeDetect {
   public boolean bProcessImage = false;
   public boolean bProcessMovie = false;
 
+
+
   // -----------------------------------------------------------------------------
   // constructor
   // -----------------------------------------------------------------------------
@@ -37,6 +40,7 @@ public class FEdgeDetect {
   public FEdgeDetect(PImage _img) {
     setImage(_img);
   }
+
 
 
   // -----------------------------------------------------------------------------
@@ -110,6 +114,7 @@ public class FEdgeDetect {
   }
 
 
+
   // -----------------------------------------------------------------------------
   // sets
   // -----------------------------------------------------------------------------
@@ -119,6 +124,8 @@ public class FEdgeDetect {
     edgeImg = createImage(img.width, img.height, RGB);
     // edgeImg.filter(THRESHOLD, .4);
   }
+
+
 
   // -----------------------------------------------------------------------------
   // gets

@@ -1,19 +1,15 @@
-/**
- *  FKulerExample
- *  Ken Frederick
- *  
- *  Example showing the usage of FKuler for color palettes
- *  as well as how to implement a custom FControl gui element
- *  
- */
- 
-// ------------------------------------------------------------------------
-// libraries
-// ------------------------------------------------------------------------
 import frederickk.tools.*;
 import frederickk.control.*;
 import frederick.api.kuler.*;
 
+/**
+ *  FKuler Example
+ *  Ken Frederick
+ * 
+ *  Example showing the usage of FKuler for color palettes
+ *  as well as how to implement a custom FControl gui element
+ * 
+ */
 
 
 
@@ -24,7 +20,6 @@ FKuler kuler;
 String kulerKey = "5F5D21FE5CA6CBE00A40BD4457BAF3BA";
 
 FControl gui;
-
 
 
 
@@ -39,7 +34,7 @@ void setup() {
   gui = new FControl(this);
 
 
-  /**
+  /*
    *  kuler
    */
   kuler = new FKuler(this, kulerKey);
@@ -52,7 +47,7 @@ void setup() {
   int rand = 0; //(int) random(kuler.getThemeCount());
 
 
-  /**
+  /*
    *  custom checkbox
    */
   ColorCheck[] cc = new ColorCheck[kuler.getSwatches(rand).length];
