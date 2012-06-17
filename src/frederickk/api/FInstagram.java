@@ -1,7 +1,7 @@
-package frederickk.api.instagram;
+package frederickk.api;
 
-/*
- *  Frederickk.api.instagram 001
+/**
+ *  FInstagram.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de

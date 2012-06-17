@@ -1,7 +1,7 @@
-import com.maxmind.geoip.*;  // http://www.maxmind.com/app/java
+import com.maxmind.geoip.*;  // https://github.com/frederickk/ProcessingGeoIP
 import java.net.InetAddress;
 
-import frederickk.api.twitter.*;
+import frederickk.api.*;
 import frederickk.tools.*;
 import frederickk.control.*;
 
@@ -14,6 +14,9 @@ import frederickk.control.*;
  *  on location using an IP address
  *  (work in progress)
  *
+ *  requires java code from http://www.maxmind.com/app/java
+ *  I've compiled this into a processing compatible library
+ *  which can be downloaded here https://github.com/frederickk/ProcessingGeoIP
  */
 
 
@@ -80,9 +83,8 @@ void draw() {
  *  "GeoIP.dat"
  *  "GeoLiteCity.dat"
  *
- *  download this http://www.maxmind.com/app/java
- *  and place the files within this sketch's "code" folder
- *  or within the "libraries" folder
+ *  download https://github.com/frederickk/ProcessingGeoIP
+ *  place the files from "distribution" within the "libraries" folder
  */
 void loadGeoIP() {
   try {

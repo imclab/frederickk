@@ -1,7 +1,7 @@
-package frederickk.api.flickr;
+package frederickk.api;
 
-/*
- *  Frederickk.api.flickr 001
+/**
+ *  FFlickrSearch.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -11,7 +11,13 @@ package frederickk.api.flickr;
  *
  *  a library for easier use of the flickr api
  *  http://github.com/frederickk/frederickk
+ *  
+ *  multi-threading insight via marius watz
+ *  http://processing.org/discourse/yabb2/YaBB.pl?board=Integrate;action=display;num=1204990614
  *
+ *  and ben fry
+ *  http://processing.org/discourse/yabb2/YaBB.pl?num=1119238260
+ * 
  */
 
 
@@ -20,28 +26,28 @@ package frederickk.api.flickr;
 // libraries
 //-----------------------------------------------------------------------------
 import processing.core.*;
-import processing.core.PApplet;
+import processing.xml.*;
+import java.util.ArrayList;
 
 
 
-class FFlickrSource {
+public class FFlickrSearch implements FFlickrConstants,Runnable {
 	//-----------------------------------------------------------------------------
 	// properties
 	//-----------------------------------------------------------------------------
 	private static PApplet p5;
+	private Thread thread;
+
+	private String url = "";
+
+
 	
-	protected PImage img;
-	protected boolean LOADED = false;
-	protected boolean ERROR = false;
-	protected String url;
-
-
-
 	//-----------------------------------------------------------------------------
 	// constructor
 	//-----------------------------------------------------------------------------
-	public FFlickrSource(PApplet papplet, String _url) {
-		url = _url;
+	public FFlickrSearch(PApplet papplet) {
+		p5 = papplet;
+		p5.registerDispose(this);
 	}
 
 
@@ -49,16 +55,20 @@ class FFlickrSource {
 	//-----------------------------------------------------------------------------
 	// methods
 	//-----------------------------------------------------------------------------
-	void load() {
-		System.out.println("nLoading image: " + url);
-		img = p5.loadImage(url);
-
-		if(img == null) ERROR = true;
-		LOADED = true;
-
-		if(ERROR) System.out.println("Error occurred when loading image.");
-		else System.out.println("Load successful. " + 
-				"Image size is " + img.width + "x" + img.height);
+	/**
+	 * run() is a required method
+	 */
+	public void run() {
 
 	}
+
+
+
+	//-----------------------------------------------------------------------------
+	// sets
+	//-----------------------------------------------------------------------------
+	protected void setURL(String _url) {
+		url = _url;
+	}
+	
 }

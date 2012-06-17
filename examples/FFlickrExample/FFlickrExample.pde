@@ -1,4 +1,4 @@
-import frederickk.api.flickr.*;
+import frederickk.api.*;
 
 /**
  *  FFlickr Example 

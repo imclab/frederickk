@@ -27,7 +27,7 @@ import processing.core.PVector;
 
 public class FKnob extends FSlider {
 	//-----------------------------------------------------------------------------
-	//properties
+	// properties
 	//-----------------------------------------------------------------------------
 	private static final long serialVersionUID = 004L;
 
@@ -59,7 +59,7 @@ public class FKnob extends FSlider {
 
 
 	//-----------------------------------------------------------------------------
-	//methods
+	// methods
 	//-----------------------------------------------------------------------------
 	public void draw() {
 		update();

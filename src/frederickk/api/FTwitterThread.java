@@ -1,8 +1,8 @@
-package frederickk.api.twitter;
+package frederickk.api;
 
 
-/*
- *  Frederickk.api.twitter 0.0.2
+/**
+ *  FTwitterThread.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de

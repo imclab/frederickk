@@ -1,4 +1,4 @@
-import frederickk.api.twitter.*;
+import frederickk.api.*;
 import frederickk.tools.*;
 import frederickk.control.*;
 

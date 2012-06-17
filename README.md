@@ -1,17 +1,18 @@
-/*
- *  Frederickk Library 0.0.4
- *
- *  Ken Frederick
- *  ken.frederick@gmx.de
- *
- *  http://cargocollective.com/kenfrederick/
- *  http://kenfrederick.blogspot.com/
- *
- */
+Frederickk Library 0.0.4
+===============
+
+Ken Frederick
+
+ken.frederick@gmx.de
 
 
-// About
-// -----------------------------------------
+http://cargocollective.com/kenfrederick/
+
+http://kenfrederick.blogspot.com/
+
+
+About
+===============
 This a collection of GUI elements and various tools for use with 
 Processing (http://www.processing.org/) that I find useful.
 
@@ -19,8 +20,9 @@ source:  https://github.com/frederickk/frederickk
 binary:  http://code.google.com/p/frederickk/
 
 
-// Change Log
-// -----------------------------------------
+Change Log
+===============
+
  -	0.0.1
  *	created initial library
 

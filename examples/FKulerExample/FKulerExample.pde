@@ -1,6 +1,6 @@
 import frederickk.tools.*;
 import frederickk.control.*;
-import frederick.api.kuler.*;
+import frederickk.api.*;
 
 /**
  *  FKuler Example

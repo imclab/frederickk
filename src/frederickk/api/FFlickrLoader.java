@@ -1,7 +1,7 @@
-package frederickk.api.flickr;
+package frederickk.api;
 
-/*
- *  Frederickk.api.flickr 001
+/**
+ *  FFlickrLoader.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de

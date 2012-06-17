@@ -1,7 +1,7 @@
-package frederickk.api.kuler;
+package frederickk.api;
 
 /**
- *  Frederickk.api.kuler 001
+ *  FKuler.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de

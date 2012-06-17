@@ -1,7 +1,7 @@
-package frederickk.api.flickr;
+package frederickk.api;
 
-/*
- *  Frederickk.api.flickr 001
+/**
+ *  FFlickr.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -22,6 +22,8 @@ package frederickk.api.flickr;
 import processing.core.*;
 import processing.xml.*;
 import java.util.ArrayList;
+
+
 
 public class FFlickr implements FFlickrConstants, Runnable {
 	//-----------------------------------------------------------------------------
@@ -63,7 +65,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	/**
 	 * instantiate FFlickr
 	 * 
-	 * @param thePApplet
+	 * @param papplet
 	 * 			PApplet
 	 */
 	public FFlickr(PApplet papplet) {
@@ -75,7 +77,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	/**
 	 * instantiate FFlickr
 	 * 
-	 * @param thePApplet
+	 * @param papplet
 	 * 			PApplet
 	 * @param _key
 	 * 			authentication key
