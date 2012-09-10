@@ -1,4 +1,4 @@
-Frederickk Library 0.0.4
+Frederickk Library 0.0.5
 ===============
 
 Ken Frederick
@@ -17,7 +17,7 @@ This a collection of GUI elements and various tools for use with
 Processing (http://www.processing.org/) that I find useful.
 
 source:  https://github.com/frederickk/frederickk
-binary:  http://code.google.com/p/frederickk/
+binary:  https://github.com/frederickk/frederickk/blob/master/distribution/frederickk-0.0.5/download/frederickk-0.0.5.zip
 
 
 Change Log
@@ -41,3 +41,10 @@ Change Log
  *	added additional tools
  *	changed getColorActive() to getColorOver()
  *	change setColorActive() to setColorOver()
+
+ -	0.0.5
+ *	updated for processing 2.0b1
+ *	fixing getClicked() and getPressed() (still buggy)
+ *	added setSize() and setPos() to adjust elements after instaniation
+ *	added FDropDown (still buggy)
+ 
