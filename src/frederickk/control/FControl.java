@@ -1,7 +1,8 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 0.0.4
+ *  Frederickk.Control 0.0.5
+ *  FControl.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -26,7 +27,7 @@ import processing.core.PConstants;
 
 //import java.awt.event.MouseEvent;
 import java.awt.Color;
-import java.awt.Frame;
+//import java.awt.Frame;
 import java.util.ArrayList;
 
 
@@ -37,6 +38,8 @@ public class FControl implements PConstants,FControlConstants {
 	//-----------------------------------------------------------------------------
 	protected static PApplet p5;
 	//protected static Frame frame;
+
+	private int sleepTime = 150;
 
 	
 	// controllers
@@ -53,9 +56,10 @@ public class FControl implements PConstants,FControlConstants {
 	private boolean boolVal;
 	private int intVal;
 	private float floatVal;
-	private int selVal;
+	private String selStrVal = new String();
+	private int selIntVal;
 
-
+	
 	// colors
 //	private static int colorInactive;
 //	private static int colorOver;
@@ -193,7 +197,7 @@ public class FControl implements PConstants,FControlConstants {
 	private void welcome() {
 		System.out.println( "\n" );
 		System.out.println( "-----------------------------------------------------------------------------" );
-		System.out.println( "Frederickk Library 0.0.4" );
+		System.out.println( "Frederickk Library 0.0.5" );
 		System.out.println( "FControl" );
 		System.out.println( "http://github.com/frederickk/frederickk" );
 		System.out.println( "http://kenfrederick.blogspot.com/\n" );
@@ -224,7 +228,7 @@ public class FControl implements PConstants,FControlConstants {
 	public void addButton(String _name, float _x, float _y, int _w, int _h) {
 		FButton fb = new FButton(p5);
 		fb.setName(_name);
-		fb.setCoord(_x, _y);
+		fb.setPos(_x, _y);
 		fb.setSize(_w, _h);
 
 		FLabel LabelValue = new FLabel(p5);
@@ -277,7 +281,7 @@ public class FControl implements PConstants,FControlConstants {
 	public void addButton(String _name, float _x, float _y, int _w, int _h, int _mode) {
 		FButton fb = new FButton(p5);
 		fb.setName(_name);
-		fb.setCoord(_x, _y);
+		fb.setPos(_x, _y);
 		fb.setSize(_w, _h);
 		fb.setMode(_mode);
 
@@ -335,7 +339,7 @@ public class FControl implements PConstants,FControlConstants {
 	public void addHandle(String _name, float _x, float _y, int _w, int _h, int _labelType) {
 		FHandle fh = new FHandle(p5);
 		fh.setName(_name);
-		fh.setCoord(_x, _y);
+		fh.setPos(_x, _y);
 		fh.setSize(_w, _h);
 
 		FLabel LabelValue = new FLabel(p5);
@@ -401,14 +405,12 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  z value of gui element
 	 * @param _w
 	 *		  width of gui element
-	 * @param _h
-	 *		  height of gui element
 	 *		  
 	 */
 	public void addHandle3D(String _name, float _x, float _y, float _z, int _w, int _labelType) {
 		FHandle3D fh3 = new FHandle3D(p5);
 		fh3.setName(_name);
-		fh3.setCoord(_x, _y, _z);
+		fh3.setPos(_x, _y, _z);
 		fh3.setSize(_w, _w);
 
 		FLabel LabelValue = new FLabel(p5);
@@ -434,8 +436,6 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  z value of gui element
 	 * @param _w
 	 *		  width of gui element
-	 * @param _h
-	 *		  height of gui element
 	 *		  
 	 */
 	public void addHandle3D(String _name, float _x, float _y, float _z, int _w) {
@@ -455,8 +455,6 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  z value of gui element
 	 * @param _w
 	 *		  width of gui element
-	 * @param _h
-	 *		  height of gui element
 	 *		  
 	 */
 	public void addHandle3D(String _name, int _series, float _x, float _y, float _z, int _w) {
@@ -468,7 +466,7 @@ public class FControl implements PConstants,FControlConstants {
 	// FCheck
 	//-----------------------------------------
 	/**
-	 * @param _fcheck
+	 * @param fcheck
 	 *		  fcheck element
 	 */
 	public void addCheck(FCheck fcheck) {
@@ -495,7 +493,7 @@ public class FControl implements PConstants,FControlConstants {
 	public void addCheck(String _name, float _x, float _y, int _sz, boolean _val) {
 		FCheck fc = new FCheck(p5);
 		fc.setName(_name);
-		fc.setCoord(_x, _y);
+		fc.setPos(_x, _y);
 		fc.setSize(_sz,_sz);
 		fc.setValue(_val);
 
@@ -568,7 +566,7 @@ public class FControl implements PConstants,FControlConstants {
 	public void addSlider(String _name, float _x, float _y, int _w, int _h, float _vMin, float _vMax, float _val, int _labelType) {
 		FSlider fs = new FSlider(p5);
 		fs.setName(_name);
-		fs.setCoord(_x, _y);
+		fs.setPos(_x, _y);
 		fs.setSize(_w,_h);
 		fs.setValueRange(_vMin,_vMax);
 		fs.setValue(_val);
@@ -701,7 +699,7 @@ public class FControl implements PConstants,FControlConstants {
 	public void addKnob(String _name, float _x, float _y, int _r, float _vMin, float _vMax, float _val, int _labelType) {
 		FKnob fk = new FKnob(p5);
 		fk.setName(_name);
-		fk.setCoord(_x, _y);
+		fk.setPos(_x, _y);
 		fk.setRadius(_r);
 		fk.setValueRange(_vMin,_vMax);
 		fk.setValue(_val);
@@ -816,14 +814,18 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  width of gui element
 	 * @param _h
 	 *		 height of gui element
+	 * @param items
+	 *		 array of menu items
 	 *		 
 	 */
-	public void addDropDown(String _name, float _x, float _y, int _w, int _h) {
+	public void addDropDown(String _name, float _x, float _y, int _w, int _h, String[] items) {
 		FDropDown fd = new FDropDown(p5);
 		fd.setName(_name);
-		fd.setCoord(_x, _y);
+		fd.setPos(_x, _y);
 		fd.setSize(_w, _h);
 
+		fd.addItem(items);
+		
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
 		LabelValue.setTypeface(typefaceReg,typefaceBold);
@@ -833,7 +835,37 @@ public class FControl implements PConstants,FControlConstants {
 		
 		FDropDowns.add(fd);
 	}
-	
+
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		 height of gui element
+	 * @param items
+	 *		 array of menu items
+	 * @param selected
+	 *		 initial value
+	 *		 
+	 */
+	public void addDropDown(String _name, float _x, float _y, int _w, int _h, String[] items, String selected) {
+		FDropDown fd = new FDropDown(p5, _name, _x,_y, _w,_h, items, selected);	
+		
+		FLabel LabelValue = new FLabel(p5);
+		FLabel LabelInfo = new FLabel(p5);
+		LabelValue.setTypeface(typefaceReg,typefaceBold);
+		LabelInfo.setTypeface(typefaceReg,typefaceBold);
+		fd.setLabels(LabelValue, LabelInfo);
+		fd.setLabelType( LABEL_STRING );
+		
+		FDropDowns.add(fd);
+	}
+
 	
 	//-----------------------------------------
 	// FLabel
@@ -871,56 +903,49 @@ public class FControl implements PConstants,FControlConstants {
 		p5.pushStyle();
 		p5.rectMode(CORNER);
 		p5.strokeWeight(1);
-		for(int i=0; i<FButtons.size(); i++) {
-			FButton fb = (FButton) FButtons.get(i);
+		for(FButton fb : FButtons) {
 			fb.setColorOver( colorOver );
 			fb.setColorPressed( colorPressed );
 			fb.setColorInactive( colorInactive );
 			fb.showLabels( bShowLabels );
 			fb.draw();
 		}
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			fh.setColorOver( colorOver );
 			fh.setColorPressed( colorPressed );
 			fh.setColorInactive( colorInactive );
 			fh.showLabels( bShowLabels );
 			fh.draw();
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			fh3.setColorOver( colorOver );
 			fh3.setColorPressed( colorPressed );
 			fh3.setColorInactive( colorInactive );
 			fh3.showLabels( bShowLabels );
 			fh3.draw();
 		}
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			fc.setColorOver( colorOver );
 			fc.setColorPressed( colorPressed );
 			fc.setColorInactive( colorInactive );
 			fc.showLabels( bShowLabels );
 			fc.draw();
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			fs.setColorOver( colorOver );
 			fs.setColorPressed( colorPressed );
 			fs.setColorInactive( colorInactive );
 			fs.showLabels( bShowLabels );
 			fs.draw();
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			fk.setColorOver( colorOver );
 			fk.setColorPressed( colorPressed );
 			fk.setColorInactive( colorInactive );
 			fk.showLabels( bShowLabels );
 			fk.draw();
 		}
-		for(int i=0; i<FDropDowns.size(); i++) {
-			FDropDown fd = (FDropDown) FDropDowns.get(i);
+		for(FDropDown fd : FDropDowns) {
 			fd.setColorOver( colorOver );
 			fd.setColorPressed( colorPressed );
 			fd.setColorInactive( colorInactive );
@@ -949,23 +974,23 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public void showLabels(boolean val, String _name) {
 		/*
-		for(int i=0; i<FButtons.size(); i++) {
+		for(FButton fb : FButtons) {
 			FButton fb = (FButton) FButtons.get(i);
 			if(_name.compareTo(fb.name) == 0) fb.showLabels( val );
 		}
-		for(int i=0; i<FHandles.size(); i++) {
+		for(FHandle fh : FHandles) {
 			FHandle fh = (FHandle) FHandles.get(i);
 			if(_name.compareTo(fh.name) == 0) fh.showLabels( val );
 		}
-		for(int i=0; i<FChecks.size(); i++) {
+		for(FCheck fc : FChecks) {
 			FCheck fc = (FCheck) FChecks.get(i);
 			if(_name.compareTo(fc.name) == 0) fc.showLabels( val );
 		}
-		for(int i=0; i<FSliders.size(); i++) {
+		for(FSlider fs : FSliders) {
 			FSlider fs = (FSlider) FSliders.get(i);
 			if(_name.compareTo(fs.name) == 0) fs.showLabels( val );
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
+		for(FKnob fk : FKnobs) {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(_name.compareTo(fk.name) == 0) fk.showLabels( val );
 		}
@@ -1005,6 +1030,122 @@ public class FControl implements PConstants,FControlConstants {
 	// sets
 	//-----------------------------------------------------------------------------
 	/**
+	 * FButton
+	 * FHandle
+	 * FHandle3D
+	 * FSliders
+	 * FDropDowns
+	 * 
+	 * set width,height of specific element
+	 * 
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _width
+	 *		  set width of gui element 
+	 * @param _height
+	 *		  set height of gui element 
+	 */
+	public void setSize(String _name, float _width, float _height) {
+		for(FButton fb : FButtons) {
+			if(_name.compareTo(fb.name) == 0) fb.setSize((int)_width, (int)_height);
+		}
+		for(FHandle fh : FHandles) {
+			if(_name.compareTo(fh.name) == 0) fh.setSize((int)_width, (int)_height);
+		}
+		for(FHandle3D fh3 : FHandle3Ds) {
+			if(_name.compareTo(fh3.name) == 0) fh3.setSize((int)_width, (int)_height);
+		}
+		for(FSlider fs : FSliders) {
+			if(_name.compareTo(fs.name) == 0) fs.setSize((int)_width, (int)_height);
+		}
+		for(FDropDown fd : FDropDowns) {
+			if(_name.compareTo(fd.name) == 0) fd.setSize((int)_width, (int)_height);
+		}
+	}
+
+	/**
+	 * FCheck
+	 * FKnob
+	 * 
+	 * set radius of specfic element
+	 * 
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _radius
+	 *		  radius of element 
+	 */
+	public void setSize(String _name, float _radius) {
+		for(FCheck fc : FChecks) {
+			if(_name.compareTo(fc.name) == 0) fc.setSize((int)_radius,(int)_radius);
+		}
+		for(FKnob fk : FKnobs) {
+			if(_name.compareTo(fk.name) == 0) fk.setSize((int)_radius,(int)_radius);
+		}
+	}
+	
+	
+	//-----------------------------------------------------------------------------
+	/**
+	 * FButton
+	 * FHandle
+	 * FSliders
+	 * FDropDowns
+	 * FCheck
+	 * FKnob
+	 * 
+	 * set x,y position of specfic element
+	 * 
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _x
+	 *		  set x position of gui element 
+	 * @param _y
+	 *		  set y position of gui element 
+	 */
+	public void setPos(String _name, float _x, float _y) {
+		for(FButton fb : FButtons) {
+			if(_name.compareTo(fb.name) == 0) fb.setPos((int)_x, (int)_y);
+		}
+		for(FHandle fh : FHandles) {
+			if(_name.compareTo(fh.name) == 0) fh.setPos((int)_x, (int)_y);
+		}
+		for(FSlider fs : FSliders) {
+			if(_name.compareTo(fs.name) == 0) fs.setPos((int)_x, (int)_y);
+		}
+		for(FDropDown fd : FDropDowns) {
+			if(_name.compareTo(fd.name) == 0) fd.setPos((int)_x, (int)_y);
+		}
+		for(FCheck fc : FChecks) {
+			if(_name.compareTo(fc.name) == 0) fc.setPos((int)_x,(int)_y);
+		}
+		for(FKnob fk : FKnobs) {
+			if(_name.compareTo(fk.name) == 0) fk.setPos((int)_x,(int)_y);
+		}
+	}
+
+	/**
+	 * FHandle3D
+	 * 
+	 * set x,y,z position of specific element
+	 * 
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _x
+	 *		  set x position of gui element 
+	 * @param _y
+	 *		  set y position of gui element 
+	 * @param _z
+	 *		  set z position of gui element 
+	 */
+	public void setSize(String _name, float _x, float _y, float _z) {
+		for(FHandle3D fh3 : FHandle3Ds) {
+			if(_name.compareTo(fh3.name) == 0) fh3.setPos((int)_x, (int)_y, (int)_z);
+		}
+	}
+	
+	
+	//-----------------------------------------------------------------------------
+	/**
 	 * FHandle
 	 * FHandle3D
 	 * 
@@ -1016,13 +1157,11 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  set element PVector value 
 	 */
 	public void setValue(String _name, PVector _val) {
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
-			if(_name.compareTo(fh.name) == 0) fh.setCoord(_val.x,_val.y);
+		for(FHandle fh : FHandles) {
+			if(_name.compareTo(fh.name) == 0) fh.setPos(_val.x,_val.y);
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
-			if(_name.compareTo(fh3.name) == 0) fh3.setCoord(_val.x,_val.y,_val.z);
+		for(FHandle3D fh3 : FHandle3Ds) {
+			if(_name.compareTo(fh3.name) == 0) fh3.setPos(_val.x,_val.y,_val.z);
 		}
 	}
 
@@ -1042,13 +1181,11 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public void setValue(String _name, int _series, PVector _val) {
 		String seriesName = _name + Integer.toString(_series);
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
-			if(seriesName.compareTo(fh.name) == 0) fh.setCoord(_val.x,_val.y);
+		for(FHandle fh : FHandles) {
+			if(seriesName.compareTo(fh.name) == 0) fh.setPos(_val.x,_val.y);
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
-			if(seriesName.compareTo(fh3.name) == 0) fh3.setCoord(_val.x,_val.y,_val.z);
+		for(FHandle3D fh3 : FHandle3Ds) {
+			if(seriesName.compareTo(fh3.name) == 0) fh3.setPos(_val.x,_val.y,_val.z);
 		}
 	}
 
@@ -1065,8 +1202,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  set element boolean value 
 	 */
 	public void setValue(String _name, boolean _val) {
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(_name.compareTo(fc.name) == 0) fc.setValue(_val);
 		}
 	}
@@ -1085,8 +1221,7 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public void setValue(String _name, int _series, boolean _val) {
 		String seriesName = _name + Integer.toString(_series);
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(seriesName.compareTo(fc.name) == 0) fc.setValue(_val);
 		}
 	}
@@ -1104,12 +1239,10 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  set loosenes of the sliding mechanism (globally for every slider and knob) 
 	 */
 	public void setLoose(int _val) {
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			fs.setLoose(_val);
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			fk.setLoose(_val);
 		}
 	}
@@ -1127,12 +1260,10 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  set element int value 
 	 */
 	public void setValue(String _name, int _val) {
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) fs.setValue(_val);
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) fk.setValue(_val);
 		}
 	}
@@ -1149,12 +1280,10 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  set element float value 
 	 */
 	public void setValue(String _name, float _val) {
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) fs.setValue(_val);
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) fk.setValue(_val);
 		}
 	}	
@@ -1176,12 +1305,10 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public void setValue(String _name, int _series, int _val) {
 		String seriesName = _name + Integer.toString(_series);
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(seriesName.compareTo(fs.name) == 0) fs.setValue(_val);
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(seriesName.compareTo(fk.name) == 0) fk.setValue(_val);
 		}
 	}
@@ -1201,12 +1328,10 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public void setValue(String _name, int _series, float _val) {
 		String seriesName = _name + Integer.toString(_series);
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(seriesName.compareTo(fs.name) == 0) fs.setValue(_val);
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(seriesName.compareTo(fk.name) == 0) fk.setValue(_val);
 		}
 	}
@@ -1227,12 +1352,10 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  maximum value of gui element
 	 */
 	public void setValueRange(String _name, float _vMin, float _vMax) {
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) fs.setValueRange(_vMin,_vMax);
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) fk.setValueRange(_vMin,_vMax);
 		}
 	}
@@ -1254,12 +1377,10 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public void setValueRange(String _name, int _series, float _vMin, float _vMax) {
 		String seriesName = _name + Integer.toString(_series);
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(seriesName.compareTo(fs.name) == 0) fs.setValueRange(_vMin,_vMax);
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(seriesName.compareTo(fk.name) == 0) fk.setValueRange(_vMin,_vMax);
 		}
 	}
@@ -1278,8 +1399,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public void addItem(String _name, String _nameItem) {
-		for(int i=0; i<FDropDowns.size(); i++) {
-			FDropDown fd = (FDropDown) FDropDowns.get(i);
+		for(FDropDown fd : FDropDowns) {
 			if(_name.compareTo(fd.name) == 0) fd.addItem(_nameItem);
 		}
 	}
@@ -1295,17 +1415,14 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  increment value
 	 */
 	public void enableSnap(String _name, float _val) {
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(_name.compareTo(fh.name) == 0) fh.enableSnap(_val);
 		}
 
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) fs.enableSnap(_val);
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) fk.enableSnap(_val);
 		}
 	}
@@ -1317,17 +1434,13 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  name of the gui element
 	 */
 	public void disableSnap(String _name) {
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(_name.compareTo(fh.name) == 0) fh.disableSnap();
 		}
-
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) fs.disableSnap();
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) fk.disableSnap();
 		}
 	}
@@ -1366,27 +1479,23 @@ public class FControl implements PConstants,FControlConstants {
 	 * 
 	 * global
 	 * 
-	 * @param _val
+	 * @param _labelType
 	 *		  increment value
 	 *		  LABEL_FLOAT displays value as a 2 decimal float
 	 *		  LABEL_INT displays value as an integer
 	 *		  LABEL_STRING displays values as a string
 	 */
 	public void setLabelType(int _labelType) {
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			fh.setLabelType(_labelType);
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			fh3.setLabelType(_labelType);
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			fs.setLabelType(_labelType);
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			fk.setLabelType(_labelType);
 		}
 	}
@@ -1401,27 +1510,23 @@ public class FControl implements PConstants,FControlConstants {
 	 * 
 	 * @param _name
 	 *		  name of the gui element 
-	 * @param _val
+	 * @param _labelType
 	 *		  increment value
 	 *		  LABEL_FLOAT displays value as a 2 decimal float
 	 *		  LABEL_INT displays value as an integer
 	 *		  LABEL_STRING displays values as a string
 	 */
 	public void setLabelType(String _name, int _labelType) {
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(_name.compareTo(fh.name) == 0) fh.setLabelType(_labelType);
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			if(_name.compareTo(fh3.name) == 0) fh3.setLabelType(_labelType);
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) fs.setLabelType(_labelType);
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) fk.setLabelType(_labelType);
 		}
 	}
@@ -1438,7 +1543,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  name of the gui element 
 	 * @param _series
 	 *		  number marker for multiple elements (i.e. name + series = "name0")
-	 * @param _val
+	 * @param _labelType
 	 *		  increment value
 	 *		  LABEL_FLOAT displays value as a 2 decimal float
 	 *		  LABEL_INT displays value as an integer
@@ -1446,20 +1551,16 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public void setLabelType(String _name, int _series, int _labelType) {
 		String seriesName = _name + Integer.toString(_series);
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(seriesName.compareTo(fh.name) == 0) fh.setLabelType(_labelType);
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			if(seriesName.compareTo(fh3.name) == 0) fh3.setLabelType(_labelType);
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(seriesName.compareTo(fs.name) == 0) fs.setLabelType(_labelType);
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(seriesName.compareTo(fk.name) == 0) fk.setLabelType(_labelType);
 		}
 	}
@@ -1476,7 +1577,7 @@ public class FControl implements PConstants,FControlConstants {
 	}
 
 	/**
-	 * @param _colorActive
+	 * @param _colorOver
 	 *		  set global over color for all gui elements
 	 */
 	public void setColorOver(int _colorOver) {
@@ -1506,8 +1607,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public boolean getBoolValue(String _name) {
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(_name.compareTo(fc.name) == 0) boolVal = fc.getValue();
 			//else bool = null;
 		}
@@ -1525,8 +1625,7 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public boolean getBoolValue(String _name, int _series) {
 		String seriesName = _name + Integer.toString(_series);
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(seriesName.compareTo(fc.name) == 0) boolVal = fc.getValue();
 			//else bool = null;
 		}
@@ -1545,18 +1644,15 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public int getIntValue(String _name) {
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(_name.compareTo(fc.name) == 0) intVal = ( fc.getValue() )?1:0;
 			//else bool = null;
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) intVal = fs.getIntValue();
 			//else return null;
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) intVal = fk.getIntValue();
 			//else return null;
 		}
@@ -1575,18 +1671,15 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public int getIntValue(String _name, int _series) {
 		String seriesName = _name + Integer.toString(_series);
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(seriesName.compareTo(fc.name) == 0) intVal = ( fc.getValue() )?1:0;
 			//else bool = null;
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(seriesName.compareTo(fs.name) == 0) intVal = fs.getIntValue();
 			//else return null;
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(seriesName.compareTo(fk.name) == 0) intVal = fk.getIntValue();
 			//else return null;
 		}
@@ -1606,13 +1699,11 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public float getFloatValue(String _name) {
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) floatVal = fs.getFloatValue();
 			//else return null;
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) floatVal = fk.getFloatValue();
 			//else return null;
 		}
@@ -1631,13 +1722,11 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public float getFloatValue(String _name, int _series) {
 		String seriesName = _name + Integer.toString(_series);
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(seriesName.compareTo(fs.name) == 0) floatVal = fs.getFloatValue();
 			//else return null;
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(seriesName.compareTo(fk.name) == 0) floatVal = fk.getFloatValue();
 			//else return null;
 		}
@@ -1658,8 +1747,7 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public String getFilePath(String _name) {
 		String filePath = "";
-		for(int i=0; i<FButtons.size(); i++) {
-			FButton fb = (FButton) FButtons.get(i);
+		for(FButton fb : FButtons) {
 			if(_name.compareTo(fb.name) == 0) filePath = fb.getFilePath();
 			//else return null;
 		}
@@ -1679,8 +1767,7 @@ public class FControl implements PConstants,FControlConstants {
 	public String getFilePath(String _name, int _series) {
 		String filePath = "";
 		String seriesName = _name + Integer.toString(_series);
-		for(int i=0; i<FButtons.size(); i++) {
-			FButton fb = (FButton) FButtons.get(i);
+		for(FButton fb : FButtons) {
 			if(seriesName.compareTo(fb.name) == 0) filePath = fb.getFilePath();
 			//else return null;
 		}
@@ -1704,24 +1791,19 @@ public class FControl implements PConstants,FControlConstants {
 	public PVector getCoord(String _name) {
 		PVector vector = new PVector();
 
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(_name.compareTo(fh.name) == 0) vector = fh.getCoord();
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			if(_name.compareTo(fh3.name) == 0) vector = fh3.getCoord();
 		}
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(_name.compareTo(fc.name) == 0) vector = fc.getCoord();
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) vector = fs.getCoord();
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) vector = fk.getCoord();
 		}
 
@@ -1744,24 +1826,19 @@ public class FControl implements PConstants,FControlConstants {
 		PVector vector = new PVector();
 		String seriesName = _name + Integer.toString(_series);
 
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(seriesName.compareTo(fh.name) == 0) vector = fh.getCoord();
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			if(seriesName.compareTo(fh3.name) == 0) vector = fh3.getCoord();
 		}
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(seriesName.compareTo(fc.name) == 0) vector = fc.getCoord();
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(seriesName.compareTo(fs.name) == 0) vector = fs.getCoord();
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(seriesName.compareTo(fk.name) == 0) vector = fk.getCoord();
 		}
 
@@ -1783,24 +1860,19 @@ public class FControl implements PConstants,FControlConstants {
 	public boolean getOver(String _name) {
 		boolean _over = false;
 
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(_name.compareTo(fh.name) == 0) _over = fh.getOver();
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			if(_name.compareTo(fh3.name) == 0) _over = fh3.getOver();
 		}
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(_name.compareTo(fc.name) == 0) _over = fc.getOver();
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) _over = fs.getOver();
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) _over = fk.getOver();
 		}
 		
@@ -1818,37 +1890,37 @@ public class FControl implements PConstants,FControlConstants {
 	public boolean getClicked(String _name) {
 		boolean _clicked = false;
 
-		for(int i=0; i<FButtons.size(); i++) {
-			FButton fb = (FButton) FButtons.get(i);
+		for(FButton fb : FButtons) {
 			if(_name.compareTo(fb.name) == 0) _clicked = fb.getClicked();
 			else continue;
 		}		
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(_name.compareTo(fc.name) == 0) _clicked = fc.getClicked();
 			else continue;
 		}		
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(_name.compareTo(fh.name) == 0) _clicked = fh.getClicked();
 			else continue;
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			if(_name.compareTo(fh3.name) == 0) _clicked = fh3.getClicked();
 			else continue;
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) _clicked = fs.getClicked();
 			else continue;
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) _clicked = fk.getClicked();
 			else continue;
 		}
 		
+		try {
+			Thread.sleep(sleepTime);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		return _clicked;
 	}
 	
@@ -1863,37 +1935,37 @@ public class FControl implements PConstants,FControlConstants {
 	public boolean getPressed(String _name) {
 		boolean _pressed = false;
 
-		for(int i=0; i<FButtons.size(); i++) {
-			FButton fb = (FButton) FButtons.get(i);
+		for(FButton fb : FButtons) {
 			if(_name.compareTo(fb.name) == 0) _pressed = fb.getPressed();
 			else continue;
 		}		
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(_name.compareTo(fc.name) == 0) _pressed = fc.getPressed();
 			else continue;
 		}		
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(_name.compareTo(fh.name) == 0) _pressed = fh.getPressed();
 			else continue;
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			if(_name.compareTo(fh3.name) == 0) _pressed = fh3.getPressed();
 			else continue;
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) _pressed = fs.getPressed();
 			else continue;
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) _pressed = fk.getPressed();
 			else continue;
 		}
 		
+		try {
+			Thread.sleep(sleepTime);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		return _pressed;
 	}
 	
@@ -1908,33 +1980,27 @@ public class FControl implements PConstants,FControlConstants {
 	public boolean getLocked(String _name) {
 		boolean _locked = false;
 
-		for(int i=0; i<FButtons.size(); i++) {
-			FButton fb = (FButton) FButtons.get(i);
+		for(FButton fb : FButtons) {
 			if(_name.compareTo(fb.name) == 0) _locked = fb.getLocked();
 			else continue;
 		}		
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(_name.compareTo(fc.name) == 0) _locked = fc.getLocked();
 			else continue;
 		}		
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(_name.compareTo(fh.name) == 0) _locked = fh.getLocked();
 			else continue;
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			if(_name.compareTo(fh3.name) == 0) _locked = fh3.getLocked();
 			else continue;
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) _locked = fs.getLocked();
 			else continue;
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) _locked = fk.getLocked();
 			else continue;
 		}
@@ -1945,28 +2011,20 @@ public class FControl implements PConstants,FControlConstants {
 	
 	/**
 	 * return whether any element has been moved/adjusted 
-	 * 
-	 * @param _name
-	 *		  name of the gui element 
-	 *		  
 	 */
 	public boolean getMoved() {
 		boolean _moved = false;
 
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			_moved = fh.getMoved();
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			_moved = fh3.getMoved();
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			_moved = fs.getMoved();
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			_moved = fk.getMoved();
 		}
 		
@@ -1984,20 +2042,16 @@ public class FControl implements PConstants,FControlConstants {
 	public boolean getMoved(String _name) {
 		boolean _moved = false;
 
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(_name.compareTo(fh.name) == 0) _moved = fh.getMoved();
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			if(_name.compareTo(fh3.name) == 0) _moved = fh3.getMoved();
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) _moved = fs.getMoved();
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) _moved = fk.getMoved();
 		}
 		
@@ -2015,28 +2069,22 @@ public class FControl implements PConstants,FControlConstants {
 	public boolean getReleased(String _name) {
 		boolean _released = false;
 
-		for(int i=0; i<FButtons.size(); i++) {
-			FButton fb = (FButton) FButtons.get(i);
+		for(FButton fb : FButtons) {
 			if(_name.compareTo(fb.name) == 0) _released = fb.getReleased();
 		}		
-		for(int i=0; i<FChecks.size(); i++) {
-			FCheck fc = (FCheck) FChecks.get(i);
+		for(FCheck fc : FChecks) {
 			if(_name.compareTo(fc.name) == 0) _released = fc.getReleased();
 		}		
-		for(int i=0; i<FHandles.size(); i++) {
-			FHandle fh = (FHandle) FHandles.get(i);
+		for(FHandle fh : FHandles) {
 			if(_name.compareTo(fh.name) == 0) _released = fh.getReleased();
 		}
-		for(int i=0; i<FHandle3Ds.size(); i++) {
-			FHandle3D fh3 = (FHandle3D) FHandle3Ds.get(i);
+		for(FHandle3D fh3 : FHandle3Ds) {
 			if(_name.compareTo(fh3.name) == 0) _released = fh3.getReleased();
 		}
-		for(int i=0; i<FSliders.size(); i++) {
-			FSlider fs = (FSlider) FSliders.get(i);
+		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) _released = fs.getReleased();
 		}
-		for(int i=0; i<FKnobs.size(); i++) {
-			FKnob fk = (FKnob) FKnobs.get(i);
+		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) _released = fk.getReleased();
 		}
 		
@@ -2049,18 +2097,37 @@ public class FControl implements PConstants,FControlConstants {
 	 * return the selection from FDropDown 
 	 * 
 	 * @param _name
-	 *		  name of the gui element 
+	 *		  name of the dropdown gui element
+	 *
+	 * @return
+	 * 		  String (name) of the element selected
 	 *		  
 	 */
-	public int getSelection(String _name) {
-		for(int i=0; i<FDropDowns.size(); i++) {
-			FDropDown fd = (FDropDown) FDropDowns.get(i);
-			if(_name.compareTo(fd.name) == 0) selVal = fd.getSelection();
+	public String getSelection(String _name) {
+		for(FDropDown fd : FDropDowns) {
+			if(_name.compareTo(fd.name) == 0) selStrVal = fd.getSelection();
 		}
-		return selVal;
+		return selStrVal;
 	}
 	
+	/**
+	 * return the selection from FDropDown 
+	 * 
+	 * @param _name
+	 *		  name of the dropdown gui element
+	 *
+	 * @return
+	 * 		  int (index) of the element selected
+	 *		  
+	 */
+	public int getSelectionIndex(String _name) {
+		for(FDropDown fd : FDropDowns) {
+			if(_name.compareTo(fd.name) == 0) selIntVal = fd.getSelectionIndex();
+		}
+		return selIntVal;
+	}
 
+	
 	//-----------------------------------------------------------------------------
 	/**
 	 * return inactive color (as int) 

@@ -1,6 +1,7 @@
 package frederickk.api;
 
 /**
+ *  Frederickk.Api 0.0.5
  *  FKuler.java
  *
  *  Ken Frederick
@@ -63,7 +64,7 @@ public class FKuler {
 	 * 
 	 * @param p5
 	 * 			instance of the applet
-	 * @param key 
+	 * @param _key 
 	 * 			required Kuler developer API key http://kuler.adobe.com/api 
 	 * 
 	 */
@@ -202,7 +203,7 @@ public class FKuler {
 
 
 	//-----------------------------------------------------------------------------
-	//gets
+	// gets 
 	//-----------------------------------------------------------------------------
 	/**
 	 * @param search

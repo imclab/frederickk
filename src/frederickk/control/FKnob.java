@@ -1,7 +1,8 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 0.0.4
+ *  Frederickk.Control 0.0.5
+ *  FKnob.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -47,7 +48,7 @@ public class FKnob extends FSlider {
 		super(p5);
 		
 		setRadius(_radius);
-		setCoord(_x,_y);
+		setPos(_x,_y);
 		setName(_name);
 
 		setValueRange(_vMin,_vMax);
@@ -164,7 +165,7 @@ public class FKnob extends FSlider {
 
 	
 	//-----------------------------------------------------------------------------
-	//gets
+	// gets 
 	//-----------------------------------------------------------------------------
 	private PVector getAngle(float offset) {
 		float ax = (float) (x + Math.cos( angle ) * (radius*0.5 - offset));

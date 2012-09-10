@@ -1,6 +1,7 @@
 package frederickk.api;
 
 /**
+ *  Frederickk.Api 0.0.5
  *  FFlickr.java
  *
  *  Ken Frederick
@@ -298,7 +299,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	}
 
 	/**
-	 * @param _mstb</p>
+	 * @param _mstb
 	 * 			s - small square 75x75</br>
 	 * 			t - thumbnail, 100 on longest side</br>
 	 * 			m - small, 240 on longest side</br>
@@ -421,8 +422,6 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	 *		  3 - Medium
 	 *		  
 	 * return the sizes of photo
-	 * 
-	 * @return images[w]
 	 */
 	public void getSizes(String id, int sz) {
 		String url = SERVICE_URL_REST + 

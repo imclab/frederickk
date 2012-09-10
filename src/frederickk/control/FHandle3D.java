@@ -1,7 +1,8 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 0.0.4
+ *  Frederickk.Control 0.0.5
+ *  FHandle3D.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -165,7 +166,7 @@ public class FHandle3D extends FHandle {
 	//-----------------------------------------------------------------------------
 	// sets
 	//-----------------------------------------------------------------------------
-	public void setCoord(float _x, float _y, float _z) {
+	public void setPos(float _x, float _y, float _z) {
 		x = (int) _x;
 		y = (int) _y;
 		z = _z;

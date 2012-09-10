@@ -1,7 +1,8 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 0.0.4
+ *  Frederickk.Control 0.0.5
+ *  FCheck.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -47,7 +48,7 @@ public class FCheck extends FControlBase {
 		super(p5);
 		setName(_name);
 		setSize(_sz,_sz);
-		setCoord(_x,_y);
+		setPos(_x,_y);
 		setValue(_val);
 	}
 
@@ -104,13 +105,18 @@ public class FCheck extends FControlBase {
 
 
 	//-----------------------------------------------------------------------------
-	protected void toggle() {
+	protected boolean toggle() {
 		if( LOCKED ) {
 			val = !val;
 			
 			LOCKED = !LOCKED;
 			OVER = !OVER;
 			PRESSED = !PRESSED;
+			
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 

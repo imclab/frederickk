@@ -1,7 +1,8 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 0.0.4
+ *  Frederickk.Tools 0.0.5
+ *  FPalette.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -47,7 +48,7 @@ public class FPalette {
 	/**
 	 * instantiate FPalette
 	 * 
-	 * @param thePApplet
+	 * @param papplet
 	 * 			PApplet
 	 * @param p
 	 *		  the path of the palette image to load
@@ -57,31 +58,25 @@ public class FPalette {
 			PApplet papplet,
 			String p) {
 
+		p5 = papplet;
 		setPath(p);
+		setImage( p5.loadImage( p5.sketchPath + pfad) );
+	}
+	/**
+	 * instantiate FPalette
+	 * 
+	 * @param papplet
+	 * 			PApplet
+	 * @param img
+	 *		  the image of the palette
+	 * 
+	 */
+	public FPalette(
+			PApplet papplet,
+			PImage img) {
 
 		p5 = papplet;
-
-		img = p5.loadImage( p5.sketchPath + pfad);
-		img.loadPixels();
-
-		colors = new int[img.width*img.height];
-		
-		int index = 0;
-		//top to bottom
-		//System.out.println("TOP_BOTTOM");
-		for (int i=0; i<img.width; i++) {
-			for (int j=0; j<img.height; j++) {
-				//-----------------------------------------------------------------------------
-				//get the color and location of images pixels
-				//-----------------------------------------------------------------------------
-				loc = i + j*img.width; 
-				colors[index] = img.pixels[loc];
-				
-				index++;
-			}  
-		}
-
-	
+		setImage(img);
 	}
 
 
@@ -89,6 +84,21 @@ public class FPalette {
 	//-----------------------------------------------------------------------------
 	// methods
 	//-----------------------------------------------------------------------------
+	private void load() {
+		img.loadPixels();
+		colors = new int[img.width*img.height];
+		int index = 0;
+		//top to bottom
+		//System.out.println("TOP_BOTTOM");
+		for (int i=0; i<img.width; i++) {
+			for (int j=0; j<img.height; j++) {
+				loc = i + j*img.width; 
+				colors[index] = img.pixels[loc];
+				index++;
+			}  
+		}
+	}
+	
 	/**
 	 * @param w
 	 *		  value to keep within the range of colors created
@@ -158,6 +168,14 @@ public class FPalette {
 		this.pfad = pfad;
 	}
 
+	/**
+	 * @param img
+	 *		  the image of the palette
+	 */
+	public void setImage(PImage img) {
+		this.img = img;
+		load();
+	}
 
 	/**
 	 * @param val

@@ -1,6 +1,7 @@
 package frederickk.api;
 
 /**
+ *  Frederickk.Api 0.0.5
  *  FInstagram.java
  *
  *  Ken Frederick

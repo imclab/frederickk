@@ -1,7 +1,8 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 0.0.4
+ *  Frederickk.Tools 0.0.5
+ *  FTools.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -33,11 +34,12 @@ public class FTools {
 	//------------------------------------------------------------------------
 	public static final float[] EMPTY_FLOAT_ARRAY = new float[0];
 	public static final Float[] EMPTY_FLOAT_OBJECT_ARRAY = new Float[0];
+	public static final float[] _map = {90.0f, 9.00f, 4.00f, 2.33f, 1.50f, 1.00f, 0.66f, 0.43f, 0.25f, 0.11f, 0.01f};
 
-
+	
 
 	//------------------------------------------------------------------------
-	// methods
+	// Arrays
 	//------------------------------------------------------------------------
 	/**
 	 * Reverse
@@ -45,7 +47,7 @@ public class FTools {
 	 * Reverses the order of the given array. There is no special handling for
 	 * multi-dimensional arrays.
 	 * 
-	 * @param array
+	 * @param _array
 	 *			the array to reverse, may be <code>null</code>
 	 */
 	public static void reverse(Object[] _array) {
@@ -67,7 +69,7 @@ public class FTools {
 	/**
 	 * Converts an array of object Integers to int[]
 	 * 
-	 * @param array
+	 * @param _array
 	 *			a <code>Integer</code> array, may be <code>null</code>
 	 * @return an <code>int</code> array, <code>null</code> if null array input
 	 * @throws NullPointerException
@@ -88,7 +90,7 @@ public class FTools {
 	/**
 	 * Converts an ArrayList to int[]
 	 * 
-	 * @param array
+	 * @param _array
 	 *			a <code>Integer</code> ArrayList, may be <code>null</code>
 	 * @return an <code>int</code> array, <code>null</code> if null array input
 	 * @throws NullPointerException
@@ -196,7 +198,7 @@ public class FTools {
 	/**
 	 * Converts an ArrayList<Object> to float[][]
 	 * 
-	 * @param array
+	 * @param _array
 	 *			a <code>Integer</code> ArrayList, may be <code>null</code>
 	 * @return an <code>int</code> array, <code>null</code> if null array input
 	 * @throws NullPointerException
@@ -217,7 +219,7 @@ public class FTools {
 	/**
 	 * Converts an ArrayList<PVector> to float[][]
 	 * 
-	 * @param array
+	 * @param _array
 	 *			a <code>Integer</code> ArrayList, may be <code>null</code>
 	 * @return an <code>int</code> array, <code>null</code> if null array input
 	 * @throws NullPointerException
@@ -237,19 +239,47 @@ public class FTools {
 		return floatArray;
 	}
 
+
+	/**
+	 * finds maximum value within an array
+	 * 
+	 */
+	public static float maxValue(float[] array) {
+		float max = array[0];
+		int len = array.length;
+		//for(var i=1; i<len; i++) if(array[i] > max) max = array[i];
+		for(int i=1; i<len; i++) if(array[i] > max) max = i;
+		return max;
+	}
+	public static int maxValue(int[] array) {
+		int max = array[0];
+		int len = array.length;
+		//for(var i=1; i<len; i++) if(array[i] > max) max = array[i];
+		for(int i=1; i<len; i++) if(array[i] > max) max = i;
+		return max;
+	}
+
 	
-	//------------------------------------------------------------------------
-	//additional tools
-	//------------------------------------------------------------------------
-	public static int snap(int value, int snapAmt) {
-		return snapAmt * Math.round(value / snapAmt);
+	/**
+	 * finds minimum value within an array
+	 * 
+	 */
+	public static float minValue(float[] array) {
+		float min = array[0];
+		int len = array.length;
+		//for (var i=1; i<len; i++) if(array[i] < min) min = this[i];
+		for (int i=1; i<len; i++) if(array[i] < min) min = i;
+		return min;
 	}
-	public static float snap(float value, float snapAmt) {
-		return snapAmt * Math.round(value / snapAmt);
+	public static int minValue(int[] array) {
+		int min = array[0];
+		int len = array.length;
+		//for (var i=1; i<len; i++) if(array[i] < min) min = this[i];
+		for (int i=1; i<len; i++) if(array[i] < min) min = i;
+		return min;
 	}
-
-
-	//------------------------------------------------------------------------
+	
+	
 	/**
 	 * method which return the index of
 	 * the index of the largest value in the array
@@ -300,7 +330,51 @@ public class FTools {
 		for (int i=1; i<len; i++) if(array[i] < min) min = i;
 		return min;
 	}
+	
+	
+	//------------------------------------------------------------------------
+	//additional tools
+	//------------------------------------------------------------------------
+	public static int snap(int value, int snapAmt) {
+		return snapAmt * Math.round(value / snapAmt);
+	}
+	public static float snap(float value, float snapAmt) {
+		return snapAmt * Math.round(value / snapAmt);
+	}
 
+
+	//------------------------------------------------------------------------
+	/**
+	 *	http://www.siafoo.net/snippet/191
+	 *
+	 *	Returns a number between v1 and v2, including v1 but not v2.
+	 *	The bias represents the preference towards lower or higher numbers,
+	 *	@param minr
+	 *				minimum value  
+	 *	@param maxr
+	 *				maximum value
+	 *	@param bias
+	 *				as a number between 0 and 10, randomBias(0, 10, bias=0.9) will return 9 much more often than 1.
+	 */
+	public static float randomBias(float minr, float maxr, float bias) {
+		bias = Math.max(0, Math.min(bias, 1)) * 10;
+
+		int i = (int)(Math.floor(bias));
+		float n = _map[i];
+		if(bias < 10) n += (_map[i+1]-n) * (bias-i);
+
+		return (float) (Math.pow( Math.random(),n ) * (maxr-minr) + minr);
+	}
+	public static float randomBias(float maxr, float bias) {
+		bias = Math.max(0, Math.min(bias, 1)) * 10;
+
+		int i = (int)(Math.floor(bias));
+		float n = _map[i];
+		if(bias < 10) n += (_map[i+1]-n) * (bias-i);
+
+		return (float) (Math.pow( Math.random(),n ) * (maxr-0) + 0);
+	}	
+	
 	
 	/**
 	 * return boolean value as int

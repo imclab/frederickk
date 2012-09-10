@@ -1,7 +1,8 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 0.0.4
+ *  Frederickk.Control 0.0.5
+ *  FSlider.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -52,7 +53,7 @@ public class FSlider extends FControlBase {
 
 		setName(_name);
 		setSize(_w,_h);
-		setCoord(_x,_y);
+		setPos(_x,_y);
 
 		posNew = pos;
 		setValueRange(_vMin,_vMax);

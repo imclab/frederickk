@@ -1,7 +1,8 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 0.0.4
+ *  Frederickk.Control 0.0.5
+ *  FDropDown.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -23,18 +24,23 @@ import java.util.ArrayList;
 
 import processing.core.PApplet;
 import processing.core.PFont;
-import processing.core.PVector;
 
 
 
-public class FDropDown extends FControlBase {
+public class FDropDown extends FButton {
 	//-----------------------------------------------------------------------------
 	// properties
 	//-----------------------------------------------------------------------------
+	private static final long serialVersionUID = 1L;
+
 	private ArrayList<FButton> FItems = new ArrayList<FButton>();
 	private int val = -1;
 
-	private boolean OPEN = true;
+	private int heightHolder;
+	
+	private boolean OPENED = false;
+	private String selStrVal = new String();
+	private int selIntVal = -1;
 
 
 	
@@ -45,20 +51,30 @@ public class FDropDown extends FControlBase {
 		super(p5);
 	}
 	
-	public FDropDown(PApplet p5, String _name, float _x, float _y, int _w, int _h) {
+	public FDropDown(PApplet p5, String _name, float _x, float _y, int _w, int _h, String[] items) {
 		super(p5);
 		setName(_name);
 		setSize(_w,_h);
-		setCoord(_x,_y);
+		setPos(_x,_y);
+
+		addItem(items);
 	}
+	public FDropDown(PApplet p5, String _name, float _x, float _y, int _w, int _h, String[] items, String selected) {
+		super(p5);
+		setName(_name);
+		setSize(_w,_h);
+		setPos(_x,_y);
 
-
+		selStrVal = selected;
+		addItem(items);
+	}
 
 	//-----------------------------------------------------------------------------
 	// methods
 	//-----------------------------------------------------------------------------
 	protected void update() {
 		if( getOver() && PRESSED ) LOCKED = true;
+//		getSelection();
 	}
 
 
@@ -67,35 +83,45 @@ public class FDropDown extends FControlBase {
 		update();
 		toggle();
 		
+		
 		//-----------------------------------------
 		// controller
 		//-----------------------------------------
 		p5.pushStyle();
-		if( OPEN ) {
-			p5.noFill();
-			p5.stroke( getColorInactive() );
-			p5.rect(x,y, width,height*(FItems.size()+1) );
-
-			for(int i=0; i<FItems.size(); i++) {
-				//items
-				FButton fb = (FButton) FItems.get(i);
-				fb.setCoord( x,y+(height*(i+1)) );
-				fb.setSize(width,height);
-				fb.setColorOver( colorOver );
-				fb.setColorInactive( colorInactive );
-				fb.showLabels( true );
-				//fb.drawItem();
-	
-				//background
-				p5.noFill();
-				p5.stroke( getColorInactive() );
-				p5.rect(x,y+(height*(i+1)), width,height);
-			}
-		}
 
 		//-----------------------------------------
-		p5.fill( getColorOver() );
+		// background
+		//-----------------------------------------
+		if( getOver() || getPressed() ) {
+			p5.fill( getColorOver() );
+			height = heightHolder*(FItems.size()+1);
+			OPENED = true;
+		}
+		else {
+			p5.fill( getColorInactive() );
+			height = heightHolder;
+			OPENED = false;
+		}
+		p5.noStroke();
 		p5.rect(x,y, width,height);
+
+		
+		//-----------------------------------------
+		// elements
+		//-----------------------------------------
+		if( OPENED ) {
+			getSelection();
+
+			for(FButton fc : FItems) {
+				fc.showLabels( true );
+
+				fc.setColorOver( colorOver );
+				fc.setColorPressed( colorPressed );
+				fc.setColorInactive( colorInactive );
+				
+				fc.draw();
+			}
+		}
 
 		
 		//-----------------------------------------
@@ -104,39 +130,85 @@ public class FDropDown extends FControlBase {
 		if(showLabels) {
 			int a = (getColorInactive() >> 24) & 0xFF;
 			p5.fill( white, a );
-			labelName.draw( name ); // PApplet.CENTER, BOLD );
+//			labelName.uncontained();
+			labelName.setCoord( x+5, y );
+			labelName.setSize( width-10, heightHolder);
+			labelName.draw( name, PApplet.LEFT, BOLD );
+			
+//			labelVal.uncontained();
+			labelVal.setCoord( x-5, y );
+			labelVal.setSize( width-10, heightHolder);
+			labelVal.draw( selStrVal, PApplet.RIGHT, REGULAR );
 		}
 		p5.popStyle();
 	}	
 
 
 	//-----------------------------------------------------------------------------
-	private void toggle() {
-		if( LOCKED ) {
-			OPEN = !OPEN;
-			LOCKED = !LOCKED;
-			OVER = !OVER;
-			PRESSED = !PRESSED;
+	public void addItem(String[] items) {
+		float yh = y+height;
+		
+		System.out.println( "addItems() ");
+		for(int i=0; i<items.length; i++) {
+			FButton fc = new FButton(p5);
+			fc.setName(items[i]);
+			fc.setPos(x, yh);
+			fc.setSize(width, height);
+//			fc.setValue(false);
+
+			FLabel LabelName = new FLabel(p5);
+			fc.setLabels(LabelName);
+
+			FItems.add(fc);
+			yh += height;
 		}
+
 	}
-
-
-	//-----------------------------------------------------------------------------
 	public void addItem(String _name) {
-		FItems.add(new FButton(p5, _name, x,y, width,height, LABEL_INT) );
+//		FItems.add(new FButton(p5, _name, x,y, width,height, LABEL_INT) );
+//		FItems.add( new FButton(p5, _name, x,y, width, false) );
 	}
 
 
 	
 	//-----------------------------------------------------------------------------
+	// sets
+	//-----------------------------------------------------------------------------
+	/**
+	 * @param _w
+	 *		  width
+	 * @param _h
+	 *		  height
+	 */
+	public void setSize(int _w, int _h) {
+		this.width = _w;
+		this.height = _h;
+
+		heightHolder = _h;
+	}
+	
+
+	
+	//-----------------------------------------------------------------------------
 	// gets
 	//-----------------------------------------------------------------------------
-	protected int getSelection() {
-		for(int i=0; i<FItems.size(); i++) {
-			FButton fb = (FButton) FItems.get(i);
-			if(fb.LOCKED) val = i;
+	protected String getSelection() {
+		int i = 0;
+		for(FButton fc : FItems) {
+			if( fc.getClicked() ) {
+				selStrVal = fc.name;
+				selIntVal = i;
+				break;
+			}
+			i++;
 		}
-		return val;
+		return selStrVal;
 	}
+
+	protected int getSelectionIndex() {
+		return selIntVal;
+	}
+
+
 
 }

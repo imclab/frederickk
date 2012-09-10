@@ -1,7 +1,8 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 0.0.4
+ *  Frederickk.Control 0.0.5
+ *  FButton.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -51,7 +52,7 @@ public class FButton extends FControlBase {
 		super(p5);
 		setName(_name);
 		setSize(_w,_h);
-		setCoord(_x,_y);
+		setPos(_x,_y);
 		//setLabelType(_labelType);
 		setMode(BUTTON_NORMAL);
 	}
@@ -60,7 +61,7 @@ public class FButton extends FControlBase {
 		super(p5);
 		setName(_name);
 		setSize(_w,_h);
-		setCoord(_x,_y);
+		setPos(_x,_y);
 		//setLabelType(_labelType);
 		setMode(_mode);
 	}
@@ -134,11 +135,16 @@ public class FButton extends FControlBase {
 	
 	
 	//-----------------------------------------------------------------------------
-	protected void toggle() {
+	protected boolean toggle() {
 		if( LOCKED ) {
 			LOCKED = !LOCKED;
 			OVER = !OVER;
 			PRESSED = !PRESSED;
+			
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 	
@@ -162,6 +168,10 @@ public class FButton extends FControlBase {
 
 	public String getFilePath() {
 		return filePath;
+	}
+	
+	public int getIntValue() {
+		return boolToInt( getPressed() ); 
 	}
 	
 }

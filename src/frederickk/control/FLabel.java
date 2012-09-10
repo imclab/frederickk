@@ -1,7 +1,8 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 0.0.4
+ *  Frederickk.Control 0.0.5
+ *  FLabel.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -67,6 +68,7 @@ public class FLabel implements PConstants, FControlConstants {
 	public void draw(String _text) {
 		setText(_text);
 
+		p5.pushStyle();
 		p5.textFont(TYPEFACE_BOLD);
 		//System.out.println( "FLabel " + text );
 		//System.out.println( "w: " + Integer.toString(width) + " h: " + Integer.toString(height) );
@@ -78,11 +80,13 @@ public class FLabel implements PConstants, FControlConstants {
 			p5.textAlign(LEFT);
 			p5.text(text, x+5,y+TYPEFACE_SIZE);
 		}
+		p5.popStyle();
 	}
 
 	public void draw(String _text, int TEXT_ALIGNMENT) {
 		setText(_text);
 
+		p5.pushStyle();
 		p5.textFont(TYPEFACE_BOLD);
 		//System.out.println( "FLabel " + text );
 		//System.out.println( "w: " + Integer.toString(width) + " h: " + Integer.toString(height) );
@@ -94,11 +98,13 @@ public class FLabel implements PConstants, FControlConstants {
 			p5.textAlign(TEXT_ALIGNMENT);
 			p5.text(text, x+5,y+TYPEFACE_SIZE);
 		}
+		p5.popStyle();
 	}
 
 	public void draw(String _text, int TEXT_ALIGNMENT, int TYPE_STYLE) {
 		setText(_text);
 
+		p5.pushStyle();
 		if(TYPE_STYLE == BOLD) p5.textFont(TYPEFACE_BOLD);
 		else p5.textFont(TYPEFACE_REG);
 		//System.out.println( "FLabel " + text );
@@ -111,6 +117,7 @@ public class FLabel implements PConstants, FControlConstants {
 			p5.textAlign(TEXT_ALIGNMENT);
 			p5.text(text, x+5,y+TYPEFACE_SIZE);
 		}
+		p5.popStyle();
 	}
 
 	
@@ -135,13 +142,13 @@ public class FLabel implements PConstants, FControlConstants {
 	protected void setTypeface(PFont _typefaceLabel) {
 		TYPEFACE_REG = _typefaceLabel;
 		TYPEFACE_BOLD = _typefaceLabel;
-		TYPEFACE_SIZE = TYPEFACE_REG.getFont().getSize()+1;
+		TYPEFACE_SIZE = 0; //TYPEFACE_REG.getFont().getSize()+1;
 	}
 
 	protected void setTypeface(PFont _typefaceLabel, PFont _typefaceLabelBold) {
 		TYPEFACE_REG = _typefaceLabel;
 		TYPEFACE_BOLD = _typefaceLabelBold;
-		TYPEFACE_SIZE = TYPEFACE_REG.getFont().getSize()+1;
+		TYPEFACE_SIZE = 0; //TYPEFACE_REG.getFont().getSize()+1;
 	}
 	
 

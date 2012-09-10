@@ -3,7 +3,8 @@ package frederickk.tools;
 import processing.core.PApplet;
 
 /*
- *  Frederickk.Tools 0.0.4
+ *  Frederickk.Tools 0.0.5
+ *  FFade.java
  *  
  *  
  *  Copyright (c) 2009, Rui Madeira
@@ -25,7 +26,7 @@ import processing.core.PApplet;
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *
- *	ported from OpenFrameworks to procssing by
+ *	ported from OpenFrameworks to processing by
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de

@@ -1,7 +1,8 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 0.0.4
+ *  Frederickk.Control 0.0.5
+ *  FMeter.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de

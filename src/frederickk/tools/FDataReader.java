@@ -1,7 +1,8 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 0.0.4
+ *  Frederickk.Tools 0.0.5
+ *  FDataReader.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de

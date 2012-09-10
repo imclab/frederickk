@@ -1,7 +1,8 @@
 package frederickk.control;
 
 /*
- *  Frederickk.Control 0.0.4
+ *  Frederickk.Control 0.0.5
+ *  FHandle.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -50,7 +51,7 @@ public class FHandle extends FControlBase {
 		super(p5);
 		setName(_name);
 		setSize(_w,_h);
-		setCoord(_x,_y);
+		setPos(_x,_y);
 		setLabelType(_labelType);
 	}
 
@@ -136,12 +137,17 @@ public class FHandle extends FControlBase {
 
 
 	//-----------------------------------------------------------------------------
-	private void toggle() {
+	protected boolean toggle() {
 		if( LOCKED ) {
 			valSel = !valSel;
 			LOCKED = !LOCKED;
 			OVER = !OVER;
 			PRESSED = !PRESSED;
+			
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 	
@@ -162,7 +168,7 @@ public class FHandle extends FControlBase {
 
 
 	//-----------------------------------------------------------------------------
-	private void drag() {
+	protected void drag() {
 		if( LOCKED ) {
 			if( SNAP ) {
 				x_new = snap( (float) (MOUSE_X - (width * 0.5)), SNAP_INC, 0);
@@ -188,8 +194,8 @@ public class FHandle extends FControlBase {
 	//-----------------------------------------------------------------------------
 	// sets
 	//-----------------------------------------------------------------------------
-	public void setCoord(float _x, float _y) {
-		super.setCoord(_x, _y);
+	public void setPos(float _x, float _y) {
+		super.setPos(_x, _y);
 		x_new = x;
 		y_new = y;
 

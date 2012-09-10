@@ -1,7 +1,8 @@
 package frederickk.tools;
 
 /*
- *  Frederickk.Tools 0.0.4
+ *  Frederickk.Tools 0.0.5
+ *  FColor.java
  *
  *  Ken Frederick
  *  ken.frederick@gmx.de
@@ -24,21 +25,55 @@ import java.awt.Color;
 
 public class FColor {
 	//-----------------------------------------------------------------------------
+	// properties
+	//-----------------------------------------------------------------------------
+	/**
+	 *  array of hsb values
+	 * 
+	 *  hsbVals[0] = hue
+	 *  hsbVals[1] = saturation
+	 *  hsbVals[2] = brightness
+	 */
+	protected static float[] hsbVals = new float[3];
+
+	/**
+	 *  array of int rgba values (0 - 255)
+	 * 
+	 *  rgbaVals[0] = red
+	 *  rgbaVals[1] = green
+	 *  rgbaVals[2] = blue
+	 *  rgbaVals[2] = alpha
+	 */
+	protected static int[] rgbaVals = new int[4];
+
+	/**
+	 *  array of float rgba values (0.0 - 1.0)
+	 * 
+	 *  rgbaFVals[0] = red
+	 *  rgbaFVals[1] = green
+	 *  rgbaFVals[2] = blue
+	 *  rgbaFVals[2] = alpha
+	 */
+	protected static float[] rgbaFVals = new float[4];
+
+
+
+	//-----------------------------------------------------------------------------
 	// methods
 	//-----------------------------------------------------------------------------
 	/**
 	 * return the RGBA break down of an int/color (0.0 - 1.0) as float[4]   
 
-	 * @param _col
+	 * @param col
 	 * 			input color as int 
 	 * 
 	 * @return rgba
 	 */
-	public static float[] getColorF(int _col) {
-		int r = (_col >> 16) & 0xFF;
-		int g = (_col >> 8) & 0xFF;
-		int b = _col & 0xFF;
-		int a = (_col >> 24) & 0xFF;
+	public static float[] getColorF(int col) {
+		int r = (col >> 16) & 0xFF;
+		int g = (col >> 8) & 0xFF;
+		int b = col & 0xFF;
+		int a = (col >> 24) & 0xFF;
 
 		float[] rgba = { 
 				r/255,g/255, b/255, a/255
@@ -50,39 +85,54 @@ public class FColor {
 	/**
 	 * return the RGBA break down of an int/color (0 - 255) as int[4]  
 	 * 
-	 * @param _col
+	 * @param col
 	 * 			input color as int 
 	 * 
 	 * @return rgba
 	 */
-	public static int[] getColor(int _col) {
-		int r = (_col >> 16) & 0xFF;
-		int g = (_col >> 8) & 0xFF;
-		int b = _col & 0xFF;
-		int a = (_col >> 24) & 0xFF;
+	public static int[] getColor(int col) {
+		int r = (col >> 16) & 0xFF;
+		int g = (col >> 8) & 0xFF;
+		int b = col & 0xFF;
+		int a = (col >> 24) & 0xFF;
 
 		int[] rgba = { r,g,b,a }; 
 		return rgba;
 	}
 
-	
+
+	/**
+	 * return int of color from a Hexidecimal color code  
+	 * 
+	 * @param hexStr
+	 * 			input color as hex string
+	 * 
+	 * @return opacityMask
+	 */
+	public static int getColor(String hexStr) {
+		// http://processing.org/bugs/bugzilla/attachments/191
+		int opacityMask = 0xFF000000;
+		return opacityMask | (Integer.parseInt(hexStr.substring(1), 16)) & 0xFFFFFF;
+	}
+
+
+	//-----------------------------------------------------------------------------
 	/**
 	 * return desaturated color as int  
 	 * 
-	 * @param _col
+	 * @param col
 	 * 			input color as int 
 	 * @param pct
 	 * 			percentage of desaturation as a floating-point value (0.0 - 1.0) 
 	 * 
 	 * @return rgba
 	 */
-	public static int desaturate(int _col, float pct) {
-		int r = (_col >> 16) & 0xFF;
-		int g = (_col >> 8) & 0xFF;
-		int b = _col & 0xFF;
+	public static int desaturate(int col, float pct) {
+		//		int[] rgbaVals = getColor(col);
+		rgbaVals = getColor(col);
 
-		float[] hsb = Color.RGBtoHSB(r, g, b, null); 
-		
+		float[] hsb = Color.RGBtoHSB(rgbaVals[0], rgbaVals[1], rgbaVals[2], null); 
+
 		int rgba = Color.HSBtoRGB(hsb[0], pct, hsb[1]);
 		return rgba;
 	}
@@ -90,7 +140,7 @@ public class FColor {
 	/**
 	 * return desaturated color as int  
 	 * 
-	 * @param _col
+	 * @param col
 	 * 			input color as int 
 	 * @param sat
 	 * 			percentage of desaturation as a floating-point value (0.0 - 1.0) 
@@ -99,70 +149,104 @@ public class FColor {
 	 * 
 	 * @return rgba
 	 */
-	public static int desaturate(int _col, float sat, float bright) {
-		int r = (_col >> 16) & 0xFF;
-		int g = (_col >> 8) & 0xFF;
-		int b = _col & 0xFF;
+	public static int desaturate(int col, float sat, float bright) {
+		//		int[] rgbaVals = getColor(col);
+		rgbaVals = getColor(col);
 
-		float[] hsb = Color.RGBtoHSB(r, g, b, null); 
-		
+		float[] hsb = Color.RGBtoHSB(rgbaVals[0], rgbaVals[1], rgbaVals[2], null); 
+
 		int rgba = Color.HSBtoRGB(hsb[0], sat, bright);
 		return rgba;
 	}
 
-	
+
 	/**
 	 * return darkened color as int  
 	 * 
-	 * @param _col
+	 * @param col
 	 * 			input color as int 
 	 * @param pct
 	 * 			percentage of darkening as a floating-point value (0.0 - 1.0) 
 	 * 
 	 * @return rgba
 	 */
-	public static int darken(int _col, float pct) {
-		float[] rgbaf = getColorF(_col);
+	public static int darken(int col, float pct) {
+		//		float[] rgbaFVals = getColorF(col);
+		rgbaFVals = getColorF(col);
 
-		rgbaf[0] -= pct;
-		if(rgbaf[0] < 0.0) rgbaf[0] = 0.0f;
-		rgbaf[1] -= pct;
-		if(rgbaf[1] < 0.0) rgbaf[1] = 0.0f;
-		rgbaf[2] -= pct;
-		if(rgbaf[2] < 0.0) rgbaf[2] = 0.0f;
-		
-		Color c = new Color( Math.abs(rgbaf[0]), Math.abs(rgbaf[1]), Math.abs(rgbaf[2]), rgbaf[3]);
+		rgbaFVals[0] -= pct;
+		if(rgbaFVals[0] < 0.0) rgbaFVals[0] = 0.0f;
+		rgbaFVals[1] -= pct;
+		if(rgbaFVals[1] < 0.0) rgbaFVals[1] = 0.0f;
+		rgbaFVals[2] -= pct;
+		if(rgbaFVals[2] < 0.0) rgbaFVals[2] = 0.0f;
+
+		Color c = new Color( Math.abs(rgbaFVals[0]), Math.abs(rgbaFVals[1]), Math.abs(rgbaFVals[2]), rgbaFVals[3]);
 		int rgba = c.getRGB();
 		return rgba;
 	}
-	
+
 
 	/**
 	 * return lightened color as int  
 	 * 
-	 * @param _col
+	 * @param col
 	 * 			input color as int 
 	 * @param pct
 	 * 			percentage lightening as a floating-point value (0.0 - 1.0) 
 	 * 
 	 * @return rgba
 	 */
-	public static int lighten(int _col, float pct) {
-		float[] rgbaf = getColorF(_col);
+	public static int lighten(int col, float pct) {
+		//		float[] rgbaFVals = getColorF(col);
+		rgbaFVals = getColorF(col);
 
-		rgbaf[0] += pct;
-		if(rgbaf[0] > 1.0) rgbaf[0] = 1.0f;
-		rgbaf[1] += pct;
-		if(rgbaf[1] > 1.0) rgbaf[1] = 1.0f;
-		rgbaf[2] += pct;
-		if(rgbaf[2] > 1.0) rgbaf[2] = 1.0f;
-		
-		Color c = new Color( Math.abs(rgbaf[0]), Math.abs(rgbaf[1]), Math.abs(rgbaf[2]), rgbaf[3]);
+		rgbaFVals[0] += pct;
+		if(rgbaFVals[0] > 1.0) rgbaFVals[0] = 1.0f;
+		rgbaFVals[1] += pct;
+		if(rgbaFVals[1] > 1.0) rgbaFVals[1] = 1.0f;
+		rgbaFVals[2] += pct;
+		if(rgbaFVals[2] > 1.0) rgbaFVals[2] = 1.0f;
+
+		Color c = new Color( Math.abs(rgbaFVals[0]), Math.abs(rgbaFVals[1]), Math.abs(rgbaFVals[2]), rgbaFVals[3]);
 		int rgba = c.getRGB();
 		return rgba;
 	}
 
-	
+
+	//-----------------------------------------------------------------------------
+	/**
+	 * hue
+	 * 
+	 * @param col
+	 * 			color value 
+	 * 
+	 */
+	public static float hue(int col) {
+		//		int[] rgbaVals = getColor(col);
+		rgbaVals = getColor(col);
+
+		Color.RGBtoHSB(rgbaVals[0],rgbaVals[1],rgbaVals[2], hsbVals);	
+		return hsbVals[0]; 
+	}
+
+
+	/**
+	 * saturation
+	 * 
+	 * @param col
+	 * 			color value 
+	 * 
+	 */
+	public static float saturation(int col) {
+		//		int[] rgbaVals = getColor(col);
+		rgbaVals = getColor(col);
+
+		Color.RGBtoHSB(rgbaVals[0],rgbaVals[1],rgbaVals[2], hsbVals);	
+		return hsbVals[1]; 
+	}
+
+
 	/**
 	 * bitwise luminance
 	 * http://processing.org/discourse/yabb2/YaBB.pl?num=1164286894
@@ -171,64 +255,194 @@ public class FColor {
 	 * 			color value 
 	 * 
 	 */
-	public static int luminance(int _col){
-		return ( ((_col>>16)&0xff)*9 + ((_col>>8)&0xff)*19 + ((_col&0xff)<<2) ) >> 5;
+	public static int luminance(int col){
+		//		int[] rgbaVals = getColor(col);
+		rgbaVals = getColor(col);
+		return ( rgbaVals[0]*9 + rgbaVals[1]*19 + (rgbaVals[2]<<2) ) >> 5;
 	}
 
-	/*
+
+	/**
+	 * bitwise brightness
+	 * 
+	 * @param col
+	 * 			color value 
+	 * 
+	 */
 	public static int brightness(int col){
-		int a = (col >> 16) & 0xFF;
-		int b = (col >> 8) & 0xFF;
-		int c = col & 0xFF;
+		//		int[] rgbaVals = getColor(col);
+		rgbaVals = getColor(col);
 
 		//max function taken from processing 
-		return (a > b) ? ((a > c) ? a : c) : ((b > c) ? b : c);
+		return (rgbaVals[0] > rgbaVals[1]) ? ((rgbaVals[0] > rgbaVals[2]) ? rgbaVals[0] : rgbaVals[2]) : ((rgbaVals[1] > rgbaVals[2]) ? rgbaVals[1] : rgbaVals[2]);
 	}
-	*/
-	
-	
+
+
+	//-----------------------------------------------------------------------------
 	/**
 	 * return random RGB color as int  
 	 * 
 	 * @return rgb
 	 */
 	public static int randomRGBColor() {
-		Color c = new Color( (int) Math.random()*255,
-							 (int) Math.random()*255,
-							 (int) Math.random()*255,
-							 255
-							);
+		int r = new Double(Math.random()*255).intValue();
+		int g = new Double(Math.random()*255).intValue();
+		int b = new Double(Math.random()*255).intValue();
+		int a = 255;
+
+		Color c = new Color(r,g,b,a);
 		int rgb = c.getRGB();
 		return rgb;
 	}
 
 
 	/**
+	 * return random RGB color within hue range as int  
+	 * 
+	 * @param hue1
+	 * 			0-360 
+	 * @param hue2
+	 * 			0-360 
+	 * 
+	 * @return rgb
+	 */
+	public static int randomRGBColor(int hue1, int hue2) {
+		float h = (float) (Math.abs(hue1) + Math.random() * (Math.abs(hue2) - Math.abs(hue1)));
+		Color c = Color.getHSBColor(h, 1.0f,1.0f);
+		
+		int rgb = c.getRGB();
+		return rgb;
+	}
+
+	
+	/**
 	 * return random RGBA color as int  
 	 * 
 	 * @return rgba
 	 */
 	public static int randomRGBAColor() {
-		Color c = new Color( (int) Math.random()*255,
-							 (int) Math.random()*255,
-							 (int) Math.random()*255,
-							 (int) Math.random()*255
-							);
+		int r = new Double(Math.random()*255).intValue();
+		int g = new Double(Math.random()*255).intValue();
+		int b = new Double(Math.random()*255).intValue();
+		int a = new Double(Math.random()*255).intValue();
+		
+		Color c = new Color(r,g,b,a);
 		int rgba = c.getRGB();
 		return rgba;
 	}
 
 
 	/**
-	 * return random RGBA color as int  
+	 * return random grayscale color as int  
 	 * 
 	 * @return rgba
 	 */
 	public static int randomGrayColor() {
-		int g = (int) Math.random()*255;
+		int g = new Double(Math.random()*255).intValue();
 		Color c = new Color(g,g,g, 255);
 		int rgba = c.getRGB();
 		return rgba;
 	}
+
+
+	/**
+	 * return random grayscale within a percent range color as int  
+	 * 
+	 * @param pct1
+	 * 			0.0 - 1.0 
+	 * @param pct2
+	 * 			0.0 - 1.0 
+	 * 
+	 * @return rgba
+	 */
+	public static int randomGrayColor(float pct1, float pct2) {
+		int g = (int) ((Math.abs(pct1) + Math.random() * (Math.abs(pct2) - Math.abs(pct1))) * 255);
+		
+		Color c = new Color(g,g,g, 255);
+		int rgba = c.getRGB();
+		return rgba;
+	}
+	
+
+	//-----------------------------------------------------------------------------
+	/*
+	 * Color Utilities
+	 * 
+	 * @author		Tom Beddard
+	 * @version 	0.1
+	 *
+	 * Licensed under the MIT License
+	 * http://www.opensource.org/licenses/mit-license.php
+	 * 
+	 */
+
+	/**
+	 * Return a color blended between two source colors with a midpoint 
+	 * 
+	 * @param c1
+	 * 			color 1
+	 * @param c2
+	 * 			color 2
+	 * @param p
+	 * 			dist away from the first color
+	 * 
+	 * @return result
+	 */
+	public int blend(int c1, int c2, float p) {
+		return blend(c1, c2, p, 0xFFFFFFFF);
+	}
+
+
+	/**
+	 * Return a color blended between two source colors with a midpoint 
+	 * 
+	 * @param c1
+	 * 			color 1
+	 * @param c2
+	 * 			color 2
+	 * @param p
+	 * 			distance away from the first color
+	 * @param bc
+	 * 			base color is handy for getting the alpha blending working on a solid color background
+	 * 
+	 * @return result
+	 */
+	public int blend(int c1, int c2, float p, int bc) {
+		if (p >= 1) return c2;
+		if (p <= 0) return c1;
+
+		int[] rgba1 = getColor(c1);
+		int[] rgba2 = getColor(c2);
+
+		int r = (int) (rgba1[0] + (rgba2[0] - rgba1[0]) * p);
+		int g = (int) (rgba1[1] + (rgba2[1] - rgba1[1]) * p);
+		int b = (int) (rgba1[2] + (rgba2[2] - rgba1[2]) * p);
+		int a = (c1 == bc) ? rgba2[3] : Math.min(rgba1[3] + rgba2[0], 255);
+
+		Color c = new Color(r,g,b,a);
+		return c.getRGB();
+	}
+	
+	
+	/**
+	 * Return an array of colors blended from two colors
+	 * 
+	 * @param c1
+	 * 			color 1
+	 * @param c2
+	 * 			color 2
+	 * @param n
+	 * 			number of intermediate steps
+	 * 
+	 * @return rgba
+	 */
+	public int[] blendArray(int c1, int c2, int n) {
+		int[] a = new int[n];
+		float p = 1 / (n + 1);
+		for (int i=0; i<a.length; i++) a[i] = blend(c1, c2, i*p);
+		return a;
+	}
+
+
 
 }
