@@ -2,9 +2,11 @@ Frederickk Library 0.0.5
 ===============
 
 Ken Frederick
+
 ken.frederick@gmx.de
 
 http://cargocollective.com/kenfrederick/
+
 http://kenfrederick.blogspot.com/
 
 
