@@ -2,19 +2,15 @@ Frederickk Library 0.0.5
 ===============
 
 Ken Frederick
-
 ken.frederick@gmx.de
 
-
 http://cargocollective.com/kenfrederick/
-
 http://kenfrederick.blogspot.com/
 
 
 About
 ===============
-This a collection of GUI elements and various tools for use with 
-Processing (http://www.processing.org/) that I find useful.
+This a collection of GUI elements and various tools for use with Processing (http://www.processing.org/) that I find useful.
 
 source:  https://github.com/frederickk/frederickk
 binary:  https://github.com/frederickk/frederickk/blob/master/distribution/frederickk-0.0.5/download/frederickk-0.0.5.zip
@@ -47,4 +43,5 @@ Change Log
  *	fixing getClicked() and getPressed() (still buggy)
  *	added setSize() and setPos() to adjust elements after instaniation
  *	added FDropDown (still buggy)
- 
+ *	added FInputField (incomplete, but functional)
+ *	added FASE (stolen code see source for references) reading and writing of Adobe Swatch Exchange Files
