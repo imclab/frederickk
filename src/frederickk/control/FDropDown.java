@@ -73,7 +73,7 @@ public class FDropDown extends FButton {
 	// methods
 	//-----------------------------------------------------------------------------
 	protected void update() {
-		if( getOver() && PRESSED ) LOCKED = true;
+		if( isOver() && DOWN ) LOCKED = true;
 //		getSelection();
 	}
 
@@ -92,7 +92,7 @@ public class FDropDown extends FButton {
 		//-----------------------------------------
 		// background
 		//-----------------------------------------
-		if( getOver() || getPressed() ) {
+		if( isOver() || isDown() ) {
 			p5.fill( getColorOver() );
 			height = heightHolder*(FItems.size()+1);
 			OPENED = true;
@@ -195,7 +195,7 @@ public class FDropDown extends FButton {
 	protected String getSelection() {
 		int i = 0;
 		for(FButton fc : FItems) {
-			if( fc.getClicked() ) {
+			if( fc.isClicked() ) {
 				selStrVal = fc.name;
 				selIntVal = i;
 				break;

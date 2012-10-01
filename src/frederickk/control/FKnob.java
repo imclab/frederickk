@@ -87,8 +87,8 @@ public class FKnob extends FSlider {
 		// handle
 		//-----------------------------------------
 		p5.noStroke();
-		if( getOver() ) p5.fill( getColorOver() );
-		else if( getOver() && LOCKED ) p5.fill( getColorPressed() );
+		if( isOver() ) p5.fill( getColorOver() );
+		else if( isOver() && LOCKED ) p5.fill( getColorPressed() );
 		else p5.fill( getColorInactive() );
 		p5.ellipse(hx,hy, radiusHandle,radiusHandle);
 
@@ -120,7 +120,7 @@ public class FKnob extends FSlider {
 	//-----------------------------------------------------------------------------
 	// events
 	//-----------------------------------------------------------------------------
-	protected boolean getOver() {
+	protected boolean isOver() {
 		if(MOUSE_X > x-radius*0.5 && MOUSE_X < x+radius*0.5 && 
 		   MOUSE_Y > y-radius*0.5 && MOUSE_Y < y+radius*0.5) {
 			OVER = true;

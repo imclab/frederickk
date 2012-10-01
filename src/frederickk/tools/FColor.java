@@ -307,13 +307,35 @@ public class FColor {
 	 * @return rgb
 	 */
 	public static int randomRGBColor(int hue1, int hue2) {
-		float h = (float) (Math.abs(hue1) + Math.random() * (Math.abs(hue2) - Math.abs(hue1)));
-		Color c = Color.getHSBColor(h, 1.0f,1.0f);
-		
-		int rgb = c.getRGB();
-		return rgb;
+//		float h = (float) ( Math.abs(hue1) + (Math.random() * (Math.abs(hue2) - Math.abs(hue1))) );
+//		float hnorm = (float) (h/360.0f);
+//		Color c = Color.getHSBColor(hnorm, 1.0f,1.0f);
+//		return c.getRGB();
+		return randomRGBColor(hue1, hue2, 1.0f, 1.0f);
 	}
 
+
+	/**
+	 * return random RGB color within hue range with specified saturation and brightness as int  
+	 * 
+	 * @param hue1
+	 * 			0-360 
+	 * @param hue2
+	 * 			0-360 
+	 * @param sat
+	 * 			percentage of desaturation as a floating-point value (0.0 - 1.0) 
+	 * @param bright
+	 * 			percentage of brightness as a floating-point value (0.0 - 1.0) 
+	 * 
+	 * @return rgb
+	 */
+	public static int randomRGBColor(int hue1, int hue2, float sat, float bright) {
+		float h = (float) ( Math.abs(hue1) + (Math.random() * (Math.abs(hue2) - Math.abs(hue1))) );
+		float hnorm = (float) (h/360.0f);
+		Color c = Color.getHSBColor(hnorm, sat, bright);
+		return c.getRGB();
+	}
+	
 	
 	/**
 	 * return random RGBA color as int  

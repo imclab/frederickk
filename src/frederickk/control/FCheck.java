@@ -58,7 +58,7 @@ public class FCheck extends FControlBase {
 	// methods
 	//-----------------------------------------------------------------------------
 	protected void update() {
-		if( getOver() && PRESSED ) LOCKED = true;
+		if( isOver() && DOWN ) LOCKED = true;
 	}
 
 
@@ -73,7 +73,7 @@ public class FCheck extends FControlBase {
 		//-----------------------------------------
 		p5.pushStyle();
 		p5.noFill();
-		if( getOver() ) p5.stroke( getColorOver() );
+		if( isOver() ) p5.stroke( getColorOver() );
 		else if( LOCKED ) p5.stroke( getColorPressed() );
 		else p5.stroke( getColorInactive() );
 		p5.rect(x,y, width,height);
@@ -111,7 +111,7 @@ public class FCheck extends FControlBase {
 			
 			LOCKED = !LOCKED;
 			OVER = !OVER;
-			PRESSED = !PRESSED;
+			DOWN = !DOWN;
 			
 			return true;
 		}

@@ -22,24 +22,26 @@ package frederickk.control;
 //-----------------------------------------------------------------------------
 import processing.core.PApplet;
 import processing.core.PFont;
+import processing.core.PImage;
 import processing.core.PVector;
 import processing.core.PConstants;
 
 //import java.awt.event.MouseEvent;
 import java.awt.Color;
+import java.awt.Dimension;
 //import java.awt.Frame;
 import java.util.ArrayList;
 
 
 
-public class FControl implements PConstants,FControlConstants {
+public class FControl implements PConstants, FControlConstants {
 	//-----------------------------------------------------------------------------
 	// properties
 	//-----------------------------------------------------------------------------
 	protected static PApplet p5;
 	//protected static Frame frame;
 
-	private int sleepTime = 150;
+	private int sleepTime = 40;
 
 	
 	// controllers
@@ -50,12 +52,14 @@ public class FControl implements PConstants,FControlConstants {
 	private ArrayList<FSlider> FSliders = new ArrayList<FSlider>();
 	private ArrayList<FKnob> FKnobs = new ArrayList<FKnob>();
 	private ArrayList<FDropDown> FDropDowns = new ArrayList<FDropDown>();
+	private ArrayList<FInputField> FInputFields = new ArrayList<FInputField>();
 
 	
 	// values
 	private boolean boolVal;
 	private int intVal;
 	private float floatVal;
+	private String strVal = new String();
 	private String selStrVal = new String();
 	private int selIntVal;
 
@@ -112,10 +116,10 @@ public class FControl implements PConstants,FControlConstants {
 		// set default typeface
 		try {
 			//setTypeface( p5.createFont("LucidaGrande",9), p5.createFont("LucidaGrande-Bold",9) );
-			setTypeface( p5.createFont("LucidaGrande-Bold",10) );
+			setTypeface( p5.createFont("LucidaGrande-Bold", 10) );
 
 		} catch (Exception e) {
-			setTypeface( p5.createFont("SansSerif",9) );
+			setTypeface( p5.createFont("SansSerif", 9) );
 			
 			System.out.println( "-----------------------------------------------------------------------------" );
 			System.out.println( "FControl Error: " + e );
@@ -233,8 +237,8 @@ public class FControl implements PConstants,FControlConstants {
 
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
-		LabelValue.setTypeface(typefaceReg,typefaceBold);
-		LabelInfo.setTypeface(typefaceReg,typefaceBold);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
 
 		fb.setLabels(LabelValue, LabelInfo);
 		fb.setLabelType( LABEL_STRING );
@@ -261,6 +265,69 @@ public class FControl implements PConstants,FControlConstants {
 		addButton(_name + Integer.toString(_series), _x,_y, _w,_h);
 	}
 
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		  height of gui element
+	 * @param img
+	 * 			sprite source image, sprites must be square
+	 * 			loading a sprite (vertical)
+	 * 			|------|------|------|
+	 *			|-[0]U-|-[1]O-|-[2]D-|
+	 * 			|------|------|------|
+	 * 			up, over, down
+	 *		  
+	 */
+	public void addButton(String _name, float _x, float _y, int _w, int _h, PImage img) {
+		FButton fb = new FButton(p5);
+		fb.setName(_name);
+		fb.setPos(_x, _y);
+		fb.setSize(_w, _h);
+		fb.setSprite(img, img.height,img.height);
+		
+		FLabel LabelValue = new FLabel(p5);
+		FLabel LabelInfo = new FLabel(p5);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
+
+		fb.setLabels(LabelValue, LabelInfo);
+		fb.setLabelType( LABEL_STRING );
+
+		FButtons.add(fb);
+	}
+
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		  height of gui element
+	 * @param img
+	 * 			sprite source image, sprites must be square
+	 * 			loading a sprite (vertical)
+	 * 			|------|------|------|
+	 *			|-[0]U-|-[1]O-|-[2]D-|
+	 * 			|------|------|------|
+	 * 			up, over, down
+	 *		  
+	 */
+	public void addButton(String _name, int _series, float _x, float _y, int _w, int _h, PImage img) {
+		addButton(_name + Integer.toString(_series), _x,_y, _w,_h, img);
+	}
 	
 	/**
 	 * @param _name
@@ -287,8 +354,8 @@ public class FControl implements PConstants,FControlConstants {
 
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
-		LabelValue.setTypeface(typefaceReg,typefaceBold);
-		LabelInfo.setTypeface(typefaceReg,typefaceBold);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
 
 		fb.setLabels(LabelValue, LabelInfo);
 		fb.setLabelType( LABEL_STRING );
@@ -318,7 +385,78 @@ public class FControl implements PConstants,FControlConstants {
 		addButton(_name + Integer.toString(_series), _x,_y, _w,_h, _mode);
 	}
 	
-	
+
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		  height of gui element
+	 * @param _mode
+	 *		  BUTTON_NORMAL creates a generic button
+	 *		  BUTTON_LOAD creates a button which opens a file dialog use getFilePath() to retrieve the path to the file
+	 * @param img
+	 * 			sprite source image, sprites must be square
+	 * 			loading a sprite (vertical)
+	 * 			|------|------|------|
+	 *			|-[0]U-|-[1]O-|-[2]D-|
+	 * 			|------|------|------|
+	 * 			up, over, down
+	 *
+	 */
+	public void addButton(String _name, float _x, float _y, int _w, int _h, int _mode, PImage img) {
+		FButton fb = new FButton(p5);
+		fb.setName(_name);
+		fb.setPos(_x, _y);
+		fb.setSize(_w, _h);
+		fb.setMode(_mode);
+		fb.setSprite(img, img.height,img.height);
+
+		FLabel LabelValue = new FLabel(p5);
+		FLabel LabelInfo = new FLabel(p5);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
+
+		fb.setLabels(LabelValue, LabelInfo);
+		fb.setLabelType( LABEL_STRING );
+
+		FButtons.add(fb);
+	}	
+
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		  height of gui element
+	 * @param _mode
+	 *		  BUTTON_NORMAL creates a generic button
+	 *		  BUTTON_LOAD creates a button which opens a file dialog use getFilePath() to retrieve the path to the file
+	 * @param img
+	 * 			sprite source image, sprites must be square
+	 * 			loading a sprite (vertical)
+	 * 			|------|------|------|
+	 *			|-[0]U-|-[1]O-|-[2]D-|
+	 * 			|------|------|------|
+	 * 			up, over, down
+	 *		  
+	 */
+	public void addButton(String _name, int _series, float _x, float _y, int _w, int _h, int _mode, PImage img) {
+		addButton(_name + Integer.toString(_series), _x,_y, _w,_h, _mode, img);
+	}
+
 	
 	//-----------------------------------------
 	// FHandle
@@ -343,10 +481,10 @@ public class FControl implements PConstants,FControlConstants {
 		fh.setSize(_w, _h);
 
 		FLabel LabelValue = new FLabel(p5);
-		LabelValue.setTypeface(typefaceReg,typefaceBold);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
 
 		FLabel LabelInfo = new FLabel(p5);
-		LabelInfo.setTypeface(typefaceReg,typefaceBold);
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
 		
 		fh.setLabels(LabelValue, LabelInfo);
 		fh.setLabelType( _labelType );
@@ -414,10 +552,10 @@ public class FControl implements PConstants,FControlConstants {
 		fh3.setSize(_w, _w);
 
 		FLabel LabelValue = new FLabel(p5);
-		LabelValue.setTypeface(typefaceReg,typefaceBold);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
 
 		FLabel LabelInfo = new FLabel(p5);
-		LabelInfo.setTypeface(typefaceReg,typefaceBold);
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
 		
 		fh3.setLabels(LabelValue, LabelInfo);
 		fh3.setLabelType( _labelType );
@@ -471,7 +609,7 @@ public class FControl implements PConstants,FControlConstants {
 	 */
 	public void addCheck(FCheck fcheck) {
 		FLabel LabelName = new FLabel(p5);
-		LabelName.setTypeface(typefaceBold);
+		LabelName.setTypeface( typefaceBold );
 		fcheck.setLabels(LabelName);
 
 		FChecks.add(fcheck);
@@ -498,7 +636,7 @@ public class FControl implements PConstants,FControlConstants {
 		fc.setValue(_val);
 
 		FLabel LabelName = new FLabel(p5);
-		LabelName.setTypeface(typefaceBold);
+		LabelName.setTypeface( typefaceBold );
 		fc.setLabels(LabelName);
 
 		FChecks.add(fc);
@@ -573,8 +711,8 @@ public class FControl implements PConstants,FControlConstants {
 
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
-		LabelValue.setTypeface(typefaceReg,typefaceBold);
-		LabelInfo.setTypeface(typefaceReg,typefaceBold);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
 		fs.setLabels(LabelValue, LabelInfo);
 		fs.setLabelType( _labelType );
 
@@ -706,8 +844,8 @@ public class FControl implements PConstants,FControlConstants {
 
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
-		LabelValue.setTypeface(typefaceReg,typefaceBold);
-		LabelInfo.setTypeface(typefaceReg,typefaceBold);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
 		fk.setLabels(LabelValue, LabelInfo);
 		fk.setLabelType( LABEL_FLOAT );
 		
@@ -799,10 +937,11 @@ public class FControl implements PConstants,FControlConstants {
 	}
 
 	
-	
 	//-----------------------------------------
 	// FDropDown
 	//-----------------------------------------
+	// TODO: fix buggy click
+	
 	/**
 	 * @param _name
 	 *		  name of the gui element
@@ -828,8 +967,8 @@ public class FControl implements PConstants,FControlConstants {
 		
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
-		LabelValue.setTypeface(typefaceReg,typefaceBold);
-		LabelInfo.setTypeface(typefaceReg,typefaceBold);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
 		fd.setLabels(LabelValue, LabelInfo);
 		fd.setLabelType( LABEL_FLOAT );
 		
@@ -858,20 +997,276 @@ public class FControl implements PConstants,FControlConstants {
 		
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
-		LabelValue.setTypeface(typefaceReg,typefaceBold);
-		LabelInfo.setTypeface(typefaceReg,typefaceBold);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
 		fd.setLabels(LabelValue, LabelInfo);
 		fd.setLabelType( LABEL_STRING );
 		
 		FDropDowns.add(fd);
 	}
 
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		 height of gui element
+	 * @param items
+	 *		 array of menu items
+	 *		 
+	 */
+	public void addDropDown(String _name, int _series, float _x, float _y, int _w, int _h, String[] items) {
+		addDropDown(_name + Integer.toString(_series), _x,_y, _w,_h, items);
+	}
+
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		 height of gui element
+	 * @param items
+	 *		 array of menu items
+	 * @param selected
+	 *		 initial value
+	 *		 
+	 */
+	public void addDropDown(String _name, int _series, float _x, float _y, int _w, int _h, String[] items, String selected) {
+		addDropDown(_name + Integer.toString(_series), _x,_y, _w,_h, items, selected);
+	}	
+	
 	
 	//-----------------------------------------
 	// FLabel
 	//-----------------------------------------
 
 
+	
+	//-----------------------------------------
+	// FInputField
+	//-----------------------------------------
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		 height of gui element
+	 *		 
+	 */
+	public void addInputField(String _name, float _x, float _y, int _w, int _h) {
+		System.out.println("addInputField");
+		FInputField fi = new FInputField(p5);
+		fi.setName(_name);
+		fi.setPos(_x, _y);
+		fi.setSize(_w, _h);
+		fi.setTypeface( typefaceReg );
+		
+		FLabel LabelValue = new FLabel(p5);
+		FLabel LabelInfo = new FLabel(p5);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
+		
+		FInputFields.add(fi);
+	}	
+	
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		 height of gui element
+	 * @param _typeface
+	 * 		typeface to use for input
+	 *		 
+	 */
+	public void addInputField(String _name, float _x, float _y, int _w, int _h, PFont _typeface) {
+		FInputField fi = new FInputField(p5);
+		fi.setName(_name);
+		fi.setPos(_x, _y);
+		fi.setSize(_w, _h);
+		fi.setTypeface(_typeface);
+		
+		FLabel LabelValue = new FLabel(p5);
+		FLabel LabelInfo = new FLabel(p5);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
+		
+		FInputFields.add(fi);
+	}
+	
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		 height of gui element
+	 * @param _t
+	 *		 default string
+	 *		 
+	 */
+	public void addInputField(String _name, float _x, float _y, int _w, int _h, String _t) {
+		FInputField fi = new FInputField(p5);
+		fi.setName(_name);
+		fi.setPos(_x, _y);
+		fi.setSize(_w, _h);
+		fi.setTypeface( typefaceReg );
+		fi.setString(_t);
+		
+		FLabel LabelValue = new FLabel(p5);
+		FLabel LabelInfo = new FLabel(p5);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
+		
+		FInputFields.add(fi);
+	}	
+	
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		 height of gui element
+	 * @param _t
+	 *		 default string
+	 * @param _typeface
+	 * 		typeface to use for input
+	 *		 
+	 */
+	public void addInputField(String _name, float _x, float _y, int _w, int _h, String _t, PFont _typeface) {
+		FInputField fi = new FInputField(p5);
+		fi.setName(_name);
+		fi.setPos(_x, _y);
+		fi.setSize(_w, _h);
+		fi.setTypeface(_typeface);
+		fi.setString(_t);
+		
+		FLabel LabelValue = new FLabel(p5);
+		FLabel LabelInfo = new FLabel(p5);
+		LabelValue.setTypeface( typefaceReg, typefaceBold );
+		LabelInfo.setTypeface( typefaceReg, typefaceBold );
+		
+		FInputFields.add(fi);
+	}
+
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		 height of gui element
+	 *		  
+	 */
+	public void addInputField(String _name, int _series, float _x, float _y, int _w, int _h) {
+		addInputField(_name + Integer.toString(_series), _x,_y, _w,_h);
+	}
+
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		 height of gui element
+	 * @param _typeface
+	 * 		typeface to use for input
+	 *		  
+	 */
+	public void addInputField(String _name, int _series, float _x, float _y, int _w, int _h, PFont _typeface) {
+		addInputField(_name + Integer.toString(_series), _x,_y, _w,_h, _typeface);
+	}
+
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		 height of gui element
+	 * @param _t
+	 *		 default string
+	 *		  
+	 */
+	public void addInputField(String _name, int _series, float _x, float _y, int _w, int _h, String _t) {
+		addInputField(_name + Integer.toString(_series), _x,_y, _w,_h, _t);
+	}
+
+	/**
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _w
+	 *		  width of gui element
+	 * @param _h
+	 *		 height of gui element
+	 * @param _t
+	 *		 default string
+	 * @param _typeface
+	 * 		typeface to use for input
+	 *		  
+	 */
+	public void addInputField(String _name, int _series, float _x, float _y, int _w, int _h, String _t, PFont _typeface) {
+		addInputField(_name + Integer.toString(_series), _x,_y, _w,_h, _t, _typeface);
+	}
+	
+	
 	
 	//-----------------------------------------------------------------------------
 	// methods
@@ -890,6 +1285,7 @@ public class FControl implements PConstants,FControlConstants {
 			System.out.println( "FSliders " + FSliders.size() );
 			System.out.println( "FKnobs " + FKnobs.size() );
 			System.out.println( "FDropDowns " + FDropDowns.size() );
+			System.out.println( "FInputFields " + FInputFields.size() );
 		}
 		
 
@@ -951,6 +1347,13 @@ public class FControl implements PConstants,FControlConstants {
 			fd.setColorInactive( colorInactive );
 			fd.showLabels( bShowLabels );
 			fd.draw();
+		}
+		for(FInputField fi : FInputFields) {
+			fi.setColorOver( colorOver );
+			fi.setColorPressed( colorPressed );
+			fi.setColorInactive( colorInactive );
+			fi.showLabels( bShowLabels );
+			fi.draw();
 		}
 		p5.popStyle();
 		// end controllers
@@ -1030,11 +1433,74 @@ public class FControl implements PConstants,FControlConstants {
 	// sets
 	//-----------------------------------------------------------------------------
 	/**
+	 * @param _typeface
+	 *		  set global typeface for values and labels, applies to all gui elements
+	 */
+	public void setTypeface(PFont _typeface) {
+		typefaceReg = _typeface;
+		typefaceBold = _typeface;
+		//System.out.println( "FControl typeface " + typeface.getFont().getName() );
+	}
+
+	/**
+	 * 
+	 * @param _typeface
+	 * 		  set typeface for values [0] and labels [1], applies to all gui elements
+	 */
+	public void setTypeface(PFont _typeface[]) {
+		typefaceReg = _typeface[0];
+		typefaceBold = _typeface[1];
+		//System.out.println( "FControl typeface " + typeface.getFont().getName() );
+	}
+
+	/**
+	 * 
+	 * @param _typeface
+	 * 		  set typeface for values, applies to all gui elements
+	 * @param _typefaceBold
+	 * 		  set typeface for labels, applies to all gui elements
+	 */
+	public void setTypeface(PFont _typeface, PFont _typefaceBold) {
+		typefaceReg = _typeface;
+		typefaceBold = _typefaceBold;
+		//System.out.println( "FControl typeface " + typeface.getFont().getName() );
+	}
+
+
+	//-----------------------------------------------------------------------------
+	/**
+	 * @param _colorInactive
+	 *		  set global inactive color for all gui elements
+	 */
+	public void setColorInactive(int _colorInactive) {
+		colorInactive = _colorInactive;
+	}
+
+	/**
+	 * @param _colorOver
+	 *		  set global over color for all gui elements
+	 */
+	public void setColorOver(int _colorOver) {
+		colorOver = _colorOver;
+	}
+	
+	/**
+	 * @param _colorPressed
+	 * 		  set global pressed color for all gui elemetns
+	 */
+	public void setColorPressed(int _colorPressed) {
+		colorPressed = _colorPressed;
+	}
+	
+	
+	//-----------------------------------------------------------------------------
+	/**
 	 * FButton
 	 * FHandle
 	 * FHandle3D
-	 * FSliders
-	 * FDropDowns
+	 * FSlider
+	 * FDropDown
+	 * FInputField
 	 * 
 	 * set width,height of specific element
 	 * 
@@ -1061,8 +1527,34 @@ public class FControl implements PConstants,FControlConstants {
 		for(FDropDown fd : FDropDowns) {
 			if(_name.compareTo(fd.name) == 0) fd.setSize((int)_width, (int)_height);
 		}
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) fi.setSize((int)_width, (int)_height);
+		}
 	}
 
+	/**
+	 * FButton
+	 * FHandle
+	 * FHandle3D
+	 * FSlider
+	 * FDropDown
+	 * FInputField
+	 * 
+	 * set width,height of series element
+	 * 
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _width
+	 *		  set width of gui element 
+	 * @param _height
+	 *		  set height of gui element 
+	 */
+	public void setSize(String _name, int _series, float _width, float _height) {
+		setSize(_name + Integer.toString(_series), _width, _height);
+	}
+	
 	/**
 	 * FCheck
 	 * FKnob
@@ -1082,7 +1574,23 @@ public class FControl implements PConstants,FControlConstants {
 			if(_name.compareTo(fk.name) == 0) fk.setSize((int)_radius,(int)_radius);
 		}
 	}
-	
+
+	/**
+	 * FCheck
+	 * FKnob
+	 * 
+	 * set radius of series element
+	 * 
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _radius
+	 *		  radius of element 
+	 */
+	public void setSize(String _name, int _series, float _radius) {
+		setSize(_name + Integer.toString(_series), _radius);
+	}
 	
 	//-----------------------------------------------------------------------------
 	/**
@@ -1092,6 +1600,7 @@ public class FControl implements PConstants,FControlConstants {
 	 * FDropDowns
 	 * FCheck
 	 * FKnob
+	 * FInputField
 	 * 
 	 * set x,y position of specfic element
 	 * 
@@ -1121,12 +1630,40 @@ public class FControl implements PConstants,FControlConstants {
 		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) fk.setPos((int)_x,(int)_y);
 		}
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) fi.setPos((int)_x,(int)_y);
+		}
 	}
 
 	/**
+	 * FButton
+	 * FHandle
+	 * FSliders
+	 * FDropDowns
+	 * FCheck
+	 * FKnob
+	 * FInputField
+	 * 
+	 * set x,y position of series element
+	 * 
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *		  set x position of gui element 
+	 * @param _y
+	 *		  set y position of gui element 
+	 */
+	public void setPos(String _name, int _series, float _x, float _y) {
+		setPos(_name + Integer.toString(_series), _x,_y);
+	}
+	
+	
+	/**
 	 * FHandle3D
 	 * 
-	 * set x,y,z position of specific element
+	 * set x,y,z position of specific FHandle3D element
 	 * 
 	 * @param _name
 	 *		  name of the gui element
@@ -1137,10 +1674,30 @@ public class FControl implements PConstants,FControlConstants {
 	 * @param _z
 	 *		  set z position of gui element 
 	 */
-	public void setSize(String _name, float _x, float _y, float _z) {
+	public void setPos(String _name, float _x, float _y, float _z) {
 		for(FHandle3D fh3 : FHandle3Ds) {
 			if(_name.compareTo(fh3.name) == 0) fh3.setPos((int)_x, (int)_y, (int)_z);
 		}
+	}
+
+	/**
+	 * FHandle3D
+	 * 
+	 * set x,y,z position of series FHandle3D element
+	 * 
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _x
+	 *		  set x position of gui element 
+	 * @param _y
+	 *		  set y position of gui element 
+	 * @param _z
+	 *		  set z position of gui element 
+	 */
+	public void setPos(String _name, int _series, float _x, float _y, float _z) {
+		setPos(_name + Integer.toString(_series), _x,_y,_z);
 	}
 	
 	
@@ -1220,10 +1777,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  set element boolean value 
 	 */
 	public void setValue(String _name, int _series, boolean _val) {
-		String seriesName = _name + Integer.toString(_series);
-		for(FCheck fc : FChecks) {
-			if(seriesName.compareTo(fc.name) == 0) fc.setValue(_val);
-		}
+		setValue(_name + Integer.toString(_series), _val);
 	}
 
 
@@ -1233,7 +1787,7 @@ public class FControl implements PConstants,FControlConstants {
 	 * FSlider
 	 * FKnob
 	 * 
-	 * single & series elements
+	 * set the loose for FSlider and FKnob elements
 	 * 
 	 * @param _val
 	 *		  set loosenes of the sliding mechanism (globally for every slider and knob) 
@@ -1288,8 +1842,6 @@ public class FControl implements PConstants,FControlConstants {
 		}
 	}	
 	
-
-	
 	/**
 	 * FSlider
 	 * FKnob
@@ -1304,13 +1856,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  set element int value 
 	 */
 	public void setValue(String _name, int _series, int _val) {
-		String seriesName = _name + Integer.toString(_series);
-		for(FSlider fs : FSliders) {
-			if(seriesName.compareTo(fs.name) == 0) fs.setValue(_val);
-		}
-		for(FKnob fk : FKnobs) {
-			if(seriesName.compareTo(fk.name) == 0) fk.setValue(_val);
-		}
+		setValue(_name + Integer.toString(_series), _val);
 	}
 	
 	/**
@@ -1327,13 +1873,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  set element float/int value 
 	 */
 	public void setValue(String _name, int _series, float _val) {
-		String seriesName = _name + Integer.toString(_series);
-		for(FSlider fs : FSliders) {
-			if(seriesName.compareTo(fs.name) == 0) fs.setValue(_val);
-		}
-		for(FKnob fk : FKnobs) {
-			if(seriesName.compareTo(fk.name) == 0) fk.setValue(_val);
-		}
+		setValue(_name + Integer.toString(_series), _val);
 	}
 
 	
@@ -1376,13 +1916,7 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  maximum value of gui element
 	 */
 	public void setValueRange(String _name, int _series, float _vMin, float _vMax) {
-		String seriesName = _name + Integer.toString(_series);
-		for(FSlider fs : FSliders) {
-			if(seriesName.compareTo(fs.name) == 0) fs.setValueRange(_vMin,_vMax);
-		}
-		for(FKnob fk : FKnobs) {
-			if(seriesName.compareTo(fk.name) == 0) fk.setValueRange(_vMin,_vMax);
-		}
+		setValueRange(_name + Integer.toString(_series), _vMin,_vMax);
 	}
 
 
@@ -1404,9 +1938,67 @@ public class FControl implements PConstants,FControlConstants {
 		}
 	}
 
+	/**
+	 * FDropDown
+	 * 
+	 * series element
+	 * 
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _nameItem
+	 *		  name of the added menu item
+	 *		  
+	 */
+	public void addItem(String _name, int _series, String _nameItem) {
+		addItem(_name + Integer.toString(_series), _nameItem);
+	}
+
 	
 	//-----------------------------------------------------------------------------
 	/**
+	 * FInputField
+	 * 
+	 * single element
+	 * set typeface for FInputField to display
+	 * 
+	 * @param _name
+	 * 		  name of the gui element
+	 * @param _typeface
+	 * 		  typeface to display
+	 * 
+	 */
+	public void setTypeface(String _name, PFont _typeface) {
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) fi.setTypeface(_typeface);
+		}
+	}
+
+	/**
+	 * FInputField
+	 * 
+	 * series element
+	 * set typeface for FInputField to display
+	 * 
+	 * @param _name
+	 * 		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _typeface
+	 * 		  typeface to display
+	 * 
+	 */
+	public void setTypeface(String _name, int _series, PFont _typeface) {
+		setTypeface(_name + Integer.toString(_series), _typeface);
+	}
+	
+	//-----------------------------------------------------------------------------
+	/**
+	 * FHandle
+	 * FSlider
+	 * FKnob
+	 * 
 	 * single element
 	 * 
 	 * @param _name
@@ -1426,9 +2018,31 @@ public class FControl implements PConstants,FControlConstants {
 			if(_name.compareTo(fk.name) == 0) fk.enableSnap(_val);
 		}
 	}
+
+	/**
+	 * FHandle
+	 * FSlider
+	 * FKnob
+	 * 
+	 * series element
+	 * 
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _val
+	 *		  increment value
+	 */
+	public void enableSnap(String _name, int _series, float _val) {
+		enableSnap(_name + Integer.toString(_series), _val);
+	}	
 	
 	/**
-	 * global
+	 * FHandle
+	 * FSlider
+	 * FKnob
+	 * 
+	 * single element
 	 * 
 	 * @param _name
 	 *		  name of the gui element
@@ -1445,28 +2059,20 @@ public class FControl implements PConstants,FControlConstants {
 		}
 	}
 
-
-	//-----------------------------------------------------------------------------
 	/**
-	 * @param _typeface
-	 *		  set global typeface for all gui elements
+	 * FHandle
+	 * FSlider
+	 * FKnob
+	 * 
+	 * series element
+	 * 
+	 * @param _name
+	 *		  name of the gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
 	 */
-	public void setTypeface(PFont _typeface) {
-		typefaceReg = _typeface;
-		typefaceBold = _typeface;
-		//System.out.println( "FControl typeface " + typeface.getFont().getName() );
-	}
-
-	public void setTypeface(PFont _typeface[]) {
-		typefaceReg = _typeface[0];
-		typefaceBold = _typeface[1];
-		//System.out.println( "FControl typeface " + typeface.getFont().getName() );
-	}
-
-	public void setTypeface(PFont _typeface, PFont _typefaceBold) {
-		typefaceReg = _typeface;
-		typefaceBold = _typefaceBold;
-		//System.out.println( "FControl typeface " + typeface.getFont().getName() );
+	public void disableSnap(String _name, int _series) {
+		disableSnap(_name + Integer.toBinaryString(_series));
 	}
 
 
@@ -1550,54 +2156,402 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  LABEL_STRING displays values as a string
 	 */
 	public void setLabelType(String _name, int _series, int _labelType) {
-		String seriesName = _name + Integer.toString(_series);
-		for(FHandle fh : FHandles) {
-			if(seriesName.compareTo(fh.name) == 0) fh.setLabelType(_labelType);
-		}
-		for(FHandle3D fh3 : FHandle3Ds) {
-			if(seriesName.compareTo(fh3.name) == 0) fh3.setLabelType(_labelType);
-		}
-		for(FSlider fs : FSliders) {
-			if(seriesName.compareTo(fs.name) == 0) fs.setLabelType(_labelType);
-		}
-		for(FKnob fk : FKnobs) {
-			if(seriesName.compareTo(fk.name) == 0) fk.setLabelType(_labelType);
-		}
+		setLabelType(_name + Integer.toString(_series), _labelType);
 	}
 
+	
+	//-----------------------------------------------------------------------------
+	/**
+	 * FButton
+	 * 
+	 * single element
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param img
+	 * 			sprite source image
+	 * 			loading a sprite (vertical)
+	 * 			|------|------|------|
+	 *			|-[0]U-|-[1]O-|-[2]D-|
+	 * 			|------|------|------|
+	 * 			up, over, down
+	 * @param _sw
+	 * 			sprite width (individual)
+	 * @param _sh
+	 * 			sprite height (individual)
+	 * 
+	 */
+	public void setSprite(String _name, PImage img, int _sw, int _sh) {
+		for(FButton fb : FButtons) {
+			if(_name.compareTo(fb.name) == 0) fb.setSprite(img, _sw,_sh);
+		}
+	}
+	
+	/**
+	 * FButton
+	 * 
+	 * series element
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param img
+	 * 			sprite source image
+	 * 			loading a sprite (vertical)
+	 * 			|------|------|------|
+	 *			|-[0]U-|-[1]O-|-[2]D-|
+	 * 			|------|------|------|
+	 * 			up, over, down
+	 * @param _sw
+	 * 			sprite width (individual)
+	 * @param _sh
+	 * 			sprite height (individual)
+	 * 
+	 */
+	public void setSprite(String _name, int _series, PImage img, int _sw, int _sh) {
+		setSprite(_name + Integer.toString(_series), img, _sw,_sh);
+	}
 	
 	
 	//-----------------------------------------------------------------------------
 	/**
-	 * @param _colorInactive
-	 *		  set global inactive color for all gui elements
+	 * FInputField
+	 * 
+	 * single element
+	 * underline specific input field
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _val
+	 * 		  toggle underline
+	 *
 	 */
-	public void setColorInactive(int _colorInactive) {
-		colorInactive = _colorInactive;
+	public void underline(String _name, boolean _val) {
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) fi.underline(_val);
+			//else return null;
+		}
 	}
 
 	/**
-	 * @param _colorOver
-	 *		  set global over color for all gui elements
+	 * FInputField
+	 * 
+	 * series element
+	 * underline specific input field
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _val
+	 * 		  toggle underline
+	 *
 	 */
-	public void setColorOver(int _colorOver) {
-		colorOver = _colorOver;
+	public void underline(String _name, int _series, boolean _val) {
+		underline(_name + Integer.toString(_series), _val);
 	}
-	
+
 	/**
-	 * @param _colorPressed
-	 * 		  set global pressed color for all gui elemetns
+	 * FInputField
+	 * 
+	 * underline all input fields
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 *
 	 */
-	public void setColorPressed(int _colorPressed) {
-		colorPressed = _colorPressed;
+	public void underline(boolean _val) {
+		for(FInputField fi : FInputFields) fi.underline(_val);
 	}
+
+
+	//-----------------------------------------------------------------------------
+	/**
+	 * FInputField
+	 * 
+	 * toggle container around specific input field
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _val
+	 *		  container toggle value 
+	 *
+	 */
+	public void container(String _name, boolean _val) {
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) fi.container(_val);
+			//else return null;
+		}
+	}
+
+	/**
+	 * FInputField
+	 * 
+	 * toggle container around specific input field
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _val
+	 *		  container toggle value 
+	 *
+	 */
+	public void container(String _name, int _series, boolean _val) {
+		container(_name + Integer.toString(_series), _val);
+	}
+
+	/**
+	 * FInputField
+	 * 
+	 * toggle container around all input fields
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _val
+	 *		  container toggle value 
+	 *
+	 */
+	public void container(boolean _val) {
+		for(FInputField fi : FInputFields) fi.container(_val);
+	}	
 	
-	
+	//-----------------------------------------------------------------------------
+	/**
+	 * FInputField
+	 * 
+	 * toggle caps around specific input field
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _val
+	 *		  caps toggle value 
+	 *
+	 */
+	public void caps(String _name, boolean _val) {
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) fi.caps(_val);
+			//else return null;
+		}
+	}
+
+	/**
+	 * FInputField
+	 * 
+	 * toggle caps around specific input field
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @param _val
+	 *		  caps toggle value 
+	 *
+	 */
+	public void caps(String _name, int _series, boolean _val) {
+		caps(_name + Integer.toString(_series), _val);
+	}
+
+	/**
+	 * FInputField
+	 * 
+	 * toggle caps around all input fields
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _val
+	 *		  caps toggle value 
+	 *
+	 */
+	public void caps(boolean _val) {
+		for(FInputField fi : FInputFields) fi.caps(_val);
+	}	
+		
 
 	//-----------------------------------------------------------------------------
 	// gets
 	//-----------------------------------------------------------------------------
 	/**
+	 * return inactive color (as int) 
+	 * 
+	 */
+	public int getColorInactive() {
+		return colorInactive;
+	}
+	/**
+	 * return over color (as int) 
+	 * 
+	 */
+	public int getColorOver() {
+		return colorOver;
+	}
+	/**
+	 * return pressed color (as int) 
+	 * 
+	 */
+	public int getColorPressed() {
+		return colorPressed;
+	}
+
+
+	//-----------------------------------------------------------------------------
+	/**
+	 * FHandle
+	 * FHandle3D
+	 * FCheck
+	 * FSlider
+	 * FKnob
+	 * FButton
+	 * FDropDown
+	 * FInputField
+	 * 
+	 * single element
+	 * 
+	 * return PVector value of gui element 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 *		  
+	 */
+	public PVector getPos(String _name) {
+		PVector vector = new PVector();
+
+		for(FHandle fh : FHandles) {
+			if(_name.compareTo(fh.name) == 0) vector = fh.getPos();
+		}
+		for(FHandle3D fh3 : FHandle3Ds) {
+			if(_name.compareTo(fh3.name) == 0) vector = fh3.getPos();
+		}
+		for(FCheck fc : FChecks) {
+			if(_name.compareTo(fc.name) == 0) vector = fc.getPos();
+		}
+		for(FSlider fs : FSliders) {
+			if(_name.compareTo(fs.name) == 0) vector = fs.getPos();
+		}
+		for(FKnob fk : FKnobs) {
+			if(_name.compareTo(fk.name) == 0) vector = fk.getPos();
+		}
+		for(FButton fb : FButtons) {
+			if(_name.compareTo(fb.name) == 0) vector = fb.getPos();
+		}
+		for(FDropDown fd : FDropDowns) {
+			if(_name.compareTo(fd.name) == 0) vector = fd.getPos();
+		}
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) vector = fi.getPos();
+		}
+
+		return vector;
+	}
+
+
+	/**
+	 * FHandle
+	 * FHandle3D
+	 * FCheck
+	 * FSlider
+	 * FKnob
+	 * FButton
+	 * FDropDown
+	 * FInputField
+	 * 
+	 * series elements
+	 * 
+	 * return PVector value of gui element 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *		  
+	 */
+	public PVector getPos(String _name, int _series) {
+		return getPos(_name + Integer.toString(_series));
+	}
+
+
+	//-----------------------------------------------------------------------------
+	/**
+	 * FHandle
+	 * FHandle3D
+	 * FCheck
+	 * FSlider
+	 * FKnob
+	 * FButton
+	 * FDropDown
+	 * FInputField
+	 * 
+	 * single element
+	 * 
+	 * return Dimension of gui element 
+	 * (i.e. int h = getSize("_name").height; ) 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 *		  
+	 */
+	public Dimension getSize(String _name) {
+		Dimension dimension = new Dimension();
+
+		for(FHandle fh : FHandles) {
+			if(_name.compareTo(fh.name) == 0) dimension = fh.getSize();
+		}
+		for(FHandle3D fh3 : FHandle3Ds) {
+			if(_name.compareTo(fh3.name) == 0) dimension = fh3.getSize();
+		}
+		for(FCheck fc : FChecks) {
+			if(_name.compareTo(fc.name) == 0) dimension = fc.getSize();
+		}
+		for(FSlider fs : FSliders) {
+			if(_name.compareTo(fs.name) == 0) dimension = fs.getSize();
+		}
+		for(FKnob fk : FKnobs) {
+			if(_name.compareTo(fk.name) == 0) dimension = fk.getSize();
+		}
+		for(FButton fb : FButtons) {
+			if(_name.compareTo(fb.name) == 0) dimension = fb.getSize();
+		}
+		for(FDropDown fd : FDropDowns) {
+			if(_name.compareTo(fd.name) == 0) dimension = fd.getSize();
+		}
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) dimension = fi.getSize();
+		}
+
+		return dimension;
+	}
+
+	/**
+	 * FHandle
+	 * FHandle3D
+	 * FCheck
+	 * FSlider
+	 * FKnob
+	 * FButton
+	 * FDropDown
+	 * FInputField
+	 * 
+	 * series elements
+	 * 
+	 * return Dimension of gui element 
+	 * (i.e. int h = getSize("_name", series).height; ) 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *		  
+	 */
+	public Dimension getSize(String _name, int _series) {
+		return getSize(_name + Integer.toString(_series));
+	}	
+		
+	
+	//-----------------------------------------------------------------------------
+	/**
+	 * FCheck
+	 * 
 	 * single element
 	 * 
 	 * return boolean value of gui element 
@@ -1615,6 +2569,8 @@ public class FControl implements PConstants,FControlConstants {
 	}
 
 	/**
+	 * FCheck
+	 * 
 	 * return boolean value of gui element 
 	 * 
 	 * @param _name
@@ -1624,17 +2580,16 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public boolean getBoolValue(String _name, int _series) {
-		String seriesName = _name + Integer.toString(_series);
-		for(FCheck fc : FChecks) {
-			if(seriesName.compareTo(fc.name) == 0) boolVal = fc.getValue();
-			//else bool = null;
-		}
-		return boolVal;
+		return getBoolValue( _name + Integer.toString(_series));
 	}
 
 	
 	//-----------------------------------------------------------------------------
 	/**
+	 * FCheck
+	 * FSlider
+	 * FKnob
+	 * 
 	 * single element
 	 * 
 	 * return int value of gui element 
@@ -1661,6 +2616,10 @@ public class FControl implements PConstants,FControlConstants {
 	}
 
 	/**
+	 * FCheck
+	 * FSlider
+	 * FKnob
+	 * 
 	 * return int value of gui element 
 	 * 
 	 * @param _name
@@ -1670,26 +2629,15 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public int getIntValue(String _name, int _series) {
-		String seriesName = _name + Integer.toString(_series);
-		for(FCheck fc : FChecks) {
-			if(seriesName.compareTo(fc.name) == 0) intVal = ( fc.getValue() )?1:0;
-			//else bool = null;
-		}
-		for(FSlider fs : FSliders) {
-			if(seriesName.compareTo(fs.name) == 0) intVal = fs.getIntValue();
-			//else return null;
-		}
-		for(FKnob fk : FKnobs) {
-			if(seriesName.compareTo(fk.name) == 0) intVal = fk.getIntValue();
-			//else return null;
-		}
-
-		return intVal;
+		return getIntValue(_name + Integer.toString(_series));
 	}	
 	
 	
 	//-----------------------------------------------------------------------------
 	/**
+	 * FSlider
+	 * FKnob
+	 * 
 	 * single element
 	 * 
 	 * return float value of gui element 
@@ -1712,6 +2660,9 @@ public class FControl implements PConstants,FControlConstants {
 	}
 
 	/**
+	 * FSlider
+	 * FKnob
+	 * 
 	 * return float value of gui element 
 	 * 
 	 * @param _name
@@ -1721,22 +2672,148 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public float getFloatValue(String _name, int _series) {
-		String seriesName = _name + Integer.toString(_series);
+		return getFloatValue(_name + Integer.toString(_series));
+	}
+
+	
+	//-----------------------------------------------------------------------------
+	/**
+	 * FCheck
+	 * FSlider
+	 * FKnob
+	 * 
+	 * single element
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @return
+	 * 		  String value of gui element
+	 */
+	public String getStringValue(String _name) {
+		for(FCheck fc : FChecks) {
+			if(_name.compareTo(fc.name) == 0) strVal = ( fc.getValue() )? "true":"false";
+			//else return null;
+		}
 		for(FSlider fs : FSliders) {
-			if(seriesName.compareTo(fs.name) == 0) floatVal = fs.getFloatValue();
+			if(_name.compareTo(fs.name) == 0) strVal = Float.toString( fs.getFloatValue() );
 			//else return null;
 		}
 		for(FKnob fk : FKnobs) {
-			if(seriesName.compareTo(fk.name) == 0) floatVal = fk.getFloatValue();
+			if(_name.compareTo(fk.name) == 0) strVal = Float.toString( fk.getFloatValue() );
 			//else return null;
 		}
-
-		return floatVal;
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) strVal = fi.getValue();
+			//else return null;
+		}
+		
+		return strVal;
 	}
 
+	
+	/**
+	 * FCheck
+	 * FSlider
+	 * FKnob
+	 * 
+	 * series element
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 * @return
+	 * 		  String value of gui element
+	 */
+	public String getStringValue(String _name, int _series) {
+		return getStringValue(_name + Integer.toString(_series));
+	}
 
+	
 	//-----------------------------------------------------------------------------
 	/**
+	 * FDropDown
+	 * 
+	 * single element
+	 * return the selection from FDropDown 
+	 * 
+	 * @param _name
+	 *		  name of the dropdown gui element
+	 *
+	 * @return
+	 * 		  String (name) of the element selected
+	 *		  
+	 */
+	public String getSelection(String _name) {
+		for(FDropDown fd : FDropDowns) {
+			if(_name.compareTo(fd.name) == 0) selStrVal = fd.getSelection();
+		}
+		return selStrVal;
+	}
+
+	/**
+	 * FDropDown
+	 * 
+	 * series element
+	 * return the selection from FDropDown 
+	 * 
+	 * @param _name
+	 *		  name of the dropdown gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *
+	 * @return
+	 * 		  String (name) of the element selected
+	 *		  
+	 */
+	public String getSelection(String _name, int _series) {
+		return getSelection(_name + Integer.toString(_series));
+	}
+
+	/**
+	 * FDropDown
+	 * 
+	 * single element
+	 * return the selection from FDropDown 
+	 * 
+	 * @param _name
+	 *		  name of the dropdown gui element
+	 *
+	 * @return
+	 * 		  int (index) of the element selected
+	 *		  
+	 */
+	public int getSelectionIndex(String _name) {
+		for(FDropDown fd : FDropDowns) {
+			if(_name.compareTo(fd.name) == 0) selIntVal = fd.getSelectionIndex();
+		}
+		return selIntVal;
+	}
+
+	/**
+	 * FDropDown
+	 * 
+	 * series element
+	 * return the selection from FDropDown 
+	 * 
+	 * @param _name
+	 *		  name of the dropdown gui element
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *
+	 * @return
+	 * 		  int (index) of the element selected
+	 *		  
+	 */
+	public int getSelectionIndex(String _name, int _series) {
+		return getSelectionIndex(_name + Integer.toString(_series));
+	}
+	
+	
+	//-----------------------------------------------------------------------------
+	/**
+	 * FButton
+	 * 
 	 * single element
 	 * 
 	 * return filePath of gui element 
@@ -1756,6 +2833,9 @@ public class FControl implements PConstants,FControlConstants {
 	}
 	
 	/**
+	 * FButton
+	 * 
+	 * series element
 	 * return filePath of gui element 
 	 * 
 	 * @param _name
@@ -1765,56 +2845,36 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public String getFilePath(String _name, int _series) {
-		String filePath = "";
-		String seriesName = _name + Integer.toString(_series);
-		for(FButton fb : FButtons) {
-			if(seriesName.compareTo(fb.name) == 0) filePath = fb.getFilePath();
-			//else return null;
-		}
-
-		return filePath;
+		return getFilePath(_name + Integer.toString(_series));
 	}
 
 	
-	
-	
 	//-----------------------------------------------------------------------------
 	/**
+	 * FInputField
+	 * 
 	 * single element
 	 * 
-	 * return PVector value of gui element 
+	 * return type size of input typeface 
 	 * 
 	 * @param _name
 	 *		  name of the gui element 
 	 *		  
 	 */
-	public PVector getCoord(String _name) {
-		PVector vector = new PVector();
-
-		for(FHandle fh : FHandles) {
-			if(_name.compareTo(fh.name) == 0) vector = fh.getCoord();
+	public int getTypeSize(String _name) {
+		int typeSize = 0;
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) typeSize = fi.getTypeSize();
 		}
-		for(FHandle3D fh3 : FHandle3Ds) {
-			if(_name.compareTo(fh3.name) == 0) vector = fh3.getCoord();
-		}
-		for(FCheck fc : FChecks) {
-			if(_name.compareTo(fc.name) == 0) vector = fc.getCoord();
-		}
-		for(FSlider fs : FSliders) {
-			if(_name.compareTo(fs.name) == 0) vector = fs.getCoord();
-		}
-		for(FKnob fk : FKnobs) {
-			if(_name.compareTo(fk.name) == 0) vector = fk.getCoord();
-		}
-
-		return vector;
+		return typeSize;
 	}
 
-
 	/**
-	 * series elements
+	 * FInputField
 	 * 
-	 * return PVector value of gui element 
+	 * series element
+	 * 
+	 * return type size of input typeface 
 	 * 
 	 * @param _name
 	 *		  name of the gui element 
@@ -1822,27 +2882,8 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  number marker for multiple elements (i.e. name + series = "name0")
 	 *		  
 	 */
-	public PVector getCoord(String _name, int _series) {
-		PVector vector = new PVector();
-		String seriesName = _name + Integer.toString(_series);
-
-		for(FHandle fh : FHandles) {
-			if(seriesName.compareTo(fh.name) == 0) vector = fh.getCoord();
-		}
-		for(FHandle3D fh3 : FHandle3Ds) {
-			if(seriesName.compareTo(fh3.name) == 0) vector = fh3.getCoord();
-		}
-		for(FCheck fc : FChecks) {
-			if(seriesName.compareTo(fc.name) == 0) vector = fc.getCoord();
-		}
-		for(FSlider fs : FSliders) {
-			if(seriesName.compareTo(fs.name) == 0) vector = fs.getCoord();
-		}
-		for(FKnob fk : FKnobs) {
-			if(seriesName.compareTo(fk.name) == 0) vector = fk.getCoord();
-		}
-
-		return vector;
+	public int getTypeSize(String _name, int _series) {
+		return getTypeSize(_name + Integer.toString(_series));
 	}
 
 	
@@ -1858,28 +2899,67 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public boolean getOver(String _name) {
-		boolean _over = false;
+		try {
+			Thread.sleep(sleepTime);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
+		boolean _over = false;
 		for(FHandle fh : FHandles) {
-			if(_name.compareTo(fh.name) == 0) _over = fh.getOver();
+			if(_name.compareTo(fh.name) == 0) {
+				_over = fh.isOver();
+				break;
+			}
 		}
 		for(FHandle3D fh3 : FHandle3Ds) {
-			if(_name.compareTo(fh3.name) == 0) _over = fh3.getOver();
+			if(_name.compareTo(fh3.name) == 0) {
+				_over = fh3.isOver();
+				break;
+			}
 		}
 		for(FCheck fc : FChecks) {
-			if(_name.compareTo(fc.name) == 0) _over = fc.getOver();
+			if(_name.compareTo(fc.name) == 0) {
+				_over = fc.isOver();
+				break;
+			}
 		}
 		for(FSlider fs : FSliders) {
-			if(_name.compareTo(fs.name) == 0) _over = fs.getOver();
+			if(_name.compareTo(fs.name) == 0) {
+				_over = fs.isOver();
+				break;
+			}
 		}
 		for(FKnob fk : FKnobs) {
-			if(_name.compareTo(fk.name) == 0) _over = fk.getOver();
+			if(_name.compareTo(fk.name) == 0) {
+				_over = fk.isOver();
+				break;
+			}
+		}
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) {
+				_over = fi.isOver();
+				break;
+			}
 		}
 		
 		return _over;
 	}
 
+	/**
+	 * return whether mouse is over the gui element 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *		  
+	 */
+	public boolean getOver(String _name, int _series) {
+		return getOver(_name + Integer.toString(_series));
+	}
 	
+
 	/**
 	 * return whether the element has been clicked 
 	 * 
@@ -1888,42 +2968,79 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public boolean getClicked(String _name) {
-		boolean _clicked = false;
-
-		for(FButton fb : FButtons) {
-			if(_name.compareTo(fb.name) == 0) _clicked = fb.getClicked();
-			else continue;
-		}		
-		for(FCheck fc : FChecks) {
-			if(_name.compareTo(fc.name) == 0) _clicked = fc.getClicked();
-			else continue;
-		}		
-		for(FHandle fh : FHandles) {
-			if(_name.compareTo(fh.name) == 0) _clicked = fh.getClicked();
-			else continue;
-		}
-		for(FHandle3D fh3 : FHandle3Ds) {
-			if(_name.compareTo(fh3.name) == 0) _clicked = fh3.getClicked();
-			else continue;
-		}
-		for(FSlider fs : FSliders) {
-			if(_name.compareTo(fs.name) == 0) _clicked = fs.getClicked();
-			else continue;
-		}
-		for(FKnob fk : FKnobs) {
-			if(_name.compareTo(fk.name) == 0) _clicked = fk.getClicked();
-			else continue;
-		}
-		
 		try {
 			Thread.sleep(sleepTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
+		boolean _clicked = false;
+
+		for(FButton fb : FButtons) {
+			if(_name.compareTo(fb.name) == 0) {
+				_clicked = fb.isClicked();
+				break;
+			}
+			else continue;
+		}		
+		for(FCheck fc : FChecks) {
+			if(_name.compareTo(fc.name) == 0) {
+				_clicked = fc.isClicked();
+				break;
+			}
+			else continue;
+		}		
+		for(FHandle fh : FHandles) {
+			if(_name.compareTo(fh.name) == 0) {
+				_clicked = fh.isClicked();
+				break;
+			}
+			else continue;
+		}
+		for(FHandle3D fh3 : FHandle3Ds) {
+			if(_name.compareTo(fh3.name) == 0) {
+				_clicked = fh3.isClicked();
+				break;
+			}
+			else continue;
+		}
+		for(FSlider fs : FSliders) {
+			if(_name.compareTo(fs.name) == 0) {
+				_clicked = fs.isClicked();
+				break;
+			}
+			else continue;
+		}
+		for(FKnob fk : FKnobs) {
+			if(_name.compareTo(fk.name) == 0) {
+				_clicked = fk.isClicked();
+				break;
+			}
+			else continue;
+		}
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) {
+				_clicked = fi.isClicked();
+				break;
+			}
+		}
+		
 		return _clicked;
 	}
-	
+
+	/**
+	 * return whether the element has been clicked 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *		  
+	 */
+	public boolean getClicked(String _name, int _series) {
+		return getClicked(_name + Integer.toString(_series));
+	}
+
 	
 	/**
 	 * return whether the element has been pressed 
@@ -1933,42 +3050,78 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public boolean getPressed(String _name) {
-		boolean _pressed = false;
-
-		for(FButton fb : FButtons) {
-			if(_name.compareTo(fb.name) == 0) _pressed = fb.getPressed();
-			else continue;
-		}		
-		for(FCheck fc : FChecks) {
-			if(_name.compareTo(fc.name) == 0) _pressed = fc.getPressed();
-			else continue;
-		}		
-		for(FHandle fh : FHandles) {
-			if(_name.compareTo(fh.name) == 0) _pressed = fh.getPressed();
-			else continue;
-		}
-		for(FHandle3D fh3 : FHandle3Ds) {
-			if(_name.compareTo(fh3.name) == 0) _pressed = fh3.getPressed();
-			else continue;
-		}
-		for(FSlider fs : FSliders) {
-			if(_name.compareTo(fs.name) == 0) _pressed = fs.getPressed();
-			else continue;
-		}
-		for(FKnob fk : FKnobs) {
-			if(_name.compareTo(fk.name) == 0) _pressed = fk.getPressed();
-			else continue;
-		}
-		
 		try {
 			Thread.sleep(sleepTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
+		boolean _pressed = false;
+		for(FButton fb : FButtons) {
+			if(_name.compareTo(fb.name) == 0) {
+				_pressed = fb.isDown();
+				break;
+			}
+			else continue;
+		}		
+		for(FCheck fc : FChecks) {
+			if(_name.compareTo(fc.name) == 0) {
+				_pressed = fc.isDown();
+				break;
+			}
+			else continue;
+		}		
+		for(FHandle fh : FHandles) {
+			if(_name.compareTo(fh.name) == 0) {
+				_pressed = fh.isDown();
+				break;
+			}
+			else continue;
+		}
+		for(FHandle3D fh3 : FHandle3Ds) {
+			if(_name.compareTo(fh3.name) == 0) {
+				_pressed = fh3.isDown();
+				break;
+			}
+			else continue;
+		}
+		for(FSlider fs : FSliders) {
+			if(_name.compareTo(fs.name) == 0) {
+				_pressed = fs.isDown();
+				break;
+			}
+			else continue;
+		}
+		for(FKnob fk : FKnobs) {
+			if(_name.compareTo(fk.name) == 0) {
+				_pressed = fk.isDown();
+				break;
+			}
+			else continue;
+		}
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) {
+				_pressed = fi.isDown();
+				break;
+			}
+		}
+	
 		return _pressed;
 	}
 	
+	/**
+	 * return whether the element has been pressed 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *		  
+	 */
+	public boolean getPressed(String _name, int _series) {
+		return getPressed(_name + Integer.toString(_series));
+	}
+
 	
 	/**
 	 * return whether the element is locked on 
@@ -1978,34 +3131,77 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public boolean getLocked(String _name) {
+		try {
+			Thread.sleep(sleepTime);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		boolean _locked = false;
 
 		for(FButton fb : FButtons) {
-			if(_name.compareTo(fb.name) == 0) _locked = fb.getLocked();
+			if(_name.compareTo(fb.name) == 0) {
+				_locked = fb.isLocked();
+				break;
+			}
 			else continue;
 		}		
 		for(FCheck fc : FChecks) {
-			if(_name.compareTo(fc.name) == 0) _locked = fc.getLocked();
+			if(_name.compareTo(fc.name) == 0) {
+				_locked = fc.isLocked();
+				break;
+			}
 			else continue;
 		}		
 		for(FHandle fh : FHandles) {
-			if(_name.compareTo(fh.name) == 0) _locked = fh.getLocked();
+			if(_name.compareTo(fh.name) == 0) {
+				_locked = fh.isLocked();
+				break;
+			}
 			else continue;
 		}
 		for(FHandle3D fh3 : FHandle3Ds) {
-			if(_name.compareTo(fh3.name) == 0) _locked = fh3.getLocked();
+			if(_name.compareTo(fh3.name) == 0) {
+				_locked = fh3.isLocked();
+				break;
+			}
 			else continue;
 		}
 		for(FSlider fs : FSliders) {
-			if(_name.compareTo(fs.name) == 0) _locked = fs.getLocked();
+			if(_name.compareTo(fs.name) == 0) {
+				_locked = fs.isLocked();
+				break;
+			}
 			else continue;
 		}
 		for(FKnob fk : FKnobs) {
-			if(_name.compareTo(fk.name) == 0) _locked = fk.getLocked();
+			if(_name.compareTo(fk.name) == 0) {
+				_locked = fk.isLocked();
+				break;
+			}
 			else continue;
+		}
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) {
+				_locked = fi.isLocked();
+				break;
+			}
 		}
 		
 		return _locked;
+	}
+
+	/**
+	 * return whether the element is locked on 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *		  
+	 */
+	public boolean getLocked(String _name, int _series) {
+		return getLocked(_name + Integer.toString(_series));
 	}
 
 	
@@ -2013,23 +3209,30 @@ public class FControl implements PConstants,FControlConstants {
 	 * return whether any element has been moved/adjusted 
 	 */
 	public boolean getMoved() {
+		try {
+			Thread.sleep(sleepTime);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		boolean _moved = false;
 
 		for(FHandle fh : FHandles) {
-			_moved = fh.getMoved();
+			_moved = fh.isMoved();
 		}
 		for(FHandle3D fh3 : FHandle3Ds) {
-			_moved = fh3.getMoved();
+			_moved = fh3.isMoved();
 		}
 		for(FSlider fs : FSliders) {
-			_moved = fs.getMoved();
+			_moved = fs.isMoved();
 		}
 		for(FKnob fk : FKnobs) {
-			_moved = fk.getMoved();
+			_moved = fk.isMoved();
 		}
 		
 		return _moved;
 	}
+
 	
 	
 	/**
@@ -2040,25 +3243,56 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public boolean getMoved(String _name) {
+		try {
+			Thread.sleep(sleepTime);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		boolean _moved = false;
 
 		for(FHandle fh : FHandles) {
-			if(_name.compareTo(fh.name) == 0) _moved = fh.getMoved();
+			if(_name.compareTo(fh.name) == 0) {
+				_moved = fh.isMoved();
+				break;
+			}
 		}
 		for(FHandle3D fh3 : FHandle3Ds) {
-			if(_name.compareTo(fh3.name) == 0) _moved = fh3.getMoved();
+			if(_name.compareTo(fh3.name) == 0) {
+				_moved = fh3.isMoved();
+				break;
+			}
 		}
 		for(FSlider fs : FSliders) {
-			if(_name.compareTo(fs.name) == 0) _moved = fs.getMoved();
+			if(_name.compareTo(fs.name) == 0) {
+				_moved = fs.isMoved();
+				break;
+			}
 		}
 		for(FKnob fk : FKnobs) {
-			if(_name.compareTo(fk.name) == 0) _moved = fk.getMoved();
+			if(_name.compareTo(fk.name) == 0) {
+				_moved = fk.isMoved();
+				break;
+			}
 		}
 		
 		return _moved;
 	}
 	
+	/**
+	 * return whether any element has been moved/adjusted 
+	 * 
+	 * @param _name
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *		  
+	 */
+	public boolean getMoved(String _name, int _series) {
+		return getMoved(_name + Integer.toString(_series));
+	}
 
+	
 	/**
 	 * return whether the element has been released
 	 * 
@@ -2067,88 +3301,72 @@ public class FControl implements PConstants,FControlConstants {
 	 *		  
 	 */
 	public boolean getReleased(String _name) {
+		try {
+			Thread.sleep(sleepTime);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		boolean _released = false;
 
 		for(FButton fb : FButtons) {
-			if(_name.compareTo(fb.name) == 0) _released = fb.getReleased();
+			if(_name.compareTo(fb.name) == 0) {
+				_released = fb.isReleased();
+				break;
+			}
 		}		
 		for(FCheck fc : FChecks) {
-			if(_name.compareTo(fc.name) == 0) _released = fc.getReleased();
+			if(_name.compareTo(fc.name) == 0) {
+				_released = fc.isReleased();
+				break;
+			}
 		}		
 		for(FHandle fh : FHandles) {
-			if(_name.compareTo(fh.name) == 0) _released = fh.getReleased();
+			if(_name.compareTo(fh.name) == 0) {
+				_released = fh.isReleased();
+				break;
+			}
 		}
 		for(FHandle3D fh3 : FHandle3Ds) {
-			if(_name.compareTo(fh3.name) == 0) _released = fh3.getReleased();
+			if(_name.compareTo(fh3.name) == 0) {
+				_released = fh3.isReleased();
+				break;
+			}
 		}
 		for(FSlider fs : FSliders) {
-			if(_name.compareTo(fs.name) == 0) _released = fs.getReleased();
+			if(_name.compareTo(fs.name) == 0) {
+				_released = fs.isReleased();
+				break;
+			}
 		}
 		for(FKnob fk : FKnobs) {
-			if(_name.compareTo(fk.name) == 0) _released = fk.getReleased();
+			if(_name.compareTo(fk.name) == 0) {
+				_released = fk.isReleased();
+				break;
+			}
+		}
+		for(FInputField fi : FInputFields) {
+			if(_name.compareTo(fi.name) == 0) {
+				_released = fi.isReleased();
+				break;
+			}
 		}
 		
 		return _released;
 	}
-	
-	
-	//-----------------------------------------------------------------------------
+
 	/**
-	 * return the selection from FDropDown 
+	 * return whether the element has been released
 	 * 
 	 * @param _name
-	 *		  name of the dropdown gui element
-	 *
-	 * @return
-	 * 		  String (name) of the element selected
+	 *		  name of the gui element 
+	 * @param _series
+	 *		  number marker for multiple elements (i.e. name + series = "name0")
 	 *		  
 	 */
-	public String getSelection(String _name) {
-		for(FDropDown fd : FDropDowns) {
-			if(_name.compareTo(fd.name) == 0) selStrVal = fd.getSelection();
-		}
-		return selStrVal;
-	}
-	
-	/**
-	 * return the selection from FDropDown 
-	 * 
-	 * @param _name
-	 *		  name of the dropdown gui element
-	 *
-	 * @return
-	 * 		  int (index) of the element selected
-	 *		  
-	 */
-	public int getSelectionIndex(String _name) {
-		for(FDropDown fd : FDropDowns) {
-			if(_name.compareTo(fd.name) == 0) selIntVal = fd.getSelectionIndex();
-		}
-		return selIntVal;
+	public boolean getReleased(String _name, int _series) {
+		return getReleased(_name + Integer.toString(_series));
 	}
 
 	
-	//-----------------------------------------------------------------------------
-	/**
-	 * return inactive color (as int) 
-	 * 
-	 */
-	public int getColorInactive() {
-		return colorInactive;
-	}
-	/**
-	 * return over color (as int) 
-	 * 
-	 */
-	public int getColorOver() {
-		return colorOver;
-	}
-	/**
-	 * return pressed color (as int) 
-	 * 
-	 */
-	public int getColorPressed() {
-		return colorPressed;
-	}
-
 }

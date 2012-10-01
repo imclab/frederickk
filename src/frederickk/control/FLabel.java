@@ -142,13 +142,18 @@ public class FLabel implements PConstants, FControlConstants {
 	protected void setTypeface(PFont _typefaceLabel) {
 		TYPEFACE_REG = _typefaceLabel;
 		TYPEFACE_BOLD = _typefaceLabel;
-		TYPEFACE_SIZE = 0; //TYPEFACE_REG.getFont().getSize()+1;
+		
+		// broke in Processing 2.0bX
+		TYPEFACE_SIZE = (TYPEFACE_REG.getFont().getSize())+1;
+		
 	}
 
 	protected void setTypeface(PFont _typefaceLabel, PFont _typefaceLabelBold) {
 		TYPEFACE_REG = _typefaceLabel;
 		TYPEFACE_BOLD = _typefaceLabelBold;
-		TYPEFACE_SIZE = 0; //TYPEFACE_REG.getFont().getSize()+1;
+
+		// broke in Processing 2.0bX
+		TYPEFACE_SIZE = (TYPEFACE_REG.getFont().getSize())+1;
 	}
 	
 
@@ -192,4 +197,8 @@ public class FLabel implements PConstants, FControlConstants {
 		return val;
 	}
 
+	public PFont getTypeface() {
+		return TYPEFACE_REG;
+	}
+	
 }

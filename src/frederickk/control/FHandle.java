@@ -20,6 +20,7 @@ package frederickk.control;
 //-----------------------------------------------------------------------------
 // libraries
 //-----------------------------------------------------------------------------
+import frederickk.tools.FTools;
 import processing.core.PApplet;
 import processing.core.PVector;
 import processing.core.PFont;
@@ -61,7 +62,7 @@ public class FHandle extends FControlBase {
 	// methods
 	//-----------------------------------------------------------------------------
 	protected void update() {
-		if( getOver() && PRESSED ) LOCKED = true;
+		if( isOver() && DOWN ) LOCKED = true;
 	}
 
 
@@ -89,7 +90,7 @@ public class FHandle extends FControlBase {
 		p5.pushStyle();
 		p5.noStroke();
 
-		if( getOver() ) p5.fill( getColorOver() );
+		if( isOver() ) p5.fill( getColorOver() );
 		else if( LOCKED ) p5.fill( getColorPressed() );
 		else p5.fill( getColorInactive() );
 		
@@ -116,7 +117,7 @@ public class FHandle extends FControlBase {
 
 		//-----------------------------------------
 		p5.stroke( getColorInactive() );
-		if( getOver() || LOCKED ) p5.fill( getColorOver() );
+		if( isOver() || LOCKED ) p5.fill( getColorOver() );
 		else p5.fill( getColorInactive() );
 		p5.rect(x,y, width,height);
 
@@ -128,7 +129,7 @@ public class FHandle extends FControlBase {
 		
 		//-----------------------------------------
 		if(showLabels) {
-			if( getOver() || LOCKED ) p5.fill( white );
+			if( isOver() || LOCKED ) p5.fill( white );
 			else p5.fill( getColorOver() );
 			labelName.draw( name );
 			//updateLabel();
@@ -142,7 +143,7 @@ public class FHandle extends FControlBase {
 			valSel = !valSel;
 			LOCKED = !LOCKED;
 			OVER = !OVER;
-			PRESSED = !PRESSED;
+			DOWN = !DOWN;
 			
 			return true;
 		}
@@ -171,8 +172,8 @@ public class FHandle extends FControlBase {
 	protected void drag() {
 		if( LOCKED ) {
 			if( SNAP ) {
-				x_new = snap( (float) (MOUSE_X - (width * 0.5)), SNAP_INC, 0);
-				y_new = snap( (float) (MOUSE_Y - (height * 0.5)), SNAP_INC, 0);
+				x_new = FTools.snap( (float) (MOUSE_X - (width * 0.5)), SNAP_INC, 0);
+				y_new = FTools.snap( (float) (MOUSE_Y - (height * 0.5)), SNAP_INC, 0);
 			} else {
 				x_new = (float) (MOUSE_X - (width * 0.5));
 				y_new = (float) (MOUSE_Y - (height * 0.5));

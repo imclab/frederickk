@@ -20,6 +20,7 @@ package frederickk.control;
 //-----------------------------------------------------------------------------
 // libraries
 //-----------------------------------------------------------------------------
+import frederickk.tools.FTools;
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -69,7 +70,7 @@ public class FSlider extends FControlBase {
 	// methods
 	//-----------------------------------------------------------------------------
 	protected void update() {
-		if( getOver() && PRESSED ) LOCKED = true;
+		if( isOver() && DOWN ) LOCKED = true;
 	}
 
 
@@ -131,10 +132,10 @@ public class FSlider extends FControlBase {
 		if( LOCKED ) {
 			if(dir == HORIZONTAL) {
 				posNew = PApplet.constrain((float) (MOUSE_X - (height * 0.5)), posMin, posMax); 
-				if( SNAP ) posNew = PApplet.constrain( snap( (float) (MOUSE_X - (height * 0.5)), SNAP_INC, -5), posMin, posMax);;
+				if( SNAP ) posNew = PApplet.constrain( FTools.snap( (float) (MOUSE_X - (height * 0.5)), SNAP_INC, -5), posMin, posMax);;
 			} else if(dir == VERTICAL) {
 				posNew = PApplet.constrain((float) (MOUSE_Y - (width * 0.5)), posMin, posMax); 
-				if( SNAP ) posNew = PApplet.constrain( snap( (float) (MOUSE_Y - (width * 0.5)), SNAP_INC, -5), posMin, posMax);;
+				if( SNAP ) posNew = PApplet.constrain( FTools.snap( (float) (MOUSE_Y - (width * 0.5)), SNAP_INC, -5), posMin, posMax);;
 			}
 		}
 

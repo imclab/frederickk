@@ -5,7 +5,7 @@ import frederickk.control.*;
  *  Ken Frederick
  *  
  *  Example showing the usage of the FControl GUI elements:
- *  FKnob, FCheck, FSlider, FMeter and being able to set your
+ *  FButton, FKnob, FCheck, FSlider, FMeter and being able to set your
  *  own custom typeface, by default LucidaGrande-Bold is used
  *  
  */
@@ -35,6 +35,7 @@ void setup() {
 
 
   // add gui elements
+  gui.addButton("button", width*0.5,height*0.5+60, 48,30);
   gui.addCheck("check", 15,15, 20, true);
   gui.addKnob("knob", width*0.5,height*0.5, 100);
   gui.addSlider("slider", 15,45, 200,20);

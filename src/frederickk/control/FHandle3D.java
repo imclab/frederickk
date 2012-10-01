@@ -71,7 +71,7 @@ public class FHandle3D extends FHandle {
 
 	//-----------------------------------------------------------------------------
 	protected void update() {
-		if( getOver() && PRESSED ) LOCKED = true;
+		if( isOver() && DOWN ) LOCKED = true;
 
 		if(LOCKED) {
 			// calculate transformation matrix for projecting mouse coords
@@ -120,7 +120,7 @@ public class FHandle3D extends FHandle {
 		p5.pushStyle();
 		p5.noStroke();
 
-		if( getOver() ) p5.fill( getColorOver() );
+		if( isOver() ) p5.fill( getColorOver() );
 		else if( LOCKED ) p5.fill( getColorPressed() );
 		else p5.fill( getColorInactive() );
 		
@@ -148,7 +148,7 @@ public class FHandle3D extends FHandle {
 	//-----------------------------------------------------------------------------
 	// events
 	//-----------------------------------------------------------------------------
-	protected boolean getOver() {
+	protected boolean isOver() {
 		int x2D = (int) p5.screenX(x, y, z);
 		int y2D = (int) p5.screenY(x, y, z);
 

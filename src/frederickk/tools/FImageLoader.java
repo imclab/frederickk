@@ -36,7 +36,7 @@ public class FImageLoader {
 	private PImage[] bild;
 
 	private String[] daten;
-	//private String ordnerName;
+	//private String filepath;
 
 
 
@@ -48,15 +48,15 @@ public class FImageLoader {
 	 * 
 	 * @param _p5
 	 * 			PApplet
-	 * @param ordnerName
+	 * @param filepath
 	 *		  the path of the images to load
 	 */
 	public FImageLoader(
 			PApplet _p5,
-			String ordnerName) {
+			String filepath) {
 
 		p5 = _p5;
-		setFolder(p5.sketchPath + ordnerName);
+		setFolder(p5.sketchPath + filepath);
 	}
 
 
@@ -65,14 +65,14 @@ public class FImageLoader {
 	// sets
 	//-----------------------------------------------------------------------------
 	/**
-	 * @param ordnerName
+	 * @param filepath
 	 *		  the path to load
 	 */
 	public void setFolder(
-			String ordnerName) {
+			String filepath) {
 
-		//setFolderName(p5.sketchPath + ordnerName);
-		setFolderName(ordnerName);
+		//setFolderName(p5.sketchPath + filepath);
+		setFolderName(filepath);
 
 		//if(ordner.isFile()) {
 		boolean ds;
@@ -92,14 +92,14 @@ public class FImageLoader {
 			if(ds) {
 				for(int i=0; i != ordner.list().length-1; i++) {
 					daten[i] = ordner.list()[i+1];
-					bild[i] = p5.loadImage(ordnerName + "/" + daten[i]);
+					bild[i] = p5.loadImage(filepath + "/" + daten[i]);
 					System.out.println("loading image " + daten[i]);
 				}
 
 			} else if(!ds) {
 				for(int i=0; i != ordner.list().length; i++) {
 					daten[i] = ordner.list()[i];
-					bild[i] = p5.loadImage(ordnerName + "/" + daten[i]);
+					bild[i] = p5.loadImage(filepath + "/" + daten[i]);
 					System.out.println("loading image " + daten[i]);
 				}
 			}
@@ -114,11 +114,11 @@ public class FImageLoader {
 	}
 
 	/**
-	 * @param ordnerName
+	 * @param filepath
 	 *		  set the folder to read
 	 */
-	private void setFolderName(String ordnerName) {
-		ordner = new File(ordnerName);
+	private void setFolderName(String filepath) {
+		ordner = new File(filepath);
 	}
 
 	/**

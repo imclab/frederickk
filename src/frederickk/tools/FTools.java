@@ -331,9 +331,10 @@ public class FTools {
 		return min;
 	}
 	
+
 	
 	//------------------------------------------------------------------------
-	//additional tools
+	// additional tools
 	//------------------------------------------------------------------------
 	public static int snap(int value, int snapAmt) {
 		return snapAmt * Math.round(value / snapAmt);
@@ -341,8 +342,20 @@ public class FTools {
 	public static float snap(float value, float snapAmt) {
 		return snapAmt * Math.round(value / snapAmt);
 	}
+	public static int snap(float _val, float _inc, float _offset) {
+		float sf = ((int) (_val/_inc) * _inc) + _offset;
+		return (int) sf;
+	}
 
+	
+	//------------------------------------------------------------------------
+	public static float roundDecimal(float orig, int deci) {
+		float multi = (float) (Math.pow(10,deci));
+		float num = Math.round(orig * multi)/multi;
+		return num;
+	}	
 
+	
 	//------------------------------------------------------------------------
 	/**
 	 *	http://www.siafoo.net/snippet/191

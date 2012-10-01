@@ -21,7 +21,8 @@ package frederickk.control;
 // libraries
 //-----------------------------------------------------------------------------
 import processing.core.PApplet;
-import processing.core.PFont;
+import processing.core.PImage;
+//import processing.core.PFont;
 import processing.core.PVector;
 
 import java.awt.Color;
@@ -29,6 +30,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import java.awt.Rectangle;
+
+import frederickk.tools.FTools;
 
 
 
@@ -39,12 +42,14 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	private static final long serialVersionUID = 004L;
 	protected static PApplet p5;
 
+	
 	// constants
-	protected boolean OVER, CLICK, PRESSED, LOCKED, DRAG, MOVED, RELEASE, SNAP;
+	protected boolean OVER, DOWN, CLICK, LOCKED, RELEASE, SNAP, DRAG, MOVED;
 	protected int CLICK_COUNT;
 	protected int MOUSE_X, MOUSE_Y, MOUSE_BUTTON;
 	protected int MOUSE_X_NEW, MOUSE_Y_NEW;
 	protected float SNAP_INC;
+
 
 	// labels
 	protected String name;
@@ -54,37 +59,47 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	protected boolean showLabels;
 	protected int labelType;
 
+	
 	// colors
-	//	protected static int colorInactive;
-	//	protected static int colorOver;
-	//	protected static int colorPressed;
-	//	protected static int white;
 	protected int colorInactive;
 	protected int colorOver;
 	protected int colorPressed;
 	protected int white;
 
 
+	// sprites
+	PImage[] states;
+
+	
+	private boolean bVerbose = false;
+
+	
 
 	//-----------------------------------------------------------------------------
 	// constructor
 	//-----------------------------------------------------------------------------
 	public FControlBase(PApplet thePApplet) {
+		// the applet
 		p5 = thePApplet;
 
+
 		// mouse events
-		//		p5.registerMouseEvent(this);
-		p5.addMouseListener(this);
-		p5.addMouseMotionListener(this);
-
-		Color _white = new Color(255,255,255, 204);
-		white = _white.getRGB();
-
 		OVER = false;
-		PRESSED = false;
+		DOWN = false;
+		CLICK = false;
 		LOCKED = false;
 		RELEASE = true;
 		SNAP = false;
+		DRAG = false;
+		MOVED = false;
+		
+		p5.addMouseListener(this);
+		p5.addMouseMotionListener(this);
+
+
+		// colors
+		Color _white = new Color(255,255,255, 204);
+		white = _white.getRGB();
 	}	
 
 
@@ -92,43 +107,18 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	//-----------------------------------------------------------------------------
 	// methods
 	//-----------------------------------------------------------------------------
-	//quick and dirty, eventually move this to a different spot
-	protected double roundDecimal(float orig, int deci) {
-		double multi = Math.pow(10,deci);
-		double num = Math.round(orig * multi)/multi;
-		return num;
-	}	
-
-	protected int boolToInt(boolean val) {
-		return (val) ? 1:0;
-	}
-
-	protected int snap(float _val, float _inc, float _offset) {
-		float sf = ((int) (_val/_inc) * _inc) + _offset;
-		return (int) sf;
-	}
-
-	public void showLabels(boolean _showLabels) {
-		showLabels = _showLabels;
-	}
-	public void showLabels(boolean _showLabels, int _labelType) {
-		showLabels = _showLabels;
-		setLabelType(_labelType);
-	}
-
-	//-----------------------------------------------------------------------------
 	protected abstract void update();
-	abstract public void draw();
+	public abstract void draw();
 
-//	public abstract void onRollOver(int x, int y);							// called when mouse enters object x, y, width, height
-//	public abstract void onRollOut();										// called when mouse leaves object x, y, width, height
-//	public abstract void onMouseMove(int x, int y);							// called when mouse moves while over object x, y, width, height
-//	public abstract void onDragOver(int x, int y, int button);				// called when mouse moves while over object and button is down
-//	public abstract void onDragOutside(int x, int y, int button);			// called when mouse moves while outside the object after being clicked on it
-//	public abstract void onPress(int x, int y, int button);					// called when mouse presses while over object
-//	public abstract void onPressOutside(int x, int y, int button);			// called when mouse presses while outside object
-//	public abstract void onRelease(int x, int y, int button);				// called when mouse releases while over object
-//	public abstract void onReleaseOutside(int x, int y, int button);		// called when mouse releases outside of object after being pressed on object
+	protected void onRollOver() {}				// called when mouse enters object x, y, width, height
+	protected void onRollOut() {}				// called when mouse leaves object x, y, width, height
+	protected void onMouseMove() {}				// called when mouse moves while over object x, y, width, height
+	protected void onDragOver() {}				// called when mouse moves while over object and button is down
+	protected void onDragOutside() {}			// called when mouse moves while outside the object after being clicked on it
+	protected void onPress() {}					// called when mouse presses while over object
+	protected void onPressOutside() {}			// called when mouse presses while outside object
+	protected void onRelease() {}				// called when mouse releases while over object
+	protected void onReleaseOutside() {}		// called when mouse releases outside of object after being pressed on object
 
 	
 
@@ -136,34 +126,34 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	// events
 	//-----------------------------------------------------------------------------
 	/**
-	 * capture mouse events
-	 * 
-	 */
-//	public void mouseEvent(MouseEvent event) {
-//		MOUSE_X = event.getX();
-//		MOUSE_Y = event.getY();
-//		MOUSE_BUTTON = event.getButton();
-//	}
-
-
-	/**
 	 * mouse clicked
 	 * 
 	 * @param event
 	 * 
 	 */
 	public void mouseClicked(MouseEvent event) {
+		int _x = event.getX();
+		int _y = event.getY();
+		int _button = event.getButton();
+		CLICK_COUNT = event.getClickCount();
+		
+		if(bVerbose) System.out.println("mouseClicked() x:" + _x + " y:" + _y + " button:" + _button);
+		
+		MOUSE_X = _x;
+		MOUSE_Y = _y;
+		MOUSE_BUTTON = _button;
+
 		if(hitTest(MOUSE_X,MOUSE_Y)) {
-			if(!CLICK) {
+			if(!DOWN || !CLICK) {
+				//onPress();
 				CLICK = true;
 			}
 		} else {
 			// nothing
-			// CLICK = false;
+			// DOWN = false;
 		}
-		CLICK_COUNT = event.getClickCount();
 	}
-
+	
 	/**
 	 * mouse pressed
 	 * 
@@ -171,15 +161,27 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	 * 
 	 */
 	public void mousePressed(MouseEvent event) {
+		int _x = event.getX();
+		int _y = event.getY();
+		int _button = event.getButton();
+		CLICK_COUNT = event.getClickCount();
+		
+		if(bVerbose) System.out.println("mousePressed() x:" + _x + " y:" + _y + " button:" + _button);
+		
+		MOUSE_X = _x;
+		MOUSE_Y = _y;
+		MOUSE_BUTTON = _button;
+
 		if(hitTest(MOUSE_X,MOUSE_Y)) {
-			if(!PRESSED) {
-				PRESSED = true;
+			if(!DOWN) {
+				onPress();
+				DOWN = true;
 			}
 		} else {
 			// nothing
-			// PRESSED = false;
+			// DOWN = false;
+			onPressOutside();
 		}
-		CLICK_COUNT = event.getClickCount();
 	}
 
 	/**
@@ -189,17 +191,31 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	 * 
 	 */
 	public void mouseReleased(MouseEvent event) {
+		int _x = event.getX();
+		int _y = event.getY();
+		int _button = event.getButton();
+		
+		if(bVerbose) System.out.println("mouseReleased() x:" + _x + " y:" + _y + " button:" + _button);
+
+		MOUSE_X = _x;
+		MOUSE_Y = _y;
+		MOUSE_BUTTON = _button;
+		CLICK_COUNT = event.getClickCount();
+		
 		if(hitTest(MOUSE_X,MOUSE_Y)) {
 			// release inside
-			RELEASE = true;
+			onRelease();
 		} else {
 			// release outside
-			RELEASE = true;
+			if(DOWN) {
+				onReleaseOutside();
+			}
 		}
-		LOCKED = false;
-		PRESSED = false;
+
+		RELEASE = true;
+		DOWN = false;
 		CLICK = false;
-		CLICK_COUNT = event.getClickCount();
+		LOCKED = false;
 	}
 
 	/**
@@ -231,11 +247,24 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	 * 
 	 */
 	public void mouseMoved(MouseEvent event) {
-		MOUSE_X = event.getX();
-		MOUSE_Y = event.getY();
+		int _x = event.getX();
+		int _y = event.getY();
+		//int _button = event.getButton();
+
+		if(bVerbose) System.out.println("mouseMoved() x:" + _x + " y:" + _y);
+
+		MOUSE_X = _x;
+		MOUSE_Y = _y;
+
 		if(hitTest(MOUSE_X,MOUSE_Y)) {
-			if(!OVER) OVER = true;
-		} else if(OVER) {
+			if(!OVER) {
+				onRollOver();
+				OVER = true;
+			}
+			onMouseMove();
+		}
+		else if(OVER) {
+			onRollOut();
 			OVER = false;
 		}
 	}
@@ -247,13 +276,29 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	 * 
 	 */
 	public void mouseDragged(MouseEvent event) {
-		MOUSE_X = event.getX();
-		MOUSE_Y = event.getY();
+		int _x = event.getX();
+		int _y = event.getY();
+		int _button = event.getButton();
+		
+		if(bVerbose) System.out.println("mouseDragged() x:" + _x + " y:" + _y + " button:" + _button);
+
+		MOUSE_X = _x;
+		MOUSE_Y = _y;
+		MOUSE_BUTTON = _button;
+		
 		if(hitTest(MOUSE_X,MOUSE_Y)) {
-			if(!OVER) OVER = true;
+			if(!OVER) {
+				// onPress(x,y);
+				OVER = true;
+			}
+			onDragOver();
 		} else {
-			if(OVER) OVER = false;
-			if(PRESSED) {
+			if(OVER) {
+				onRollOut();
+				OVER = false;
+			}
+			if(DOWN) {
+				onDragOutside();
 				// drag outside
 				//LOCKED = false;
 			}
@@ -268,26 +313,33 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 
 
 	//-----------------------------------------------------------------------------
-	protected boolean getOver() {
+	protected boolean isOver() {
 		return OVER;
 	}
-	protected boolean getClicked() {
+	protected boolean isDown() {
+		return DOWN;
+	}
+	protected boolean isClicked() {
 		return CLICK;
 	}
 	public int getClickCount() {
 		return CLICK_COUNT;
 	}
-	protected boolean getPressed() {
-		return PRESSED;
-	}
-	protected boolean getLocked() {
+	protected boolean isLocked() {
 		return LOCKED;
 	}
-	protected boolean getMoved() {
+	protected boolean isMoved() {
 		return MOVED;
 	}
-	protected boolean getReleased() {
+	protected boolean isReleased() {
 		return RELEASE;
+	}
+	
+	protected int getMouseX() {
+		return MOUSE_X;
+	}
+	protected int getMouseY() {
+		return MOUSE_Y;
 	}
 
 
@@ -299,10 +351,18 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	 * @param _name
 	 *		  the name of the gui element
 	 */
+	public void setVerbose(boolean val) {
+		bVerbose = val;
+	}
+
+	//-----------------------------------------------------------------------------
+	/**
+	 * @param _name
+	 *		  the name of the gui element
+	 */
 	public void setName(String _name) {
 		name = _name;
 	}
-
 
 	//-----------------------------------------------------------------------------
 	/**
@@ -314,7 +374,6 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	public void setSize(int _w, int _h) {
 		this.width = _w;
 		this.height = _h;
-
 	}
 	/**
 	 * @param _x
@@ -326,8 +385,53 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 		this.x = (int) _x;
 		this.y = (int) _y;
 	}
+	/**
+	 * @param _x
+	 *		  x position
+	 * @param _h
+	 *		  y position
+	 */
+	public void setPosAndSize(float _x, float _y, float _w, float _h) {
+		setPos(_x,_y);
+		setSize((int)_w,(int)_h);
+	}
 
 
+	//-----------------------------------------------------------------------------
+	/**
+	 * loading a sprite (vertical)
+	 * |------|------|------|
+	 * |-[0]U-|-[1]O-|-[2]D-|
+	 * |------|------|------|
+	 * up, over, down
+	 * 
+	 * @param img
+	 * 			sprite source image
+	 * @param _sw
+	 * 			sprite width (individual)
+	 * @param _sh
+	 * 			sprite height (individual)
+	 * 
+	 */
+	public void setSprite(PImage img, int _sw, int _sh) {
+		states = new PImage[3];
+		for (int i=0; i<states.length; i++) {
+			states[i] = img.get(i*_sw ,0, _sw,_sh);
+		}		
+		setSize(_sw,_sh);
+	}
+	
+
+	//-----------------------------------------------------------------------------
+	public void showLabels(boolean _showLabels) {
+		showLabels = _showLabels;
+	}
+	public void showLabels(boolean _showLabels, int _labelType) {
+		showLabels = _showLabels;
+		setLabelType(_labelType);
+	}
+
+	
 	//-----------------------------------------------------------------------------
 	/**
 	 * @param _labelVal
@@ -425,10 +529,12 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	//-----------------------------------------------------------------------------
 	// gets
 	//-----------------------------------------------------------------------------
-	protected PVector getCoord() {
+	protected PVector getPos() {
 		return new PVector(x,y);
 	}
 
+	
+	//-----------------------------------------------------------------------------
 	public int getColorInactive() {
 		return colorInactive;
 	}
@@ -443,7 +549,7 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	// singular
 	protected String getStrValue(float _input, int deci) {
 		String val = "";
-		val = java.lang.Float.toString( (float) roundDecimal(_input,deci) );
+		val = java.lang.Float.toString( (float) FTools.roundDecimal(_input,deci) );
 		return val;
 	}
 	protected String getStrValue(float _input) {
@@ -457,8 +563,8 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	// plural
 	protected String getStrValue(float _x, float _y, int deci) {
 		String val = "";
-		val += "x " + java.lang.Float.toString( (float) roundDecimal(_x,deci) ) + "\n";
-		val += "y " + java.lang.Float.toString( (float) roundDecimal(_y,deci) ) + "\n";
+		val += "x " + java.lang.Float.toString( (float) FTools.roundDecimal(_x,deci) ) + "\n";
+		val += "y " + java.lang.Float.toString( (float) FTools.roundDecimal(_y,deci) ) + "\n";
 		//val += "z " + Float.toString( (float) roundDecimal( getValue().x,deci ) );
 		return val;
 	}
