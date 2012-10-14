@@ -19,6 +19,10 @@ FControl gui;
 PFont typeface;
 
 
+
+//-----------------------------------------------------------------------------
+// methods
+//-----------------------------------------------------------------------------
 void setup() {
   size(300,300);
   //smooth();
@@ -26,6 +30,7 @@ void setup() {
 
   // initiate FControl
   gui = new FControl(this);
+  gui.showFrameRateTitle(); // show framerate of sketch in title
 
 
   // set typeface (optional)
@@ -48,10 +53,14 @@ void setup() {
 
 }
 
+//-----------------------------------------------------------------------------
 void draw() {
   background(0);
   
   // draw gui elements to screen
   gui.draw();
 }
+
+
+
 

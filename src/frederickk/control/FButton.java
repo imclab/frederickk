@@ -83,7 +83,7 @@ public class FButton extends FControlBase {
 	//-----------------------------------------------------------------------------
 	protected void update() {
 		if( isOver() && DOWN ) {
-			if(mode == BUTTON_LOAD) filePath = p5.selectInput(name);
+//			if(mode == BUTTON_LOAD) filePath = p5.selectInput(name);
 			LOCKED = true;
 		}
 	}

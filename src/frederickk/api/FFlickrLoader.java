@@ -39,7 +39,7 @@ public class FFlickrLoader implements Runnable {
 	private Thread thread;
 
 	protected ArrayList<String> imageList;
-	protected ArrayList<PImage> images = new ArrayList();
+	protected ArrayList<PImage> images = new ArrayList<PImage>();
 	private int num = 0;
 	private int remaining = 0;
 
@@ -50,6 +50,7 @@ public class FFlickrLoader implements Runnable {
 	//-----------------------------------------------------------------------------
 	// constructor
 	//-----------------------------------------------------------------------------
+	@SuppressWarnings("deprecation")
 	public FFlickrLoader(PApplet papplet) {
 		p5 = papplet;
 		p5.registerDispose(this);
@@ -70,7 +71,7 @@ public class FFlickrLoader implements Runnable {
 			if(num > 0) {
 				while(images.size() < num) {
 				//do {
-					String src = (String) imageList.get(loadID);
+					String src = imageList.get(loadID);
 					PImage tmp = p5.loadImage( src );
 					images.add( tmp );
 
@@ -98,7 +99,7 @@ public class FFlickrLoader implements Runnable {
 	 * @param _imageList
 	 * 			the list of url's to load
 	 */ 
-	public void toLoad(ArrayList _imageList) {
+	public void toLoad(ArrayList<String> _imageList) {
 		imageList = _imageList;
 		remaining = imageList.size();
 		num = imageList.size();
@@ -134,7 +135,7 @@ public class FFlickrLoader implements Runnable {
 	// gets
 	//-----------------------------------------------------------------------------
 	public PImage getImage(int w) {
-		PImage image = (PImage) images.get(w);
+		PImage image = images.get(w);
 		/*
 		// return null if incorrect ID, image not loaded or error occurred
 		if(image == null || !image.loaded || image.error) {

@@ -1291,7 +1291,7 @@ public class FControl implements PConstants, FControlConstants {
 
 		// frameRate in title
 		if(bShowFrameRate) {
-			//frame.setTitle( Float.toString(p5.frameRate) );
+			p5.frame.setTitle( Float.toString(p5.frameRate) );
 		}
 
 		
@@ -2257,8 +2257,8 @@ public class FControl implements PConstants, FControlConstants {
 	 * 
 	 * underline all input fields
 	 * 
-	 * @param _name
-	 *		  name of the gui element 
+	 * @param _val
+	 * 		  toggle underline
 	 *
 	 */
 	public void underline(boolean _val) {
@@ -2307,8 +2307,6 @@ public class FControl implements PConstants, FControlConstants {
 	 * 
 	 * toggle container around all input fields
 	 * 
-	 * @param _name
-	 *		  name of the gui element 
 	 * @param _val
 	 *		  container toggle value 
 	 *
@@ -2358,8 +2356,6 @@ public class FControl implements PConstants, FControlConstants {
 	 * 
 	 * toggle caps around all input fields
 	 * 
-	 * @param _name
-	 *		  name of the gui element 
 	 * @param _val
 	 *		  caps toggle value 
 	 *
@@ -2371,6 +2367,95 @@ public class FControl implements PConstants, FControlConstants {
 
 	//-----------------------------------------------------------------------------
 	// gets
+	//-----------------------------------------------------------------------------
+	/**
+	 * an audit of elements 
+	 * 
+	 */
+	public void listElements() {
+		System.out.println( "FButtons " + FButtons.size() );
+		System.out.println( "FHandles " + FHandles.size() );
+		System.out.println( "FHandle3Ds " + FHandle3Ds.size() );
+		System.out.println( "FChecks " + FChecks.size() );
+		System.out.println( "FSliders " + FSliders.size() );
+		System.out.println( "FKnobs " + FKnobs.size() );
+		System.out.println( "FDropDowns " + FDropDowns.size() );
+		System.out.println( "FInputFields " + FInputFields.size() );
+	}
+	/**
+	 * @return total number of elements 
+	 * 
+	 */
+	public int totalElements() {
+		return 
+			FButtons.size() + 
+			FHandles.size() + 
+			FHandle3Ds.size() + 
+			FChecks.size() + 
+			FSliders.size() + 
+			FKnobs.size() + 
+			FDropDowns.size() + 
+			FInputFields.size(); 
+	}
+	
+	/**
+	 * @return an ArrayList of all FButton elements
+	 * 
+	 */
+	public ArrayList<FButton> getButtons() {
+		return FButtons;
+	}
+	/**
+	 * @return an ArrayList of all FHandle elements
+	 * 
+	 */
+	public ArrayList<FHandle> getHandles() {
+		return FHandles;
+	}
+	/**
+	 * @return an ArrayList of all FHandle3D elements
+	 * 
+	 */
+	public ArrayList<FHandle3D> getHandle3Ds() {
+		return FHandle3Ds;
+	}
+	/**
+	 * @return an ArrayList of all FCheck elements
+	 * 
+	 */
+	public ArrayList<FCheck> getChecks() {
+		return FChecks;
+	}
+	/**
+	 * @return an ArrayList of all FSlider elements 
+	 * 
+	 */
+	public ArrayList<FSlider> getSliders() {
+		return FSliders;
+	}
+	/**
+	 * @return an ArrayList of all FKnob elements 
+	 * 
+	 */
+	public ArrayList<FKnob> getKnobs() {
+		return FKnobs;
+	}
+	/**
+	 * @return an ArrayList of all FDropDown elements 
+	 * 
+	 */
+	public ArrayList<FDropDown> getDropDowns() {
+		return FDropDowns;
+	}
+	/**
+	 * @return an ArrayList of all FInputField elements
+	 * 
+	 */
+	public ArrayList<FInputField> getInputFields() {
+		return FInputFields;
+	}
+
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * return inactive color (as int) 

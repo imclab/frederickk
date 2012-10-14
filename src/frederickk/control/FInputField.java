@@ -47,7 +47,7 @@ public class FInputField extends FControlBase implements KeyListener {
 	private boolean CONTAINER = false;
 	private boolean CAPS = false;
 
-	
+
 
 	//-----------------------------------------------------------------------------
 	// constructor
@@ -105,7 +105,7 @@ public class FInputField extends FControlBase implements KeyListener {
 
 		p5.noStroke();
 		p5.textFont(inputTypeface);
-		
+
 		if(!CONTAINER) 
 			p5.text(t, x+10,y+getTypeSize());
 		else
@@ -121,7 +121,7 @@ public class FInputField extends FControlBase implements KeyListener {
 		p5.stroke( underlineColor );
 		p5.strokeWeight( underlineWeight );
 		p5.line( x, y+(getTypeSize()+(underlineWeight*2)), 
-				 x+p5.textWidth(word), y+(getTypeSize()+(underlineWeight*2)) );
+				x+p5.textWidth(word), y+(getTypeSize()+(underlineWeight*2)) );
 		p5.popStyle();
 	}
 
@@ -146,7 +146,7 @@ public class FInputField extends FControlBase implements KeyListener {
 		return broken;
 	}  
 
-	
+
 
 	//-----------------------------------------------------------------------------
 	// events
@@ -176,7 +176,7 @@ public class FInputField extends FControlBase implements KeyListener {
 
 	public void keyTyped(KeyEvent event) {
 		char key = event.getKeyChar();
-			
+
 		if(FOCUS) {
 			if (key == KeyEvent.VK_BACK_SPACE || key == KeyEvent.VK_DELETE) {
 				if (t.length() > 0) {
@@ -199,17 +199,18 @@ public class FInputField extends FControlBase implements KeyListener {
 		FOCUS = false;
 	}	
 
-	
+
 
 	//-----------------------------------------------------------------------------
 	// sets
 	//-----------------------------------------------------------------------------
+	@SuppressWarnings("deprecation")
 	public void setTypeface(PFont typeface) {
 		inputTypeface = typeface;
 		inputTypeSize = inputTypeface.getFont().getSize();
 		if(height < inputTypeSize) height = inputTypeSize+10; 
 	}
-	
+
 	//-----------------------------------------------------------------------------
 	public void setName(String _name) {
 		name = _name;
@@ -230,14 +231,14 @@ public class FInputField extends FControlBase implements KeyListener {
 	public void container(boolean val) {
 		CONTAINER = val;
 	}
-	
+
 	//-----------------------------------------------------------------------------
 	public void caps(boolean val) {
 		CAPS = val;
 	}
 
 
-	
+
 	//-----------------------------------------------------------------------------
 	// gets
 	//-----------------------------------------------------------------------------
@@ -249,6 +250,4 @@ public class FInputField extends FControlBase implements KeyListener {
 	public int getTypeSize() {
 		return inputTypeSize;
 	}
-
-
 }

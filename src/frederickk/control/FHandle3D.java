@@ -21,6 +21,7 @@ package frederickk.control;
 // libraries
 //-----------------------------------------------------------------------------
 import processing.core.*;
+import processing.opengl.PGraphics3D;
 
 
 
@@ -28,15 +29,17 @@ public class FHandle3D extends FHandle {
 	//-----------------------------------------------------------------------------
 	// properties
 	//-----------------------------------------------------------------------------
+	private static final long serialVersionUID = 1L;
+
 	/*
 	 * button in 3d space with help from mustermann
 	 * http://processing.org/discourse/yabb2/YaBB.pl?num=1251823003
 	 */
 	private PGraphics3D g = new PGraphics3D();
 	private PGraphics3D p3d = (PGraphics3D)g;
-	private PMatrix3D proj = new PMatrix3D();
+	//	private PMatrix3D proj = new PMatrix3D();
 	private PMatrix3D cam = new PMatrix3D();
-	private PMatrix3D modvw = new PMatrix3D();
+	//	private PMatrix3D modvw = new PMatrix3D();
 	private PMatrix3D modvwInv = new PMatrix3D();
 	private PMatrix3D screen2Model = new PMatrix3D();
 
@@ -90,14 +93,14 @@ public class FHandle3D extends FHandle {
 		}
 
 	}
-	
+
 
 	//-----------------------------------------------------------------------------
 	public void draw() {
 		update();
 		//if(!DRAG_OFF) drag();
 
-		System.out.println("g\t" + g.zbuffer);
+		//		System.out.println("g\t" + g.zbuffer);
 		System.out.println("projection\t" + p3d.projection);
 		System.out.println("camera\t" + p3d.camera);
 		System.out.println("modelview\t" + p3d.modelview);
@@ -106,14 +109,14 @@ public class FHandle3D extends FHandle {
 		//cam = p3d.camera.get();
 		//modvw = p3d.modelview.get();
 		//modvwInv = p3d.modelviewInv.get();
-		
+
 
 		//-----------------------------------------
 		val.x = x;
 		val.y = y;
 		val.z = z;
-		
-		
+
+
 		//-----------------------------------------
 		// controller
 		//-----------------------------------------
@@ -123,14 +126,14 @@ public class FHandle3D extends FHandle {
 		if( isOver() ) p5.fill( getColorOver() );
 		else if( LOCKED ) p5.fill( getColorPressed() );
 		else p5.fill( getColorInactive() );
-		
+
 		p5.pushMatrix();
 		p5.translate(x, y, z);
 		//p5.sphere(width);
 		p5.box(width);
 		p5.popMatrix();
 
-		
+
 		//-----------------------------------------
 		// label
 		//-----------------------------------------
@@ -153,7 +156,7 @@ public class FHandle3D extends FHandle {
 		int y2D = (int) p5.screenY(x, y, z);
 
 		if(MOUSE_X-width*1.5 > x2D && MOUSE_X < x2D+width*1.5 && 
-		   MOUSE_Y-height*1.5 > y2D && MOUSE_Y < y2D+height*1.5) {
+				MOUSE_Y-height*1.5 > y2D && MOUSE_Y < y2D+height*1.5) {
 			OVER = true;
 		} else {
 			OVER = false;

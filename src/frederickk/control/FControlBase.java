@@ -35,6 +35,7 @@ import frederickk.tools.FTools;
 
 
 
+
 abstract public class FControlBase extends Rectangle implements FControlConstants, MouseListener, MouseMotionListener {
 	//-----------------------------------------------------------------------------
 	// properties
@@ -348,11 +349,11 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	// sets
 	//-----------------------------------------------------------------------------
 	/**
-	 * @param _name
-	 *		  the name of the gui element
+	 * @param _val
+	 *		  toggle verbose output
 	 */
-	public void setVerbose(boolean val) {
-		bVerbose = val;
+	public void setVerbose(boolean _val) {
+		bVerbose = _val;
 	}
 
 	//-----------------------------------------------------------------------------
@@ -378,7 +379,7 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	/**
 	 * @param _x
 	 *		  x position
-	 * @param _h
+	 * @param _y
 	 *		  y position
 	 */
 	public void setPos(float _x, float _y) {
@@ -549,7 +550,7 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	// singular
 	protected String getStrValue(float _input, int deci) {
 		String val = "";
-		val = java.lang.Float.toString( (float) FTools.roundDecimal(_input,deci) );
+		val = java.lang.Float.toString( FTools.roundDecimal(_input,deci) );
 		return val;
 	}
 	protected String getStrValue(float _input) {
@@ -563,8 +564,8 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	// plural
 	protected String getStrValue(float _x, float _y, int deci) {
 		String val = "";
-		val += "x " + java.lang.Float.toString( (float) FTools.roundDecimal(_x,deci) ) + "\n";
-		val += "y " + java.lang.Float.toString( (float) FTools.roundDecimal(_y,deci) ) + "\n";
+		val += "x " + java.lang.Float.toString( FTools.roundDecimal(_x,deci) ) + "\n";
+		val += "y " + java.lang.Float.toString( FTools.roundDecimal(_y,deci) ) + "\n";
 		//val += "z " + Float.toString( (float) roundDecimal( getValue().x,deci ) );
 		return val;
 	}

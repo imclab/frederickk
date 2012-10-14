@@ -139,6 +139,7 @@ public class FLabel implements PConstants, FControlConstants {
 
 	
 	//-----------------------------------------------------------------------------
+	@SuppressWarnings("deprecation")
 	protected void setTypeface(PFont _typefaceLabel) {
 		TYPEFACE_REG = _typefaceLabel;
 		TYPEFACE_BOLD = _typefaceLabel;
@@ -148,6 +149,7 @@ public class FLabel implements PConstants, FControlConstants {
 		
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void setTypeface(PFont _typefaceLabel, PFont _typefaceLabelBold) {
 		TYPEFACE_REG = _typefaceLabel;
 		TYPEFACE_BOLD = _typefaceLabelBold;

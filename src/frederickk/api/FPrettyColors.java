@@ -21,7 +21,7 @@ package frederickk.api;
 // libraries
 //-----------------------------------------------------------------------------
 import processing.core.*;
-import processing.xml.*;
+import processing.data.XML;
 import java.util.ArrayList;
 import java.util.Collections; 
 
@@ -78,9 +78,9 @@ public class FPrettyColors {
 		papplet = _papplet;
 
 		try {
-			XMLElement xml = new XMLElement(papplet, "http://prettycolors.tumblr.com/api/read?num=" + numToReturn + "&filter=text");
-			XMLElement posts = xml.getChild(1);
-			total = posts.getIntAttribute("total");
+			XML xml = new XML(papplet, "http://prettycolors.tumblr.com/api/read?num=" + numToReturn + "&filter=text");
+			XML posts = xml.getChild(1);
+			total = posts.getInt("total");
 			returned = posts.getChildCount();
 	
 			//collect all returned colors into array
@@ -91,9 +91,9 @@ public class FPrettyColors {
 			}
 			
 			//sort the collected colors into palettes
-			paletteOrder = new FPrettyColorsPalette[ (int) (returned/5) ];
-			paletteBrightness = new FPrettyColorsPalette[ (int) (returned/5) ];
-			paletteComplement = new FPrettyColorsPalette[ (int) returned ];
+			paletteOrder = new FPrettyColorsPalette[ (returned/5) ];
+			paletteBrightness = new FPrettyColorsPalette[ (returned/5) ];
+			paletteComplement = new FPrettyColorsPalette[ returned ];
 
 			paletteRandom = new FPrettyColorsPalette(papplet);
 			paletteRandom.type = "random";
@@ -116,8 +116,8 @@ public class FPrettyColors {
 	//-----------------------------------------------------------------------------
 	// methods
 	//-----------------------------------------------------------------------------
-	private int parseElement(XMLElement xml, int num) {
-		XMLElement post = xml.getChild(1);
+	private int parseElement(XML xml, int num) {
+		XML post = xml.getChild(1);
 		int count = post.getChildCount();
 
 		if (num > count) num = count;
@@ -395,7 +395,7 @@ public class FPrettyColors {
 	public int getRandomAll() {
 		int rand = (int) (Math.random()*total);
 		try {
-			XMLElement xml = new XMLElement(papplet, "http://prettycolors.tumblr.com/api/read?num=1&filter=text&start=" + rand );
+			XML xml = new XML(papplet, "http://prettycolors.tumblr.com/api/read?num=1&filter=text&start=" + rand );
 			return parseElement(xml, 0);
 		} catch(Exception e) {
 			return 0;
@@ -415,10 +415,3 @@ public class FPrettyColors {
 
 
 } //end FPrettyColors
-
-
-
-
-
-
-

@@ -1,42 +1,29 @@
-/*
- *  Frederickk Library 003
- *
- *  Ken Frederick
- *  ken.frederick@gmx.de
- *
- *  http://cargocollective.com/kenfrederick/
- *  http://kenfrederick.blogspot.com/
- *
- */
+2010-05-07  Andreas Schlegel
+      * version 0.3.2
+      * build.xml: removing delete tag for bin folder, did cause issues with class referencing inside eclipse
 
+2010-05-01  Andreas Schlegel
+      * version 0.3.1
+      * the option to create a tool with the library template has been excluded. to create tools for processing see http://code.google.com/p/processing-tool-template
+      * build.properties and build.xml files have been adjusted accordingly
+      * modified: src, examples
 
-// About
-// -----------------------------------------
-This a collection of GUI elements and various tools for use with 
-Processing (http://www.processing.org/) that I find useful.
-
-source:  https://github.com/frederickk/frederickk
-binary:  http://code.google.com/p/frederickk/
-
-
-// Change Log
-// -----------------------------------------
- -	001
- *	created initial library
-
- -	002
- *	corrected some of the mixed language functions (german/english) 
- *	incorporated functions found in my ofxFControl (openFrameworks addon) 
-
- -	003
- *	added additional tools
- *	syntax changed and anything using previous versions (001 & 002) will not work
-
- - 0.0.4
- *	depreciated FMeter, use FSlider
- *	old FKnob is now FHandle
- *	new FKnob is a round "slider" - i.e. like a real knob
- *	added additional tools
- *	added showFrameRateTitle() which will display the applications frameRate in the title
- *	changed getColorActive() to getColorOver()
- *	change setColorActive() to getColorOver()
+2010-04-25  Andreas Schlegel
+      * version 0.2.1
+      * build.xml: zip method adjusted, tested on osx 10.x and windows xp
+      * screencasts available for both library and tool, see wiki.
+      
+2010-04-12  Andreas Schlegel
+      * version 0.2.0
+      * the template now support both, processing libraries and tools
+      * added an install file for a library/tool distribution included in the .zip file.
+      * data: adding data folder, see README file for details
+      * lib: adding lib folder, see README file for details
+      * resources: excluding project related properties from build.xml, now located inside build.properties
+      * distribution: distributions are now archived with a version number
+      * bin: folder removed
+      * build.xml: ant build file has been mostly rewritten, now supports tool and library 
+      * build.properties: adding properties file for build.xml. please read comments inside build.properties.
+      * changeLog: adding ChangeLog file
+      
+     

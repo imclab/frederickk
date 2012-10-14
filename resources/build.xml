@@ -1,4 +1,4 @@
-<project name="frederickk" default="clean" basedir="../">
+<project name="FrederickkLibs" default="clean" basedir="../">
 
     
 <!--	

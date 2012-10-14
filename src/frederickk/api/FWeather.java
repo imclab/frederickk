@@ -1,5 +1,5 @@
-//package frederickk.api;
-//
+package frederickk.api;
+
 ///**
 // *	Frederickk.Api 0.0.5
 // *	FWeather.java

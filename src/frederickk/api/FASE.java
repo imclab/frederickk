@@ -113,7 +113,7 @@ public class FASE {
 	}
 
 	//-----------------------------------------------------------------------------
-	private void readBlock(ByteBuffer buf, ArrayList _palette) {
+	private void readBlock(ByteBuffer buf, ArrayList<Integer> _palette) {
 		buf.mark();
 		short blockType = buf.getShort();
 		/* int blockLength = */    buf.getInt();

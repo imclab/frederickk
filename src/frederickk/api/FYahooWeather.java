@@ -22,7 +22,7 @@ package frederickk.api;
 // libraries
 //-----------------------------------------------------------------------------
 import processing.core.*;
-import processing.xml.*;
+import processing.data.XML;
 
 
 
@@ -38,7 +38,7 @@ public class FYahooWeather {
 		                                     "//yweather:wind[@direction]" };
 
 	private static PApplet p5;
-	private XMLElement xml;
+	private XML xml;
 
 	protected String place;
 

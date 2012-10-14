@@ -22,7 +22,7 @@ package frederickk.control;
 //-----------------------------------------------------------------------------
 import processing.core.PApplet;
 import processing.core.PConstants;
-import frederickk.tools.*;
+import frederickk.tools.FFade;
 
 
 
@@ -139,8 +139,4 @@ public class FLabelFade extends FLabel implements PConstants, FControlConstants 
     public int getAlpha() {
     	return (int) (fade.getAlpha()*255);
     }
-    
-
 }
-
-

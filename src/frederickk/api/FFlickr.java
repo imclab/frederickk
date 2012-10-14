@@ -21,7 +21,7 @@ package frederickk.api;
 // libraries
 //-----------------------------------------------------------------------------
 import processing.core.*;
-import processing.xml.*;
+import processing.data.XML;
 import java.util.ArrayList;
 
 
@@ -30,7 +30,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	//-----------------------------------------------------------------------------
 	// properties
 	//-----------------------------------------------------------------------------
-	private static PApplet p5;
+	private static PApplet papplet;
 	private Thread thread;
 
 	private static String key = "";		//"681a16a0f5448bb7c7db02431e59c7fa";
@@ -69,10 +69,9 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	 * @param papplet
 	 * 			PApplet
 	 */
-	public FFlickr(PApplet papplet) {
-		p5 = papplet;
-		//imageLoader = new FFlickrLoader(p5);
-		//welcome();
+	public FFlickr(PApplet _papplet) {
+		papplet = _papplet;
+		//imageLoader = new FFlickrLoader(papplet);
 	}
 
 	/**
@@ -87,21 +86,13 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	 * 			authentication secret
 	 * 			http://www.flickr.com/services/api/misc.userauth.html
 	 */
-	public FFlickr(PApplet papplet, String _key, String _secret) {
-		p5 = papplet;
+	public FFlickr(PApplet _papplet, String _key, String _secret) {
+		papplet = _papplet;
 		key = _key;
 		secret = _secret;
-		//imageLoader = new FFlickrLoader(p5);
-		//welcome();
+		//imageLoader = new FFlickrLoader(papplet);
 	}
 
-	private void welcome() {
-		System.out.println( "" );
-		System.out.println( "-----------------------------------------------------------------------------" );
-		System.out.println( "##name## Library ##version##" );
-		System.out.println( "http://github.com/frederickk/frederickk" );
-		System.out.println( "http://kenfrederick.blogspot.com/\n" );
-	}
 	private void noKey() {
 		System.out.println( "" );
 		System.out.println( "-----------------------------------------------------------------------------" );
@@ -117,8 +108,9 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	/**
 	 * @param _query
 	 * 			search criteria
+	 * @throws Exception 
 	 */ 
-	public void search(String _query) {
+	public void search(String _query) throws Exception {
 		query = _query;
 		initialize(query);
 	}
@@ -126,8 +118,9 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	/**
 	 * @param _query
 	 * 			search criteria
+	 * @throws Exception 
 	 */ 
-	public void search(String _query, String _method) {
+	public void search(String _query, String _method) throws Exception {
 		query = _query;
 		method = _method;
 		initialize(query);
@@ -139,7 +132,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	}
 	 */
 
-	private void initialize(String query) {
+	private void initialize(String query) throws Exception {
 		if( key != "" ) {
 			if(!FIRST_RUN) {
 				thread = new Thread(this);
@@ -155,8 +148,10 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 	/**
 	 * gather() is threadless
+	 * 
+	 * @throws Exception 
 	 */
-	protected void gather() {
+	protected void gather() throws Exception {
 		String url = SERVICE_URL_REST + 
 		"?method=" + method +
 		"&api_key=" + key +
@@ -169,29 +164,29 @@ public class FFlickr implements FFlickrConstants, Runnable {
 		//System.out.println(url);
 
 
-		XMLElement xml = new XMLElement( p5, url );
-		XMLElement photos = xml.getChild(0);
-		XMLElement[] photo = photos.getChildren();
+		XML xml = new XML( papplet, url );
+		XML photos = xml.getChild(0);
+		XML[] photo = photos.getChildren();
 
 		if(photo.length > 0) {
 			//System.out.println( photo.length );
 
 			idList = new String[photo.length];
-			imageList = new ArrayList();
+			imageList = new ArrayList<String>();
 			//images = new ArrayList();
 
 			for(int i=0; i<photo.length; i++) {
-				XMLElement kid = photos.getChild(i);
+				XML kid = photos.getChild(i);
 
-				String farm = kid.getStringAttribute("farm");
-				String server = kid.getStringAttribute("server");
-				String id = kid.getStringAttribute("id");
+				String farm = kid.getString("farm");
+				String server = kid.getString("server");
+				String id = kid.getString("id");
 				idList[i] = id;
-				String secret = kid.getStringAttribute("secret");
+				String secret = kid.getString("secret");
 
 				System.out.println("http://farm" + farm + ".static.flickr.com/" + server + "/" + id + "_" + secret + mstb + ".jpg?v=0");
 				//String imageURL = "http://farm" + farm + ".static.flickr.com/" + server + "/" + id + "_" + secret + mstb + ".jpg?v=0";
-				//images[i] = p5.loadImage( imageURL );
+				//images[i] = papplet.loadImage( imageURL );
 
 				//get the sizes of the photos
 				getSizes(id, 3);
@@ -207,8 +202,8 @@ public class FFlickr implements FFlickrConstants, Runnable {
 
 				//load the image
 				imageList.add( sizeURL );
-				//images[i] = p5.loadImage(sizeURL);
-				images.add( p5.loadImage(sizeURL) );
+				//images[i] = papplet.loadImage(sizeURL);
+				images.add( papplet.loadImage(sizeURL) );
 
 			}
 		}
@@ -224,7 +219,12 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	 * run() is a required method
 	 */
 	public void run() {
-		gather();
+		try {
+			gather();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -334,9 +334,10 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	/**
 	 * @param _search
 	 * 			search by tag
+	 * @throws Exception 
 	 * 
 	 */ 
-	public void getSearchTag(String _search) {
+	public void getSearchTag(String _search) throws Exception {
 		search = _search;
 		query = "&tags=" + search;
 		search(query);
@@ -345,9 +346,10 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	/**
 	 * @param _search
 	 * 			search by text
+	 * @throws Exception 
 	 * 
 	 */ 
-	public void getSearchText(String _search) {
+	public void getSearchText(String _search) throws Exception {
 		search = _search;
 		query = "&text=" + search;
 		search(query);
@@ -365,7 +367,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 		PImage[] imagesArray;
 		imagesArray = new PImage[images.size()];
 		for(int i=0; i<imagesArray.length; i++) {
-			PImage img = (PImage) images.get(i);
+			PImage img = images.get(i);
 			imagesArray[i] = img;
 		}
 		//imageLoader.getImages().toArray(imagesArray);
@@ -411,6 +413,8 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	}
 
 	/**
+	 * return the sizes of photo
+	 *		  
 	 * @param id
 	 *		  photo id
 	 * @param sz
@@ -421,24 +425,24 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	 *		  2 - Small</br>
 	 *		  3 - Medium
 	 *		  
-	 * return the sizes of photo
+	 * @throws Exception 
 	 */
-	public void getSizes(String id, int sz) {
+	public void getSizes(String id, int sz) throws Exception {
 		String url = SERVICE_URL_REST + 
 		"?method=" + PHOTOS_GET_SIZES + 
 		"&api_key=" + key +
 		"&photo_id=" + id;
 		//System.out.println(url);
 
-		XMLElement xml = new XMLElement( p5, url );
-		XMLElement photos  = xml.getChild(0);
-		XMLElement[] sizes = photos.getChildren();
+		XML xml = new XML( papplet, url );
+		XML photos  = xml.getChild(0);
+		XML[] sizes = photos.getChildren();
 
-		sizeURL = sizes[sz].getStringAttribute("source");
-		width = sizes[sz].getIntAttribute("width");
-		height = sizes[sz].getIntAttribute("height");
+		sizeURL = sizes[sz].getString("source");
+		width = sizes[sz].getInt("width");
+		height = sizes[sz].getInt("height");
 
-		System.out.println(sizes[sz].getStringAttribute("label") + " : " + sizeURL);
+		System.out.println(sizes[sz].getString("label") + " : " + sizeURL);
 	}	
 
 	/**
@@ -466,21 +470,22 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	 * return the search tag list of photo as array
 	 * 
 	 * @return tag
+	 * @throws Exception 
 	 */
-	public String[] getTagList(String id) {
+	public String[] getTagList(String id) throws Exception {
 		String url = SERVICE_URL_REST + 
 		"?method=" + TAGS_LIST_PHOTO +
 		"&api_key=" + key +
 		"&photo_id=" + id;
 
-		XMLElement xml = new XMLElement( p5, url );
-		XMLElement photos  = xml.getChild(0);
-		XMLElement tags = photos.getChild(0);
-		XMLElement[] tag = tags.getChildren();
+		XML xml = new XML( papplet, url );
+		XML photos  = xml.getChild(0);
+		XML tags = photos.getChild(0);
+		XML[] tag = tags.getChildren();
 
 		String[] tagsList = new String[tag.length];
 		for(int i=0; i<tagsList.length; i++) {
-			tagsList[i] = tag[i].getStringAttribute("raw");
+			tagsList[i] = tag[i].getString("raw");
 		}
 
 		return tagsList;
@@ -490,11 +495,12 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	 * @param query
 	 *		  search criteria
 	 *		  
-	 * return the search as a raw XMLElement
+	 * return the search as a raw XML
 	 * 
 	 * @return xml
+	 * @throws Exception 
 	 */
-	public XMLElement getRawFeed(String query) {
+	public XML getRawFeed(String query) throws Exception {
 		if( key != "" ) {
 			String url = SERVICE_URL_REST + 
 			"?method=" + method +
@@ -507,8 +513,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 			"&page=1";
 			//System.out.println(url);
 
-			XMLElement xml = new XMLElement( p5, url );
-			return xml;
+			return new XML( papplet, url );
 		} else {
 			noKey();
 			return null;
@@ -525,11 +530,12 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	 *		  additional url tokens that correspond to api method
 	 *		  (i.e. method = INTERESTINGNESS tokens = "&date=2010-10-02&per_page=10&page=1")
 	 *		  
-	 * return the search as a raw XMLElement
+	 * return the search as a raw XML
 	 * 
 	 * @return xml
+	 * @throws Exception 
 	 */
-	public XMLElement getRawFeed(String query, String _method, String tokens) {
+	public XML getRawFeed(String query, String _method, String tokens) throws Exception {
 		if( key != "" ) {
 			String url = SERVICE_URL_REST + 
 			"?method=" + _method +
@@ -537,8 +543,7 @@ public class FFlickr implements FFlickrConstants, Runnable {
 			url += tokens;
 			System.out.println(url);
 
-			XMLElement xml = new XMLElement( p5, url );
-			return xml;
+			return new XML( papplet, url );
 		} else {
 			noKey();
 			return null;
@@ -557,4 +562,3 @@ public class FFlickr implements FFlickrConstants, Runnable {
 	}
 
 }
-

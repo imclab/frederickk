@@ -21,7 +21,7 @@ package frederickk.api;
 // libraries
 //-----------------------------------------------------------------------------
 import processing.core.*;
-import processing.xml.*;
+import processing.data.XML;
 //import java.util.ArrayList;
 
 
@@ -46,11 +46,11 @@ public class FKuler {
 
 	//private String[] FKulerThemes;
 
-	private XMLElement[] themeItems;
-	private XMLElement themeItem;
+	private XML[] themeItems;
+	private XML themeItem;
 
-	private XMLElement[] themeSwatches;
-	private XMLElement[] themeTag;
+	private XML[] themeSwatches;
+	private XML[] themeTag;
 
 	private boolean bVerbose = false;
 
@@ -106,10 +106,10 @@ public class FKuler {
 		String urlPrint = typ + pageTyp + "?itemsPerPage=" + maxItems + "&startIndex=" + startIndex + query;
 
 		//ArrayList themes = new ArrayList();
-		XMLElement xml;
+		XML xml;
 
 		try {
-			xml = new XMLElement( papplet, url.toString() );
+			xml = new XML( papplet, url.toString() );
 
 			if(bVerbose) System.out.println("\n" + urlPrint.toString());
 			if(bVerbose) System.out.println("-----------------------------------------------------------------------------");
@@ -429,8 +429,3 @@ public class FKuler {
 
 
 }
-
-
-
-
-

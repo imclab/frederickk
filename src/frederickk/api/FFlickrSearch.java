@@ -27,7 +27,7 @@ package frederickk.api;
 // libraries
 //-----------------------------------------------------------------------------
 import processing.core.*;
-import processing.xml.*;
+import processing.data.XML;
 import java.util.ArrayList;
 
 
@@ -46,6 +46,7 @@ public class FFlickrSearch implements FFlickrConstants,Runnable {
 	//-----------------------------------------------------------------------------
 	// constructor
 	//-----------------------------------------------------------------------------
+	@SuppressWarnings("deprecation")
 	public FFlickrSearch(PApplet papplet) {
 		p5 = papplet;
 		p5.registerDispose(this);
