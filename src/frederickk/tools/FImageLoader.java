@@ -32,10 +32,10 @@ public class FImageLoader {
 	//-----------------------------------------------------------------------------
 	public static PApplet p5;
 
-	private File ordner;
-	private PImage[] bild;
+	private File folder;
+	private PImage[] img;
 
-	private String[] daten;
+	private String[] files;
 	//private String filepath;
 
 
@@ -74,33 +74,33 @@ public class FImageLoader {
 		//setFolderName(p5.sketchPath + filepath);
 		setFolderName(filepath);
 
-		//if(ordner.isFile()) {
+		//if(folder.isFile()) {
 		boolean ds;
-		String dsTest = ordner.list()[0];
+		String dsTest = folder.list()[0];
 
 		if(dsTest.equals(".DS_Store") == true) {
-			daten = new String[ordner.list().length-1];
+			files = new String[folder.list().length-1];
 			ds = true;
 		} else {
-			daten = new String[ordner.list().length];
+			files = new String[folder.list().length];
 			ds = false;
 		}
 
-		if(daten != null || daten.length != 0) {
-			bild = new PImage[daten.length];
+		if(files != null || files.length != 0) {
+			img = new PImage[files.length];
 
 			if(ds) {
-				for(int i=0; i != ordner.list().length-1; i++) {
-					daten[i] = ordner.list()[i+1];
-					bild[i] = p5.loadImage(filepath + "/" + daten[i]);
-					System.out.println("loading image " + daten[i]);
+				for(int i=0; i != folder.list().length-1; i++) {
+					files[i] = folder.list()[i+1];
+					img[i] = p5.loadImage(filepath + "/" + files[i]);
+					System.out.println("loading image " + files[i]);
 				}
 
 			} else if(!ds) {
-				for(int i=0; i != ordner.list().length; i++) {
-					daten[i] = ordner.list()[i];
-					bild[i] = p5.loadImage(filepath + "/" + daten[i]);
-					System.out.println("loading image " + daten[i]);
+				for(int i=0; i != folder.list().length; i++) {
+					files[i] = folder.list()[i];
+					img[i] = p5.loadImage(filepath + "/" + files[i]);
+					System.out.println("loading image " + files[i]);
 				}
 			}
 
@@ -108,7 +108,7 @@ public class FImageLoader {
 
 		/*
 		} else {
-			System.out.println(ordner + " is not a file");
+			System.out.println(folder + " is not a file");
 		}
 		 */
 	}
@@ -118,7 +118,7 @@ public class FImageLoader {
 	 *		  set the folder to read
 	 */
 	private void setFolderName(String filepath) {
-		ordner = new File(filepath);
+		folder = new File(filepath);
 	}
 
 	/**
@@ -126,18 +126,18 @@ public class FImageLoader {
 	 *		  set the file to read
 	 */
 	public void setFile(String dateiName) {
-		bild = new PImage[1];
-		daten = new String[1];
+		img = new PImage[1];
+		files = new String[1];
 
-		for(int i=0; i !=bild.length; i++) {
-			bild[i] = p5.loadImage(dateiName);
-			daten[i] = dateiName;
+		for(int i=0; i !=img.length; i++) {
+			img[i] = p5.loadImage(dateiName);
+			files[i] = dateiName;
 
-			//String[] n_daten = p5.split(daten[i], '/');
-			String[] n_daten = daten[i].split("/");
-			daten[i] = n_daten[n_daten.length-1];
+			//String[] n_files = p5.split(files[i], '/');
+			String[] n_files = files[i].split("/");
+			files[i] = n_files[n_files.length-1];
 
-			System.out.println("loading image " + daten[i]);
+			System.out.println("loading image " + files[i]);
 		}
 	}
 
@@ -152,7 +152,7 @@ public class FImageLoader {
 	 * @return d
 	 */
 	public int getFileNum() {
-		int d = daten.length;
+		int d = files.length;
 		return d;
 
 	}
@@ -163,7 +163,7 @@ public class FImageLoader {
 	 * @return b
 	 */
 	public int getImageNum() {
-		int b = bild.length;
+		int b = img.length;
 		return b;
 	}
 
@@ -173,11 +173,11 @@ public class FImageLoader {
 	 *		  
 	 * return a specific image
 	 * 
-	 * @return bild[w]
+	 * @return img[w]
 	 */
 	public PImage getImage(int w) {
 		w = inBounds(w);
-		return bild[w];
+		return img[w];
 	}
 
 	/**
@@ -186,11 +186,11 @@ public class FImageLoader {
 	 *		  
 	 * return a specific file 
 	 * 
-	 * @return daten[w]
+	 * @return files[w]
 	 */
 	public String getFile(int w) {
 		w = inBounds(w);
-		return daten[w];
+		return files[w];
 	}
 
 	/**

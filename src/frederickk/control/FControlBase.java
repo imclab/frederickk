@@ -443,11 +443,11 @@ abstract public class FControlBase extends Rectangle implements FControlConstant
 	public void setLabels(FLabel _labelVal, FLabel _labelName) {
 		labelVal = _labelVal;
 		labelVal.setSize( width,height );
-		labelVal.setCoord( x+5,y );
+		labelVal.setPos( x+5,y );
 
 		labelName = _labelName;
 		labelName.setSize( width,height );
-		labelName.setCoord( x+(width+5),y );
+		labelName.setPos( x+(width+5),y );
 	}
 
 	/**

@@ -349,6 +349,16 @@ public class FTools {
 
 	
 	//------------------------------------------------------------------------
+	/**
+	 *  @param orig
+	 *  			input float value
+	 *  @param deci
+	 *  			decimal point length
+	 *  
+	 *  @return
+	 *  			float with specified decimal length (2.14235454 -> 2.14)
+	 * 
+	 */
 	public static float roundDecimal(float orig, int deci) {
 		float multi = (float) (Math.pow(10,deci));
 		float num = Math.round(orig * multi)/multi;
@@ -392,6 +402,11 @@ public class FTools {
 	/**
 	 * return boolean value as int
 	 * 
+	 * @param val
+	 * 			boolean value
+	 * 
+	 * @return
+	 * 			returns 0 (false) or 1 (true)
 	 */
 	public static int boolToInt(boolean val) {
 		return (val) ? 1:0;

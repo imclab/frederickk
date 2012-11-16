@@ -16,10 +16,12 @@ import frederickk.control.*;
 // properties
 //-----------------------------------------------------------------------------
 FControlGroup cgroup;
+FControl elements;
 
 PFont typeface;
 
 int[] rgbVals = { (int)random(255), (int)random(255), (int)random(255) };
+int rgb;
 
 
 
@@ -31,41 +33,36 @@ void setup() {
   //smooth();
   typeface = loadFont("FuturaT-Bold-10.vlw");
 
+
   // initiate FControlGroup
   // pushes gui elements into a seperate window
-  cgroup = new FControlGroup("gui window", 450,450);
-  cgroup.setRowsCols(3,3);
+  cgroup = new FControlGroup("gui window", 300,300);
+  cgroup.setColsRows(3,3);
   cgroup.showGrid(true);
 
   // initiate FControl
-  FControl elements = cgroup.getElements();
-//  elements = new FControl( cgroup.getApplet() );
-//  elements.setTypeface( typeface );
-  elements.setColorOver( color(0, 200, 255) );
-  elements.addKnob("R", cgroup.getCol(0), cgroup.getRow(1), 100, 0.0f,255.0f, rgbVals[0]);
-  elements.addKnob("G", cgroup.getCol(1), cgroup.getRow(1), 100, 0.0f,255.0f, rgbVals[1]);
-  elements.addKnob("B", cgroup.getCol(2), cgroup.getRow(1), 100, 0.0f,255.0f, rgbVals[2]);
+  elements = cgroup.getElements();
+  elements.setTypeface( typeface );
 
-  // put the elements in the window
-//  cgroup.setElements( elements );
+  // add gui elements
+  elements.addSlider("R", cgroup.getCol(0), cgroup.getRow(0), cgroup.getMargins()[2]-45,50, 0.0f,255.0f, rgbVals[0]);
+  elements.addSlider("G", cgroup.getCol(0), cgroup.getRow(1), cgroup.getMargins()[2]-45,50, 0.0f,255.0f, rgbVals[1]);
+  elements.addSlider("B", cgroup.getCol(0), cgroup.getRow(2), cgroup.getMargins()[2]-45,50, 0.0f,255.0f, rgbVals[2]);
 }
 
 //-----------------------------------------------------------------------------
 void draw() {
-  background( color(rgbVals[0], rgbVals[1], rgbVals[2]) );
+  background( rgb );
 
   // rgb values
-//  println( cgroup.getIntValue("R") );
-//  rgbVals[0] = cgroup.getIntValue("R");
-//  rgbVals[1] = cgroup.getIntValue("G");
-//  rgbVals[2] = cgroup.getIntValue("B");
+  rgb = color(rgbVals[0], rgbVals[1], rgbVals[2]);
+
+  rgbVals[0] = cgroup.getIntValue("R");
+  rgbVals[1] = cgroup.getIntValue("G");
+  rgbVals[2] = cgroup.getIntValue("B");
+
+  elements.setColorOver( rgb );
 
 }
 
-
-
-void keyPressed() {
-  // put the elements in the window
-//  cgroup.setElements( elements );
-}
 

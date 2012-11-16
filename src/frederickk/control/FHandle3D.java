@@ -32,19 +32,23 @@ public class FHandle3D extends FHandle {
 	private static final long serialVersionUID = 1L;
 
 	/*
-	 * button in 3d space with help from mustermann
-	 * http://processing.org/discourse/yabb2/YaBB.pl?num=1251823003
+	 *  button in 3d space with help from mustermann
+	 *  http://processing.org/discourse/yabb2/YaBB.pl?num=1251823003
 	 */
-	private PGraphics3D g = new PGraphics3D();
-	private PGraphics3D p3d = (PGraphics3D)g;
-	//	private PMatrix3D proj = new PMatrix3D();
-	private PMatrix3D cam = new PMatrix3D();
-	//	private PMatrix3D modvw = new PMatrix3D();
-	private PMatrix3D modvwInv = new PMatrix3D();
-	private PMatrix3D screen2Model = new PMatrix3D();
+	//	private PGraphics3D g;
+	private PGraphics3D p3d;
+
+	private PMatrix3D proj;
+	private PMatrix3D cam;
+	private PMatrix3D modvw;
+	private PMatrix3D modvwInv;
+	private PMatrix3D screen2Model;
+
 
 	protected float z, x3D,y3D,z3D;
-	PVector loc2D = new PVector();
+	private PVector loc2D = new PVector();
+
+	private float rotX, rotY;
 
 
 
@@ -67,8 +71,14 @@ public class FHandle3D extends FHandle {
 	// methods
 	//-----------------------------------------------------------------------------
 	private void setup3D(PApplet papplet) {
-		g.setParent(papplet);
+		p3d = (PGraphics3D)p5.g;
 		p3d.setParent(papplet);
+
+		proj = new PMatrix3D();
+		cam = new PMatrix3D();
+		modvw = new PMatrix3D();
+		modvwInv = new PMatrix3D();
+		screen2Model = new PMatrix3D();
 	}
 
 
@@ -98,17 +108,12 @@ public class FHandle3D extends FHandle {
 	//-----------------------------------------------------------------------------
 	public void draw() {
 		update();
-		//if(!DRAG_OFF) drag();
+//		if(!DRAG_OFF) drag();
 
-		//		System.out.println("g\t" + g.zbuffer);
-		System.out.println("projection\t" + p3d.projection);
-		System.out.println("camera\t" + p3d.camera);
-		System.out.println("modelview\t" + p3d.modelview);
-		System.out.println("modelviewIn\t" + p3d.modelviewInv);
-		//proj = p3d.projection.get();
-		//cam = p3d.camera.get();
-		//modvw = p3d.modelview.get();
-		//modvwInv = p3d.modelviewInv.get();
+		proj = p3d.projection.get();
+		cam = p3d.camera.get();
+		modvw = p3d.modelview.get();
+		modvwInv = p3d.modelviewInv.get();
 
 
 		//-----------------------------------------

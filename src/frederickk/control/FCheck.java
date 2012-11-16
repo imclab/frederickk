@@ -71,10 +71,10 @@ public class FCheck extends FControlBase {
 		// controller
 		//-----------------------------------------
 		p5.pushStyle();
-		p5.noFill();
+		p5.fill( getColorInactive() );
 		if( isOver() ) p5.stroke( getColorOver() );
 		else if( LOCKED ) p5.stroke( getColorPressed() );
-		else p5.stroke( getColorInactive() );
+		else p5.noStroke();
 		p5.rect(x,y, width,height);
 
 		
@@ -82,10 +82,17 @@ public class FCheck extends FControlBase {
 		// x'd
 		//-----------------------------------------
 		if(val) {
-			PVector xsz = new PVector((float) (width*0.6), (float) (height*0.6));
-			p5.noStroke();
-			p5.fill( getColorOver() );
-			p5.ellipse(x+width/2,y+height/2, xsz.x,xsz.y);
+//			PVector xsz = new PVector((float) (width*0.6), (float) (height*0.6));
+			p5.noFill();
+			p5.strokeWeight(2);
+			p5.stroke( getColorOver() );
+			p5.beginShape();
+			p5.vertex(x+(width*0.3f), y+height/2);
+			p5.vertex(x+width/2,      y+height-(height*0.3f));
+			p5.vertex(x+width-(width*0.3f), y+(height*0.3f));
+			p5.endShape();
+
+//			p5.ellipse(x+width/2,y+height/2, xsz.x,xsz.y);
 		}
 
 
@@ -95,7 +102,7 @@ public class FCheck extends FControlBase {
 		if(showLabels) {
 			p5.fill( getColorOver() );
 			labelName.setSize(width*3,height);
-			labelName.uncontained();
+			labelName.container(false);
 			labelName.draw(name, PApplet.LEFT, BOLD);
 			//labelVal.draw("");
 		}

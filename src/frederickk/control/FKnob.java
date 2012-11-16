@@ -100,12 +100,12 @@ public class FKnob extends FSlider {
 		//-----------------------------------------
 		if(showLabels) {
 			p5.fill( getColorOver() );
-			labelName.setCoord( (int) (x+((radius*0.5)+8)), (int) (y-radius*0.5));
+			labelName.setPos( (int) (x+((radius*0.5)+8)), (int) (y-radius*0.5));
 			labelName.draw( name, PApplet.LEFT, BOLD );
 
 			int a = (getColorInactive() >> 24) & 0xFF;
 			p5.fill( white, a );
-			labelVal.setCoord( (int) (x-radius*0.5), (int) (y-radius*0.5));
+			labelVal.setPos( (int) (x-radius*0.5), (int) (y-radius*0.5));
 			labelVal.setSize( (int) radius, (int) radius);
 			if(labelType == LABEL_FLOAT) labelVal.draw( getStrValue(getFloatValue(),2), PApplet.CENTER );
 			else if(labelType == LABEL_INT) labelVal.draw( getStrValue(getIntValue()), PApplet.CENTER );

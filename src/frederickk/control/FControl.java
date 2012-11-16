@@ -43,7 +43,7 @@ public class FControl implements PConstants, FControlConstants {
 
 	private int sleepTime = 40;
 
-	
+
 	// controllers
 	private ArrayList<FButton> FButtons = new ArrayList<FButton>();
 	private ArrayList<FHandle> FHandles = new ArrayList<FHandle>();
@@ -52,9 +52,10 @@ public class FControl implements PConstants, FControlConstants {
 	private ArrayList<FSlider> FSliders = new ArrayList<FSlider>();
 	private ArrayList<FKnob> FKnobs = new ArrayList<FKnob>();
 	private ArrayList<FDropDown> FDropDowns = new ArrayList<FDropDown>();
+	private ArrayList<FLabel> FLabels = new ArrayList<FLabel>();
 	private ArrayList<FInputField> FInputFields = new ArrayList<FInputField>();
 
-	
+
 	// values
 	private boolean boolVal;
 	private int intVal;
@@ -63,27 +64,27 @@ public class FControl implements PConstants, FControlConstants {
 	private String selStrVal = new String();
 	private int selIntVal;
 
-	
+
 	// colors
-//	private static int colorInactive;
-//	private static int colorOver;
-//	private static int colorPressed;
+	//	private static int colorInactive;
+	//	private static int colorOver;
+	//	private static int colorPressed;
 	private int colorInactive;
 	private int colorOver;
 	private int colorPressed;
 
-	
+
 	// labels
 	protected static PFont typefaceReg;
 	protected static PFont typefaceBold;
 	private boolean bShowLabels = true;
 	private boolean bShowFrameRate = true;
 
-	
+
 	// debug
 	private boolean bVerbose = false;
 
-	
+
 
 	//-----------------------------------------------------------------------------
 	// constructor
@@ -100,11 +101,11 @@ public class FControl implements PConstants, FControlConstants {
 
 		p5 = _papplet;
 		//frame = p5.frame;
-		
+
 		// set default resting (inactive) color
 		Color _colorInactive = new Color(215,215,215, 96);
 		colorInactive = _colorInactive.getRGB();
-		
+
 		// set default over color
 		Color _colorOver = new Color(210,210,210, 230);
 		colorOver = _colorOver.getRGB();
@@ -120,14 +121,14 @@ public class FControl implements PConstants, FControlConstants {
 
 		} catch (Exception e) {
 			setTypeface( p5.createFont("SansSerif", 9) );
-			
+
 			System.out.println( "-----------------------------------------------------------------------------" );
 			System.out.println( "FControl Error: " + e );
 			System.out.println( "it appers you don't have \"LucidaGrande-Bold\" on your system,");
 			System.out.println( "so \"SansSerif\" has been loaded as a substitute, however" );
 			System.out.println( "setTypeface() can be use to change the typeface");
 		}
-	
+
 	}
 
 
@@ -149,7 +150,7 @@ public class FControl implements PConstants, FControlConstants {
 		// set default resting (inactive) color
 		Color _colorInactive = new Color(215,215,215, 96);
 		colorInactive = _colorInactive.getRGB();
-		
+
 		// set default over color
 		Color _colorOver = new Color(210,210,210, 230);
 		colorOver = _colorOver.getRGB();
@@ -183,7 +184,7 @@ public class FControl implements PConstants, FControlConstants {
 		// set default resting (inactive) color
 		Color _colorInactive = new Color(215,215,215, 96);
 		colorInactive = _colorInactive.getRGB();
-		
+
 		// set default over color
 		Color _colorOver = new Color(210,210,210, 230);
 		colorOver = _colorOver.getRGB();
@@ -195,8 +196,8 @@ public class FControl implements PConstants, FControlConstants {
 		//set typeface
 		setTypeface( _typeface, _typefaceBold );
 	}
-	
-	
+
+
 	//-----------------------------------------------------------------------------
 	private void welcome() {
 		System.out.println( "\n" );
@@ -207,12 +208,12 @@ public class FControl implements PConstants, FControlConstants {
 		System.out.println( "http://kenfrederick.blogspot.com/\n" );
 	}
 
-	
-	
+
+
 	//-----------------------------------------------------------------------------
 	// controllers
 	//-----------------------------------------------------------------------------
-	
+
 	//-----------------------------------------
 	// FButton
 	//-----------------------------------------
@@ -291,7 +292,7 @@ public class FControl implements PConstants, FControlConstants {
 		fb.setPos(_x, _y);
 		fb.setSize(_w, _h);
 		fb.setSprite(img, img.height,img.height);
-		
+
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
 		LabelValue.setTypeface( typefaceReg, typefaceBold );
@@ -328,7 +329,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void addButton(String _name, int _series, float _x, float _y, int _w, int _h, PImage img) {
 		addButton(_name + Integer.toString(_series), _x,_y, _w,_h, img);
 	}
-	
+
 	/**
 	 * @param _name
 	 *		  name of the gui element
@@ -384,7 +385,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void addButton(String _name, int _series, float _x, float _y, int _w, int _h, int _mode) {
 		addButton(_name + Integer.toString(_series), _x,_y, _w,_h, _mode);
 	}
-	
+
 
 	/**
 	 * @param _name
@@ -457,7 +458,7 @@ public class FControl implements PConstants, FControlConstants {
 		addButton(_name + Integer.toString(_series), _x,_y, _w,_h, _mode, img);
 	}
 
-	
+
 	//-----------------------------------------
 	// FHandle
 	//-----------------------------------------
@@ -485,7 +486,7 @@ public class FControl implements PConstants, FControlConstants {
 
 		FLabel LabelInfo = new FLabel(p5);
 		LabelInfo.setTypeface( typefaceReg, typefaceBold );
-		
+
 		fh.setLabels(LabelValue, LabelInfo);
 		fh.setLabelType( _labelType );
 
@@ -528,7 +529,7 @@ public class FControl implements PConstants, FControlConstants {
 		addHandle(_name + Integer.toString(_series), _x,_y, _w,_h);
 	}
 
-	
+
 	//-----------------------------------------
 	// FHandle3D
 	//-----------------------------------------
@@ -556,7 +557,7 @@ public class FControl implements PConstants, FControlConstants {
 
 		FLabel LabelInfo = new FLabel(p5);
 		LabelInfo.setTypeface( typefaceReg, typefaceBold );
-		
+
 		fh3.setLabels(LabelValue, LabelInfo);
 		fh3.setLabelType( _labelType );
 
@@ -598,7 +599,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void addHandle3D(String _name, int _series, float _x, float _y, float _z, int _w) {
 		addHandle3D(_name + Integer.toString(_series), _x,_y,_z, _w);
 	}
-	
+
 
 	//-----------------------------------------
 	// FCheck
@@ -614,7 +615,7 @@ public class FControl implements PConstants, FControlConstants {
 
 		FChecks.add(fcheck);
 	}
-	
+
 	/**
 	 * @param _name
 	 *		  name of the gui element
@@ -656,7 +657,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void addCheck(String _name, float _x, float _y, int _sz) {
 		addCheck(_name, _x,_y, _sz, false);
 	}
-	
+
 	/**
 	 * @param _name
 	 *		  name of the gui element
@@ -676,7 +677,7 @@ public class FControl implements PConstants, FControlConstants {
 		addCheck(_name + Integer.toString(_series), _x,_y, _sz, _val);
 	}
 
-	
+
 	//-----------------------------------------
 	// FSlider
 	//-----------------------------------------
@@ -741,7 +742,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void addSlider(String _name, float _x, float _y, int _w, int _h, float _vMin, float _vMax, float _val) {
 		addSlider(_name, _x,_y, _w,_h, _vMin,_vMax, _val, LABEL_FLOAT);
 	}
-	
+
 	/**
 	 * @param _name
 	 *		  name of the gui element
@@ -848,7 +849,7 @@ public class FControl implements PConstants, FControlConstants {
 		LabelInfo.setTypeface( typefaceReg, typefaceBold );
 		fk.setLabels(LabelValue, LabelInfo);
 		fk.setLabelType( LABEL_FLOAT );
-		
+
 		FKnobs.add(fk);
 	}
 
@@ -872,7 +873,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void addKnob(String _name, float _x, float _y, int _r, float _vMin, float _vMax, float _val) {
 		addKnob(_name, _x,_y, _r, _vMin,_vMax, _val, LABEL_FLOAT);
 	}
-	
+
 	/**
 	 * @param _name
 	 *		  name of the gui element
@@ -936,12 +937,12 @@ public class FControl implements PConstants, FControlConstants {
 		addKnob(_name + Integer.toString(_series), _x,_y, _r, _vMin,_vMax, _val, _labelType);
 	}
 
-	
+
 	//-----------------------------------------
 	// FDropDown
 	//-----------------------------------------
 	// TODO: fix buggy click
-	
+
 	/**
 	 * @param _name
 	 *		  name of the gui element
@@ -964,14 +965,14 @@ public class FControl implements PConstants, FControlConstants {
 		fd.setSize(_w, _h);
 
 		fd.addItem(items);
-		
+
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
 		LabelValue.setTypeface( typefaceReg, typefaceBold );
 		LabelInfo.setTypeface( typefaceReg, typefaceBold );
 		fd.setLabels(LabelValue, LabelInfo);
 		fd.setLabelType( LABEL_FLOAT );
-		
+
 		FDropDowns.add(fd);
 	}
 
@@ -994,14 +995,14 @@ public class FControl implements PConstants, FControlConstants {
 	 */
 	public void addDropDown(String _name, float _x, float _y, int _w, int _h, String[] items, String selected) {
 		FDropDown fd = new FDropDown(p5, _name, _x,_y, _w,_h, items, selected);	
-		
+
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
 		LabelValue.setTypeface( typefaceReg, typefaceBold );
 		LabelInfo.setTypeface( typefaceReg, typefaceBold );
 		fd.setLabels(LabelValue, LabelInfo);
 		fd.setLabelType( LABEL_STRING );
-		
+
 		FDropDowns.add(fd);
 	}
 
@@ -1048,14 +1049,51 @@ public class FControl implements PConstants, FControlConstants {
 	public void addDropDown(String _name, int _series, float _x, float _y, int _w, int _h, String[] items, String selected) {
 		addDropDown(_name + Integer.toString(_series), _x,_y, _w,_h, items, selected);
 	}	
-	
-	
+
+
 	//-----------------------------------------
 	// FLabel
 	//-----------------------------------------
+	/**
+	 * @param _text
+	 *		  the text to display
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 *		 
+	 */
+	public void addLabel(String _text, float _x, float _y) {
+		FLabel fl = new FLabel(p5);
+		fl.setText(_text);
+		fl.setPos(_x, _y);
+		fl.setTypeface( typefaceBold );
+
+		FLabels.add(fl);
+	}	
+
+	/**
+	 * @param _text
+	 *		  the text to display
+	 * @param _x
+	 *		  x value of gui element
+	 * @param _y
+	 *		  y value of gui element
+	 * @param _typefaceLabel
+	 * 		  the typeface to use for the label
+	 *		 
+	 */
+	public void addLabel(String _text, float _x, float _y, PFont _typefaceLabel) {
+		FLabel fl = new FLabel(p5);
+		fl.setText(_text);
+		fl.setPos(_x, _y);
+		fl.setTypeface( _typefaceLabel );
+
+		FLabels.add(fl);
+	}	
 
 
-	
+
 	//-----------------------------------------
 	// FInputField
 	//-----------------------------------------
@@ -1079,15 +1117,15 @@ public class FControl implements PConstants, FControlConstants {
 		fi.setPos(_x, _y);
 		fi.setSize(_w, _h);
 		fi.setTypeface( typefaceReg );
-		
+
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
 		LabelValue.setTypeface( typefaceReg, typefaceBold );
 		LabelInfo.setTypeface( typefaceReg, typefaceBold );
-		
+
 		FInputFields.add(fi);
 	}	
-	
+
 	/**
 	 * @param _name
 	 *		  name of the gui element
@@ -1109,15 +1147,15 @@ public class FControl implements PConstants, FControlConstants {
 		fi.setPos(_x, _y);
 		fi.setSize(_w, _h);
 		fi.setTypeface(_typeface);
-		
+
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
 		LabelValue.setTypeface( typefaceReg, typefaceBold );
 		LabelInfo.setTypeface( typefaceReg, typefaceBold );
-		
+
 		FInputFields.add(fi);
 	}
-	
+
 	/**
 	 * @param _name
 	 *		  name of the gui element
@@ -1140,15 +1178,15 @@ public class FControl implements PConstants, FControlConstants {
 		fi.setSize(_w, _h);
 		fi.setTypeface( typefaceReg );
 		fi.setString(_t);
-		
+
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
 		LabelValue.setTypeface( typefaceReg, typefaceBold );
 		LabelInfo.setTypeface( typefaceReg, typefaceBold );
-		
+
 		FInputFields.add(fi);
 	}	
-	
+
 	/**
 	 * @param _name
 	 *		  name of the gui element
@@ -1173,12 +1211,12 @@ public class FControl implements PConstants, FControlConstants {
 		fi.setSize(_w, _h);
 		fi.setTypeface(_typeface);
 		fi.setString(_t);
-		
+
 		FLabel LabelValue = new FLabel(p5);
 		FLabel LabelInfo = new FLabel(p5);
 		LabelValue.setTypeface( typefaceReg, typefaceBold );
 		LabelInfo.setTypeface( typefaceReg, typefaceBold );
-		
+
 		FInputFields.add(fi);
 	}
 
@@ -1265,9 +1303,9 @@ public class FControl implements PConstants, FControlConstants {
 	public void addInputField(String _name, int _series, float _x, float _y, int _w, int _h, String _t, PFont _typeface) {
 		addInputField(_name + Integer.toString(_series), _x,_y, _w,_h, _t, _typeface);
 	}
-	
-	
-	
+
+
+
 	//-----------------------------------------------------------------------------
 	// methods
 	//-----------------------------------------------------------------------------
@@ -1285,16 +1323,17 @@ public class FControl implements PConstants, FControlConstants {
 			System.out.println( "FSliders " + FSliders.size() );
 			System.out.println( "FKnobs " + FKnobs.size() );
 			System.out.println( "FDropDowns " + FDropDowns.size() );
+			System.out.println( "FLabels " + FLabels.size() );
 			System.out.println( "FInputFields " + FInputFields.size() );
 		}
-		
+
 
 		// frameRate in title
-		if(bShowFrameRate) {
-			p5.frame.setTitle( Float.toString(p5.frameRate) );
-		}
+		//		if(bShowFrameRate) {
+		//			p5.frame.setTitle( Float.toString(p5.frameRate) );
+		//		}
 
-		
+
 		// draw controllers
 		p5.pushStyle();
 		p5.rectMode(CORNER);
@@ -1348,6 +1387,9 @@ public class FControl implements PConstants, FControlConstants {
 			fd.showLabels( bShowLabels );
 			fd.draw();
 		}
+		for(FLabel fl : FLabels) {
+			fl.draw();
+		}
 		for(FInputField fi : FInputFields) {
 			fi.setColorOver( colorOver );
 			fi.setColorPressed( colorPressed );
@@ -1368,7 +1410,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void showLabels(boolean val) {
 		bShowLabels = val;
 	}
-	
+
 	/**
 	 * @param val
 	 *		  toggle showing value label for the gui element
@@ -1397,10 +1439,10 @@ public class FControl implements PConstants, FControlConstants {
 			FKnob fk = (FKnob) FKnobs.get(i);
 			if(_name.compareTo(fk.name) == 0) fk.showLabels( val );
 		}
-		*/
+		 */
 	}
 
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * show frame rate in the application title
@@ -1416,7 +1458,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void showFrameRateTitle(boolean val) {
 		bShowFrameRate = val;
 	}
-	
+
 
 	//-----------------------------------------------------------------------------
 	/**
@@ -1426,9 +1468,9 @@ public class FControl implements PConstants, FControlConstants {
 	public void verbose(boolean val) {
 		bVerbose = val;
 	}
-	
-	
-	
+
+
+
 	//-----------------------------------------------------------------------------
 	// sets
 	//-----------------------------------------------------------------------------
@@ -1483,7 +1525,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void setColorOver(int _colorOver) {
 		colorOver = _colorOver;
 	}
-	
+
 	/**
 	 * @param _colorPressed
 	 * 		  set global pressed color for all gui elemetns
@@ -1491,8 +1533,8 @@ public class FControl implements PConstants, FControlConstants {
 	public void setColorPressed(int _colorPressed) {
 		colorPressed = _colorPressed;
 	}
-	
-	
+
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FButton
@@ -1554,7 +1596,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void setSize(String _name, int _series, float _width, float _height) {
 		setSize(_name + Integer.toString(_series), _width, _height);
 	}
-	
+
 	/**
 	 * FCheck
 	 * FKnob
@@ -1591,7 +1633,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void setSize(String _name, int _series, float _radius) {
 		setSize(_name + Integer.toString(_series), _radius);
 	}
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FButton
@@ -1600,6 +1642,7 @@ public class FControl implements PConstants, FControlConstants {
 	 * FDropDowns
 	 * FCheck
 	 * FKnob
+	 * FLabel
 	 * FInputField
 	 * 
 	 * set x,y position of specfic element
@@ -1630,6 +1673,9 @@ public class FControl implements PConstants, FControlConstants {
 		for(FKnob fk : FKnobs) {
 			if(_name.compareTo(fk.name) == 0) fk.setPos((int)_x,(int)_y);
 		}
+		for(FLabel fl : FLabels) {
+			if(_name.compareTo(fl.text) == 0) fl.setPos((int)_x,(int)_y);
+		}
 		for(FInputField fi : FInputFields) {
 			if(_name.compareTo(fi.name) == 0) fi.setPos((int)_x,(int)_y);
 		}
@@ -1658,8 +1704,8 @@ public class FControl implements PConstants, FControlConstants {
 	public void setPos(String _name, int _series, float _x, float _y) {
 		setPos(_name + Integer.toString(_series), _x,_y);
 	}
-	
-	
+
+
 	/**
 	 * FHandle3D
 	 * 
@@ -1699,8 +1745,8 @@ public class FControl implements PConstants, FControlConstants {
 	public void setPos(String _name, int _series, float _x, float _y, float _z) {
 		setPos(_name + Integer.toString(_series), _x,_y,_z);
 	}
-	
-	
+
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FHandle
@@ -1781,7 +1827,7 @@ public class FControl implements PConstants, FControlConstants {
 	}
 
 
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FSlider
@@ -1800,7 +1846,7 @@ public class FControl implements PConstants, FControlConstants {
 			fk.setLoose(_val);
 		}
 	}
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FSlider
@@ -1821,7 +1867,7 @@ public class FControl implements PConstants, FControlConstants {
 			if(_name.compareTo(fk.name) == 0) fk.setValue(_val);
 		}
 	}
-	
+
 	/**
 	 * FSlider
 	 * FKnob
@@ -1841,7 +1887,7 @@ public class FControl implements PConstants, FControlConstants {
 			if(_name.compareTo(fk.name) == 0) fk.setValue(_val);
 		}
 	}	
-	
+
 	/**
 	 * FSlider
 	 * FKnob
@@ -1858,7 +1904,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void setValue(String _name, int _series, int _val) {
 		setValue(_name + Integer.toString(_series), _val);
 	}
-	
+
 	/**
 	 * FSlider
 	 * FKnob
@@ -1876,7 +1922,7 @@ public class FControl implements PConstants, FControlConstants {
 		setValue(_name + Integer.toString(_series), _val);
 	}
 
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FSlider
@@ -1955,7 +2001,7 @@ public class FControl implements PConstants, FControlConstants {
 		addItem(_name + Integer.toString(_series), _nameItem);
 	}
 
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FInputField
@@ -1992,7 +2038,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void setTypeface(String _name, int _series, PFont _typeface) {
 		setTypeface(_name + Integer.toString(_series), _typeface);
 	}
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FHandle
@@ -2010,7 +2056,6 @@ public class FControl implements PConstants, FControlConstants {
 		for(FHandle fh : FHandles) {
 			if(_name.compareTo(fh.name) == 0) fh.enableSnap(_val);
 		}
-
 		for(FSlider fs : FSliders) {
 			if(_name.compareTo(fs.name) == 0) fs.enableSnap(_val);
 		}
@@ -2036,7 +2081,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void enableSnap(String _name, int _series, float _val) {
 		enableSnap(_name + Integer.toString(_series), _val);
 	}	
-	
+
 	/**
 	 * FHandle
 	 * FSlider
@@ -2136,7 +2181,7 @@ public class FControl implements PConstants, FControlConstants {
 			if(_name.compareTo(fk.name) == 0) fk.setLabelType(_labelType);
 		}
 	}
-	
+
 	/**
 	 * FHandles
 	 * FHandles3D
@@ -2159,7 +2204,7 @@ public class FControl implements PConstants, FControlConstants {
 		setLabelType(_name + Integer.toString(_series), _labelType);
 	}
 
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FButton
@@ -2186,7 +2231,7 @@ public class FControl implements PConstants, FControlConstants {
 			if(_name.compareTo(fb.name) == 0) fb.setSprite(img, _sw,_sh);
 		}
 	}
-	
+
 	/**
 	 * FButton
 	 * 
@@ -2212,10 +2257,11 @@ public class FControl implements PConstants, FControlConstants {
 	public void setSprite(String _name, int _series, PImage img, int _sw, int _sh) {
 		setSprite(_name + Integer.toString(_series), img, _sw,_sh);
 	}
-	
-	
+
+
 	//-----------------------------------------------------------------------------
 	/**
+	 * FLabel
 	 * FInputField
 	 * 
 	 * single element
@@ -2235,6 +2281,7 @@ public class FControl implements PConstants, FControlConstants {
 	}
 
 	/**
+	 * FLabel
 	 * FInputField
 	 * 
 	 * series element
@@ -2253,6 +2300,7 @@ public class FControl implements PConstants, FControlConstants {
 	}
 
 	/**
+	 * FLabel
 	 * FInputField
 	 * 
 	 * underline all input fields
@@ -2262,15 +2310,17 @@ public class FControl implements PConstants, FControlConstants {
 	 *
 	 */
 	public void underline(boolean _val) {
+		for(FLabel fl : FLabels) fl.underline(_val);
 		for(FInputField fi : FInputFields) fi.underline(_val);
 	}
 
 
 	//-----------------------------------------------------------------------------
 	/**
+	 * FLabel
 	 * FInputField
 	 * 
-	 * toggle container around specific input field
+	 * toggle container around specific input field/label
 	 * 
 	 * @param _name
 	 *		  name of the gui element 
@@ -2279,6 +2329,10 @@ public class FControl implements PConstants, FControlConstants {
 	 *
 	 */
 	public void container(String _name, boolean _val) {
+		for(FLabel fl : FLabels) {
+			if(_name.compareTo(fl.text) == 0) fl.container(_val);
+			//else return null;
+		}
 		for(FInputField fi : FInputFields) {
 			if(_name.compareTo(fi.name) == 0) fi.container(_val);
 			//else return null;
@@ -2286,9 +2340,10 @@ public class FControl implements PConstants, FControlConstants {
 	}
 
 	/**
+	 * FLabel
 	 * FInputField
 	 * 
-	 * toggle container around specific input field
+	 * toggle container around specific input field/label
 	 * 
 	 * @param _name
 	 *		  name of the gui element 
@@ -2314,7 +2369,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void container(boolean _val) {
 		for(FInputField fi : FInputFields) fi.container(_val);
 	}	
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FInputField
@@ -2363,7 +2418,7 @@ public class FControl implements PConstants, FControlConstants {
 	public void caps(boolean _val) {
 		for(FInputField fi : FInputFields) fi.caps(_val);
 	}	
-		
+
 
 	//-----------------------------------------------------------------------------
 	// gets
@@ -2380,6 +2435,7 @@ public class FControl implements PConstants, FControlConstants {
 		System.out.println( "FSliders " + FSliders.size() );
 		System.out.println( "FKnobs " + FKnobs.size() );
 		System.out.println( "FDropDowns " + FDropDowns.size() );
+		System.out.println( "FLabels" + FLabels.size());
 		System.out.println( "FInputFields " + FInputFields.size() );
 	}
 	/**
@@ -2388,16 +2444,17 @@ public class FControl implements PConstants, FControlConstants {
 	 */
 	public int totalElements() {
 		return 
-			FButtons.size() + 
-			FHandles.size() + 
-			FHandle3Ds.size() + 
-			FChecks.size() + 
-			FSliders.size() + 
-			FKnobs.size() + 
-			FDropDowns.size() + 
-			FInputFields.size(); 
+		FButtons.size() + 
+		FHandles.size() + 
+		FHandle3Ds.size() + 
+		FChecks.size() + 
+		FSliders.size() + 
+		FKnobs.size() + 
+		FDropDowns.size() + 
+		FLabels.size() +
+		FInputFields.size(); 
 	}
-	
+
 	/**
 	 * @return an ArrayList of all FButton elements
 	 * 
@@ -2448,6 +2505,13 @@ public class FControl implements PConstants, FControlConstants {
 		return FDropDowns;
 	}
 	/**
+	 * @return an ArrayList of all FLabel elements
+	 * 
+	 */
+	public ArrayList<FLabel> getLabels() {
+		return FLabels;
+	}
+	/**
 	 * @return an ArrayList of all FInputField elements
 	 * 
 	 */
@@ -2489,6 +2553,7 @@ public class FControl implements PConstants, FControlConstants {
 	 * FKnob
 	 * FButton
 	 * FDropDown
+	 * FLabel
 	 * FInputField
 	 * 
 	 * single element
@@ -2523,6 +2588,9 @@ public class FControl implements PConstants, FControlConstants {
 		for(FDropDown fd : FDropDowns) {
 			if(_name.compareTo(fd.name) == 0) vector = fd.getPos();
 		}
+		for(FLabel fl : FLabels) {
+			if(_name.compareTo(fl.text) == 0) vector = fl.getPos();
+		}
 		for(FInputField fi : FInputFields) {
 			if(_name.compareTo(fi.name) == 0) vector = fi.getPos();
 		}
@@ -2539,6 +2607,7 @@ public class FControl implements PConstants, FControlConstants {
 	 * FKnob
 	 * FButton
 	 * FDropDown
+	 * FLabel
 	 * FInputField
 	 * 
 	 * series elements
@@ -2565,6 +2634,7 @@ public class FControl implements PConstants, FControlConstants {
 	 * FKnob
 	 * FButton
 	 * FDropDown
+	 * FLabel
 	 * FInputField
 	 * 
 	 * single element
@@ -2600,6 +2670,9 @@ public class FControl implements PConstants, FControlConstants {
 		for(FDropDown fd : FDropDowns) {
 			if(_name.compareTo(fd.name) == 0) dimension = fd.getSize();
 		}
+		for(FLabel fl : FLabels) {
+			if(_name.compareTo(fl.text) == 0) dimension = fl.getSize();
+		}
 		for(FInputField fi : FInputFields) {
 			if(_name.compareTo(fi.name) == 0) dimension = fi.getSize();
 		}
@@ -2615,6 +2688,7 @@ public class FControl implements PConstants, FControlConstants {
 	 * FKnob
 	 * FButton
 	 * FDropDown
+	 * FLabel
 	 * FInputField
 	 * 
 	 * series elements
@@ -2631,8 +2705,8 @@ public class FControl implements PConstants, FControlConstants {
 	public Dimension getSize(String _name, int _series) {
 		return getSize(_name + Integer.toString(_series));
 	}	
-		
-	
+
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FCheck
@@ -2668,7 +2742,7 @@ public class FControl implements PConstants, FControlConstants {
 		return getBoolValue( _name + Integer.toString(_series));
 	}
 
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FCheck
@@ -2680,7 +2754,9 @@ public class FControl implements PConstants, FControlConstants {
 	 * return int value of gui element 
 	 * 
 	 * @param _name
-	 *		  name of the gui element 
+	 *		  name of the gui element
+	 *
+	 * @return intVal
 	 *		  
 	 */
 	public int getIntValue(String _name) {
@@ -2711,13 +2787,15 @@ public class FControl implements PConstants, FControlConstants {
 	 *		  name of the gui element 
 	 * @param _series
 	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *
+	 * @return int value
 	 *		  
 	 */
 	public int getIntValue(String _name, int _series) {
 		return getIntValue(_name + Integer.toString(_series));
 	}	
-	
-	
+
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FSlider
@@ -2728,7 +2806,9 @@ public class FControl implements PConstants, FControlConstants {
 	 * return float value of gui element 
 	 * 
 	 * @param _name
-	 *		  name of the gui element 
+	 *		  name of the gui element
+	 *
+	 * @return float value
 	 *		  
 	 */
 	public float getFloatValue(String _name) {
@@ -2754,18 +2834,22 @@ public class FControl implements PConstants, FControlConstants {
 	 *		  name of the gui element 
 	 * @param _series
 	 *		  number marker for multiple elements (i.e. name + series = "name0")
+	 *
+	 * @return float value
 	 *		  
 	 */
 	public float getFloatValue(String _name, int _series) {
 		return getFloatValue(_name + Integer.toString(_series));
 	}
 
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FCheck
 	 * FSlider
 	 * FKnob
+	 * FLabel
+	 * FInputField
 	 * 
 	 * single element
 	 * 
@@ -2787,19 +2871,25 @@ public class FControl implements PConstants, FControlConstants {
 			if(_name.compareTo(fk.name) == 0) strVal = Float.toString( fk.getFloatValue() );
 			//else return null;
 		}
+		for(FLabel fl : FLabels) {
+			if(_name.compareTo(fl.text) == 0) strVal = fl.toString();
+			//else return null;
+		}
 		for(FInputField fi : FInputFields) {
 			if(_name.compareTo(fi.name) == 0) strVal = fi.getValue();
 			//else return null;
 		}
-		
+
 		return strVal;
 	}
 
-	
+
 	/**
 	 * FCheck
 	 * FSlider
 	 * FKnob
+	 * FLabel
+	 * FInputField
 	 * 
 	 * series element
 	 * 
@@ -2814,7 +2904,7 @@ public class FControl implements PConstants, FControlConstants {
 		return getStringValue(_name + Integer.toString(_series));
 	}
 
-	
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FDropDown
@@ -2893,8 +2983,8 @@ public class FControl implements PConstants, FControlConstants {
 	public int getSelectionIndex(String _name, int _series) {
 		return getSelectionIndex(_name + Integer.toString(_series));
 	}
-	
-	
+
+
 	//-----------------------------------------------------------------------------
 	/**
 	 * FButton
@@ -2916,7 +3006,7 @@ public class FControl implements PConstants, FControlConstants {
 
 		return filePath;
 	}
-	
+
 	/**
 	 * FButton
 	 * 
@@ -2933,9 +3023,10 @@ public class FControl implements PConstants, FControlConstants {
 		return getFilePath(_name + Integer.toString(_series));
 	}
 
-	
+
 	//-----------------------------------------------------------------------------
 	/**
+	 * FLabel
 	 * FInputField
 	 * 
 	 * single element
@@ -2948,6 +3039,9 @@ public class FControl implements PConstants, FControlConstants {
 	 */
 	public int getTypeSize(String _name) {
 		int typeSize = 0;
+		for(FLabel fl : FLabels) {
+			if(_name.compareTo(fl.text) == 0) typeSize = (int) fl.getTypeSize();
+		}
 		for(FInputField fi : FInputFields) {
 			if(_name.compareTo(fi.name) == 0) typeSize = fi.getTypeSize();
 		}
@@ -2955,6 +3049,7 @@ public class FControl implements PConstants, FControlConstants {
 	}
 
 	/**
+	 * FLabel
 	 * FInputField
 	 * 
 	 * series element
@@ -2971,8 +3066,8 @@ public class FControl implements PConstants, FControlConstants {
 		return getTypeSize(_name + Integer.toString(_series));
 	}
 
-	
-	
+
+
 	//-----------------------------------------------------------------------------
 	// events
 	//-----------------------------------------------------------------------------
@@ -3027,7 +3122,7 @@ public class FControl implements PConstants, FControlConstants {
 				break;
 			}
 		}
-		
+
 		return _over;
 	}
 
@@ -3043,7 +3138,7 @@ public class FControl implements PConstants, FControlConstants {
 	public boolean getOver(String _name, int _series) {
 		return getOver(_name + Integer.toString(_series));
 	}
-	
+
 
 	/**
 	 * return whether the element has been clicked 
@@ -3109,7 +3204,7 @@ public class FControl implements PConstants, FControlConstants {
 				break;
 			}
 		}
-		
+
 		return _clicked;
 	}
 
@@ -3126,7 +3221,7 @@ public class FControl implements PConstants, FControlConstants {
 		return getClicked(_name + Integer.toString(_series));
 	}
 
-	
+
 	/**
 	 * return whether the element has been pressed 
 	 * 
@@ -3190,10 +3285,10 @@ public class FControl implements PConstants, FControlConstants {
 				break;
 			}
 		}
-	
+
 		return _pressed;
 	}
-	
+
 	/**
 	 * return whether the element has been pressed 
 	 * 
@@ -3207,7 +3302,7 @@ public class FControl implements PConstants, FControlConstants {
 		return getPressed(_name + Integer.toString(_series));
 	}
 
-	
+
 	/**
 	 * return whether the element is locked on 
 	 * 
@@ -3272,7 +3367,7 @@ public class FControl implements PConstants, FControlConstants {
 				break;
 			}
 		}
-		
+
 		return _locked;
 	}
 
@@ -3289,7 +3384,7 @@ public class FControl implements PConstants, FControlConstants {
 		return getLocked(_name + Integer.toString(_series));
 	}
 
-	
+
 	/**
 	 * return whether any element has been moved/adjusted 
 	 */
@@ -3314,12 +3409,12 @@ public class FControl implements PConstants, FControlConstants {
 		for(FKnob fk : FKnobs) {
 			_moved = fk.isMoved();
 		}
-		
+
 		return _moved;
 	}
 
-	
-	
+
+
 	/**
 	 * return whether the element has been moved/adjusted 
 	 * 
@@ -3360,10 +3455,10 @@ public class FControl implements PConstants, FControlConstants {
 				break;
 			}
 		}
-		
+
 		return _moved;
 	}
-	
+
 	/**
 	 * return whether any element has been moved/adjusted 
 	 * 
@@ -3377,7 +3472,7 @@ public class FControl implements PConstants, FControlConstants {
 		return getMoved(_name + Integer.toString(_series));
 	}
 
-	
+
 	/**
 	 * return whether the element has been released
 	 * 
@@ -3436,7 +3531,7 @@ public class FControl implements PConstants, FControlConstants {
 				break;
 			}
 		}
-		
+
 		return _released;
 	}
 
@@ -3453,5 +3548,5 @@ public class FControl implements PConstants, FControlConstants {
 		return getReleased(_name + Integer.toString(_series));
 	}
 
-	
+
 }

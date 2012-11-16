@@ -50,8 +50,8 @@ public class FControlGroup extends PApplet {
 	protected FControl elements;
 
 	protected int[] margins = new int[4];
-	protected int[] cols;
-	protected int[] rows;
+	protected ArrayList<Integer> cols;
+	protected ArrayList<Integer> rows;
 	protected boolean bGrid = false;
 
 	// view
@@ -145,14 +145,8 @@ public class FControlGroup extends PApplet {
 		setMargins(15, 15, width-15, height-15);
 
 		// default rows & cols
-		if( cols == null ) {
-			cols = new int[1];
-			cols[0] = width/2;
-		}
-		if( rows == null ) {
-			rows = new int[1];
-			rows[0] = height/2;
-		}
+		if( cols == null ) setCols(3);
+		if( rows == null ) setRows(3);
 	}
 
 	//-----------------------------------------------------------------------------
@@ -185,10 +179,10 @@ public class FControlGroup extends PApplet {
 		noFill();
 		// grid
 		stroke(0,255,255);
-		for(int x=0; x<getCols().length; x++) {
+		for(int x=0; x<getCols().size(); x++) {
 			line(getCol(x), 0, getCol(x), height);
 		}
-		for(int y=0; y<getRows().length; y++) {
+		for(int y=0; y<getRows().size(); y++) {
 			line(0, getCol(y), width, getCol(y));
 		}
 		// margin
@@ -224,14 +218,27 @@ public class FControlGroup extends PApplet {
 	//-----------------------------------------------------------------------------
 	/**
 	 * 
+	 * @param _cols
+	 * 			number of columns
 	 * @param _rows
 	 * 			number of rows
+	 */
+	public void setColsRows(int _cols, int _rows) {
+		setCols(_cols);
+		setRows(_rows);
+	}
+
+	
+	/**
+	 * 
 	 * @param _cols
 	 * 			number of columns
 	 */
-	public void setRowsCols(int _rows, int _cols) {
-		setRows(_rows);
-		setCols(_cols);
+	protected void setCols(int _cols) {
+		cols = new ArrayList<Integer>();
+		for(int x=0; x<_cols; x++) {
+			cols.add( (int) map(x, 0,_cols, margins[0],margins[2] ) );
+		}
 	}
 	/**
 	 * 
@@ -239,48 +246,33 @@ public class FControlGroup extends PApplet {
 	 * 			number of rows
 	 */
 	protected void setRows(int _rows) {
-		rows = new int[_rows];
-		for(int y=0; y<rows.length; y++) {
-			int val = (int) map(y, 0,rows.length, margins[1],margins[3] );
-			rows[y] = val;
-			System.out.println( "rows\t" + val + "\tmargins\t" + margins[1] + "\t" + margins[3] );
-		}
-	}
-	/**
-	 * 
-	 * @param _rows
-	 * 			number of rows
-	 * @param _cols
-	 * 			number of columns
-	 */
-	protected void setCols(int _cols) {
-		cols = new int[_cols];
-		for(int x=0; x<cols.length; x++) {
-			int val = (int) map(x, 0,cols.length, margins[0],margins[2] );
-			cols[x] = val;
-			System.out.println( "cols\t" + val + "\tmargins\t" + margins[0] + "\t" + margins[2] );
+		rows = new ArrayList<Integer>();
+		for(int y=0; y<_rows; y++) {
+			rows.add( (int) map(y, 0,_rows, margins[1],margins[3] ) );
 		}
 	}
 
-	/**
-	 * @return y values of rows
-	 */
-	public int[] getRows() {
-		return rows;
-	}
-	public int getRow(int num) {
-		return rows[ constrain(num, 0,rows.length) ];
-	}
+	
 	/**
 	 * @return x values of cols
 	 */
-	public int[] getCols() {
+	public ArrayList<Integer> getCols() {
 		return cols;
 	}
 	public int getCol(int num) {
-		return cols[ constrain(num, 0,cols.length) ];
+		return cols.get( constrain(num, 0,cols.size()) );
+	}
+	/**
+	 * @return y values of rows
+	 */
+	public ArrayList<Integer> getRows() {
+		return rows;
+	}
+	public int getRow(int num) {
+		return rows.get( constrain(num, 0,rows.size()) );
 	}
 
+	
 	//-----------------------------------------------------------------------------
 	public void showGrid(boolean val) {
 		bGrid = val;

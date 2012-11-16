@@ -129,12 +129,12 @@ public class FDropDown extends FButton {
 			int a = (getColorInactive() >> 24) & 0xFF;
 			p5.fill( white, a );
 //			labelName.uncontained();
-			labelName.setCoord( x+5, y );
+			labelName.setPos( x+5, y );
 			labelName.setSize( width-10, heightHolder);
 			labelName.draw( name, PApplet.LEFT, BOLD );
 			
 //			labelVal.uncontained();
-			labelVal.setCoord( x-5, y );
+			labelVal.setPos( x-5, y );
 			labelVal.setSize( width-10, heightHolder);
 			labelVal.draw( selStrVal, PApplet.RIGHT, REGULAR );
 		}

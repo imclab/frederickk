@@ -123,7 +123,7 @@ public class FButton extends FControlBase {
 		if(states == null && showLabels) {
 			int a = (getColorInactive() >> 24) & 0xFF;
 			p5.fill( white, a );
-			labelName.setCoord(x,y);
+			labelName.setPos(x,y);
 			labelName.draw(name, PApplet.CENTER, BOLD);
 		}
 		p5.popStyle();

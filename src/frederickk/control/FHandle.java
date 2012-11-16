@@ -67,8 +67,8 @@ public class FHandle extends FControlBase {
 
 	//-----------------------------------------------------------------------------
 	private void updateLabel() {
-		labelVal.setCoord( x+(width+5),y );
-		labelName.setCoord( x+5,y );
+		labelVal.setPos( x+(width+5),y );
+		labelName.setPos( x+5,y );
 	}
 
 
